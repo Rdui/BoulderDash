@@ -1,7 +1,7 @@
 // Täällä määritellään mainMenun toiminnalisuus
 
 
-String playerName = "~";
+String playerName = "";
 GButton startButton;
 GEvent buttonEvent;
 
@@ -32,7 +32,7 @@ void mainMenuDraw(){
 // hallitaan nimi input textiä
 void mainMenuKeyTyped(){
   if(key == '\b'){
-      if(playerName.length() > 1){
+      if(playerName.length() >= 1){
           playerName = playerName.substring(0, playerName.length() - 1); 
       }
   }
@@ -50,7 +50,7 @@ void handleButtonEvents(GButton button, GEvent event) {
     
     button.dispose();
     
-    state = State.GAME;
+    state = State.STORY;
     
   }
   else{

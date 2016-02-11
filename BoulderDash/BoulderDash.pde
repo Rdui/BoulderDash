@@ -24,13 +24,14 @@ void printStory() {
   background(0);
   fill(0, 102, 153);
   textSize(14);
-  text(playerName + " has fallen into a cave!", width/2-100, height/3);
-  text("He has his smartphone with him and all necessary things to alert help", width/2-100, height/3+50);
-  text("BUT, because " + playerName + " is such a manly man, he won't accept help from anyone!", width/2-100, height/3+70);
-  text(playerName + " only has his boisterous biceps, his cutting edge brains and random tools found in the cave to aid him.", width/2-100, height/3+90);
-  text("Good luck " + playerName + "!", width/2-100, height/3+120);
+  textMode(CENTER);
+  text(playerName + " has fallen into a cave!", width/2, height/3);
+  text("He has his smartphone with him and all necessary things to alert help", width/2, height/3+50);
+  text("BUT, because " + playerName + " is such a manly man, he won't accept help from anyone!", width/2, height/3+70);
+  text(playerName + " only has his boisterous biceps, his cutting edge brains and random tools found in the cave to aid him.", width/2, height/3+90);
+  text("Good luck " + playerName + "!",width/2, height/3 + 120);
   textSize(20);
-  text("Press any key to continue", width/2-100, height/3+200);
+  text("Press any key to continue", width/2, height/3 + 150);
 }
 
 void storyEnd() {

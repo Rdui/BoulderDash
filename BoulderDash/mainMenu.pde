@@ -44,12 +44,15 @@ void mainMenuKeyTyped(){
 // Handling button event
 void handleButtonEvents(GButton button, GEvent event) {
   if (button == startButton && event == GEvent.CLICKED) {
-    println("peli alkaa " + playerName);
-    //reset canvas
-    
-    button.dispose();
-    
-    state = State.STORY;
+    String playerNametemp = playerName.replaceAll("\\s+","");
+    if(playerNametemp.length() != 0){
+      println("peli alkaa " + playerName);
+      //reset canvas
+      
+      button.dispose();
+      
+      state = State.STORY;
+    }
     
   }
   else{

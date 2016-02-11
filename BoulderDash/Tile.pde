@@ -1,10 +1,11 @@
 class Tile {
   PImage image;
-  Boolean canWalk, empty; // can the tile be mined, is it a clear space
+  Boolean canWalk, empty, startingPoint; // can the tile be mined, is it a clear space
 
-  Tile(PImage i, Boolean b, Boolean e) {
+  Tile(PImage i, Boolean cw, Boolean e, Boolean sp) {
     image = i;
-    canWalk = b;
+    canWalk = cw;
     empty = e;
+    startingPoint = sp;
   }
 }

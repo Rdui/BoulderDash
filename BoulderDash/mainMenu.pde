@@ -6,7 +6,7 @@ GButton startButton;
 GEvent buttonEvent;
 
 void mainMenuSetup(){
-  startButton = new GButton(this, width/2.67, height/2.2, 400, 50, "Aloita peli!");
+  startButton = new GButton(this, width/2.9, height/2.2, 400, 50, "Aloita peli!");
 }
 
 

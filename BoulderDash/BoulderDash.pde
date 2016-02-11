@@ -50,13 +50,14 @@ void draw() {
   case State.GAME:
     for (int y = 0; y < map[0].length; y++) {
       for (int x = 0; x < map.length; x++) {
-        image(map[x][y].image, x*32, y*32);
+        Tile tile = map[x][y];
+        if (!tile.empty)
+          image(map[x][y].image, x*32, y*32+8);
       }
     }
     // Game starting function should be called here
     // players name: String playerName
     break;
-
   }
 }
 // switch case structure to monitor state of the game

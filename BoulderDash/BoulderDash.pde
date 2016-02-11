@@ -72,7 +72,6 @@ void keyTyped() {
     storyEnd();
     break;
   case State.GAME:
-  playerMove();
     break;
   }
 }

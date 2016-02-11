@@ -1,4 +1,4 @@
-// Täällä määritellään mainMenun toiminnalisuus
+// This file defines mainmenu functionality
 
 
 String playerName = "";
@@ -12,23 +12,23 @@ void mainMenuSetup(){
 
 void mainMenuDraw(){
   
-  // "Syötä pelaajan nimi"
+  // "Type player name"
   fill(255);
   textSize(30);
   textAlign(CENTER);
-  text("Syötä pelaajan nimi", width/2, height/3);
+  text("Type player name:", width/2, height/3);
   
-  //tekstikentän laatikko
+  //textfield box
   fill(204, 153, 51);
   rectMode(CENTER);
   rect(width/2, height/2.5, 400, 50, 25, 5, 25, 5);
-  // itse teksti
+  // text itself
   fill(22);
   text(playerName, width/2, height/2.45);
    
 }
 
-// hallitaan nimi input textiä
+// controlling name input text
 void mainMenuKeyTyped(){
   if(key == '\b'){
       if(playerName.length() >= 1){
@@ -41,11 +41,11 @@ void mainMenuKeyTyped(){
      }
   }
 }
-// Käsitellään nappulan eventti
+// Handling button event
 void handleButtonEvents(GButton button, GEvent event) {
   if (button == startButton && event == GEvent.CLICKED) {
     println("peli alkaa " + playerName);
-    //resetataan canvas
+    //reset canvas
     
     button.dispose();
     

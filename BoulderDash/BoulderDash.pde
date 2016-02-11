@@ -1,7 +1,7 @@
 import g4p_controls.*;
 
-// Gamestate. käytetään hallinnoimaan mitä koodia suoritetaan kun peli käynnissä.
-// mainmenu, intro, game, gameover jne. lisätään tarpeen mukaan.
+// Gamestate is used to define the state of the game
+// mainmenu, intro, game, gameover etc. 
 interface State {
   byte WAIT_USER_INPUT = 0;
   byte STORY = 1;
@@ -37,7 +37,7 @@ void storyEnd() {
   state = State.GAME;
 }
 
-// switch case rakenne gamestaten tarkkailuun
+// switch case structure to monitor state of the game
 void draw() {
   background(backgroundColor);
   switch(state) {
@@ -53,16 +53,13 @@ void draw() {
         image(map[x][y].image, x*32, y*32);
       }
     }
-    //Tähän tulee funktio josta peli alkaa
-    // pelaajan nimi: String playerName
+    // Game starting function should be called here
+    // players name: String playerName
     break;
 
-
-    //Tähän tulee funktio josta peli alkaa
-    // pelaajan nimi: String playerName
   }
 }
-// switch case rakenne gamestaten tarkkailuun
+// switch case structure to monitor state of the game
 void keyTyped() {
   switch(state) {
   case State.WAIT_USER_INPUT:
@@ -77,7 +74,7 @@ void keyTyped() {
   }
 }
 
-// switch case rakenne gamestaten tarkkailuun
+// switch case structure to monitor state of the game
 void mousePressed() {
   switch(state) {
   case State.WAIT_USER_INPUT:

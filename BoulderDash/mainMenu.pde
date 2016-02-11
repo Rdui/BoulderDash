@@ -39,6 +39,18 @@ void mainMenuKeyTyped(){
      if(key != '\n'){
         playerName += key; 
      }
+     
+     if(key == '\n'){
+       String playerNametemp = playerName.replaceAll("\\s+","");
+        if(playerNametemp.length() != 0){
+          println("peli alkaa " + playerName);
+          //reset canvas
+      
+          startButton.dispose();
+      
+          state = State.STORY;
+        } 
+     }
   }
 }
 // Handling button event

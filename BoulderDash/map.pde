@@ -18,7 +18,7 @@ void loadMap(String mapPath, String charPath) {
   for (int y = 0; y < mapLines.length; y++) {
     String[] row = split(mapLines[y], ' ');
     for (int x = 0; x < row.length; x++) {
-      map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false);
+      map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false, row[x] == "@" ? true:false);
     }
   }
 }

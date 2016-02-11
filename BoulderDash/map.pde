@@ -8,7 +8,7 @@ void loadMap(String mapPath, String charPath) {
   for (int i = 0; i < charLines.length; i++) {
     String[] split = split(charLines[i], ' ');
     if (split[1] != "empty")
-      tiles.put(split[0], loadImage(split[1]));
+      tiles.put(split[0], loadImage("graphics/"+split[1]));
     else
       tiles.put(split[0], null);
   }

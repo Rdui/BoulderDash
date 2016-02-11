@@ -1,2 +1,4 @@
-g tile.png
+g basic_mineable.png
+s hard_mineable.png
+w not_mineable.png
 # empty

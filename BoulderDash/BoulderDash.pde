@@ -13,11 +13,15 @@ byte state = State.WAIT_USER_INPUT;
 
 color backgroundColor = color(22);
 
+Player player = new Player(0,0);
+PImage img;
 void setup() {
   background(backgroundColor);
   size(1280, 720);
   loadMap("map.txt", "chars.txt");
   mainMenuSetup();
+  img = loadImage("graphics/tempModel.png");
+  player.setCoordinates(1*32, 1*32+8);
 }
 
 void printStory() {
@@ -56,6 +60,9 @@ void draw() {
           image(map[x][y].image, x*32, y*32+8);
       }
     }
+    //println(startX + " " + startY);
+    player.move();
+    player.drawPlayer();
     // Game starting function should be called here
     // players name: String playerName
     break;
@@ -72,6 +79,32 @@ void keyTyped() {
     storyEnd();
     break;
   case State.GAME:
+    break;
+  }
+}
+
+void keyPressed() {
+  switch(state) {
+  case State.WAIT_USER_INPUT:
+
+    break;
+  case State.STORY:
+    break;
+  case State.GAME:
+    movementKeyPressed();
+    break;
+  }
+}
+
+void keyReleased() {
+  switch(state) {
+  case State.WAIT_USER_INPUT:
+
+    break;
+  case State.STORY:
+    break;
+  case State.GAME:
+    movementKeyReleased();
     break;
   }
 }

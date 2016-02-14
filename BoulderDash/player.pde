@@ -4,7 +4,7 @@ class Player {
   int score = 0;
   float x = 0;
   float y = 0;
-  float speed = 5;
+  float speed = 32;
   
   
   
@@ -45,37 +45,64 @@ class Player {
   void move(){
     int gridX = this.getGridPosX();
     int gridY = this.getGridPosY();
-    if(up == 1){
+    
+    if(up == 1 && gridY > 0){
+      if (this.is_mineable(gridX, gridY-1) == true){
+        map[gridX][gridY-1].empty = true;
+      }
+      
       if(map[gridX][gridY-1].empty == true){
         this.erasePlayer();
         y -= speed;
         this.drawPlayer();
+        delay(40);
       }
     }
-    else if(down == 1){
+    else if(down == 1 && gridY < 21){
+      if ( this.is_mineable(gridX, gridY+1) == true){
+        map[gridX][gridY+1].empty = true;
+      }
+        
       if(map[gridX][gridY+1].empty == true){
         this.erasePlayer();
         y += speed;
         this.drawPlayer();
+        delay(40);
       }
     }
-    else if(left == 1){
+    else if(left == 1 && gridX > 0){
+      if (this.is_mineable(gridX-1, gridY) == true){
+        map[gridX-1][gridY].empty = true;
+      }
+      
       if(map[gridX-1][gridY].empty == true){
         this.erasePlayer();
         x -= speed;
         this.drawPlayer();
+        delay(40);
       }else{
         println("seinä");
       }  
     }
-    else if(right == 1){
+    else if(right == 1 && gridX < 39){
+      if (this.is_mineable(gridX+1, gridY) == true){
+        map[gridX+1][gridY].empty = true;
+      }
+      
       if(map[gridX+1][gridY].empty == true){
         this.erasePlayer();
         x += speed;
         this.drawPlayer();
+        delay(40);
       }
-      
-      
     }    
+  }
+  boolean is_mineable(int gridX, int gridY){
+    if (map[gridX][gridY].canWalk == true){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

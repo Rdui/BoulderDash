@@ -13,15 +13,16 @@ byte state = State.WAIT_USER_INPUT;
 
 color backgroundColor = color(22);
 
-Player player = new Player(0, 0);
+Player player = new Player(0,0);
 PImage img;
+PImage backgroundimage;
 void setup() {
   background(backgroundColor);
   size(1280, 720);
   loadMap("map.txt", "chars.txt", "pickups.txt");
   mainMenuSetup();
   img = loadImage("graphics/tempModel.png");
-  player.setCoordinates(1*32, 1*32+8);
+  player.setCoordinates(startX*32, startY*32+8);
 }
 
 void printStory() {
@@ -33,7 +34,7 @@ void printStory() {
   text("He has his smartphone with him and all necessary things to alert help", width/2, height/3+50);
   text("BUT, because " + playerName + " is such a manly man, he won't accept help from anyone!", width/2, height/3+70);
   text(playerName + " only has his boisterous biceps, his cutting edge brains and random tools found in the cave to aid him.", width/2, height/3+90);
-  text("Good luck " + playerName + "!", width/2, height/3 + 120);
+  text("Good luck " + playerName + "!",width/2, height/3 + 120);
   textSize(20);
   text("Press any key to continue", width/2, height/3 + 150);
 }
@@ -41,6 +42,7 @@ void printStory() {
 void storyEnd() {
   state = State.GAME;
 }
+
 
 // switch case structure to monitor state of the game
 void draw() {
@@ -53,7 +55,17 @@ void draw() {
     printStory();
     break;
   case State.GAME:
-    drawMap();
+    backgroundimage = loadImage("graphics/waterfall-cave-1280x720.jpg");
+    //background(backgroundimage);
+
+    image(backgroundimage, player.x/100, player.y/100, width, height);
+    for (int y = 0; y < map[0].length; y++) {
+      for (int x = 0; x < map.length; x++) {
+        Tile tile = map[x][y];
+        if (!tile.empty)
+          image(map[x][y].image, x*32, y*32+8);
+      }
+    }
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();

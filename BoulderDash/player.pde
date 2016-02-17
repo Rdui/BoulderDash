@@ -49,7 +49,6 @@ class Player {
     if (up == 1 && gridY > 0) {
       if (this.is_mineable(gridX, gridY-1) == true) {
         map[gridX][gridY-1].empty = true;
-        checkPickup(gridX, gridY);
       }
 
       if (map[gridX][gridY-1].empty == true) {
@@ -57,11 +56,11 @@ class Player {
         y -= speed;
         this.drawPlayer();
         delay(40);
+        checkPickup();
       }
     } else if (down == 1 && gridY < 21) {
       if ( this.is_mineable(gridX, gridY+1) == true) {
         map[gridX][gridY+1].empty = true;
-        checkPickup(gridX, gridY);
       }
 
       if (map[gridX][gridY+1].empty == true) {
@@ -69,11 +68,11 @@ class Player {
         y += speed;
         this.drawPlayer();
         delay(40);
+        checkPickup();
       }
     } else if (left == 1 && gridX > 0) {
       if (this.is_mineable(gridX-1, gridY) == true) {
         map[gridX-1][gridY].empty = true;
-        checkPickup(gridX, gridY);
       }
 
       if (map[gridX-1][gridY].empty == true) {
@@ -81,13 +80,13 @@ class Player {
         x -= speed;
         this.drawPlayer();
         delay(40);
+        checkPickup();
       } else {
         println("seinä");
       }
     } else if (right == 1 && gridX < 39) {
       if (this.is_mineable(gridX+1, gridY) == true) {
         map[gridX+1][gridY].empty = true;
-        checkPickup(gridX, gridY);
       }
 
       if (map[gridX+1][gridY].empty == true) {
@@ -95,6 +94,7 @@ class Player {
         x += speed;
         this.drawPlayer();
         delay(40);
+        checkPickup();
       }
     }
   }
@@ -107,11 +107,14 @@ class Player {
     }
   }
 
-  void checkPickup(int gridX, int gridY)
+  void checkPickup()
   {
+    int gridX = this.getGridPosX();
+    int gridY = this.getGridPosY();
     if (map[gridX][gridY].pickup != null) {
       player.score += map[gridX][gridY].pickup.score;
       map[gridX][gridY].pickup = null;
+      println(gridX, gridY);
     }
   }
 }

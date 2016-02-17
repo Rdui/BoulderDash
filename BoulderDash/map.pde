@@ -22,10 +22,12 @@ void loadMap(String mapPath, String charPath) {
     String[] row = split(mapLines[y], ' ');
     for (int x = 0; x < row.length; x++) {
       map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false);
-      if (row[x]=="@") {
+      if (row[x].equals("@")) {
+        println("perkele");
         startX = x;
         startY = y;
       }
     }
   }
+  println("x"+startX+"y"+startY);
 }

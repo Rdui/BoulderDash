@@ -33,8 +33,8 @@ class Player {
   
   void drawPlayer(){
     image(img, x, y);
-    println(this.getGridPosX() + " " + this.getGridPosY());
-    println(this.x + " " + this.y);
+    //println(this.getGridPosX() + " " + this.getGridPosY());
+    //println(this.x + " " + this.y);
   }
   
   void erasePlayer(){

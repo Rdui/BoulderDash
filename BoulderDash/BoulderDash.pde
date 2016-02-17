@@ -15,6 +15,7 @@ color backgroundColor = color(22);
 
 Player player = new Player(0,0);
 PImage img;
+PImage backgroundimage;
 void setup() {
   background(backgroundColor);
   size(1280, 720);
@@ -42,6 +43,7 @@ void storyEnd() {
   state = State.GAME;
 }
 
+
 // switch case structure to monitor state of the game
 void draw() {
   background(backgroundColor);
@@ -53,6 +55,10 @@ void draw() {
     printStory();
     break;
   case State.GAME:
+    backgroundimage = loadImage("graphics/waterfall-cave-1280x720.jpg");
+    //background(backgroundimage);
+
+    image(backgroundimage, player.x/100, player.y/100, width, height);
     for (int y = 0; y < map[0].length; y++) {
       for (int x = 0; x < map.length; x++) {
         Tile tile = map[x][y];

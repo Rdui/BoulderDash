@@ -100,7 +100,7 @@ class Player {
   }
 
   boolean is_mineable(int gridX, int gridY) {
-    if (map[gridX][gridY].canWalk == true) {
+    if (map[gridX][gridY].tile_type !=10) {
       return true;
     } else {
       return false;

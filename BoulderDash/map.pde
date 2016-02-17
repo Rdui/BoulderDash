@@ -3,6 +3,7 @@ import java.util.HashMap; //<>// //<>// //<>// //<>// //<>// //<>//
 Tile[][] map;
 int startX; // player start point location
 int startY;
+int tile_;
 
 void loadMap(String mapPath, String charPath, String pickupPath) {
 
@@ -22,7 +23,19 @@ void loadMap(String mapPath, String charPath, String pickupPath) {
   for (int y = 0; y < mapLines.length; y++) {
     String[] row = split(mapLines[y], ' ');
     for (int x = 0; x < row.length; x++) {
-      map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false);
+      if (row[x].equals("w")){ //// tarkistetaan minkätyyppinen tiili on (mitä vaikeampi tiili on rikkoa, sitä suurempi numero sille annetaan.)
+        tile_ = 10;
+      }
+      else if (row[x].equals("s")){
+        tile_ = 2;
+      }
+      else if (row[x].equals("g")){
+        tile_ = 1;
+      }
+      else if (row[x].equals("#") || row[x].equals("@")){
+        tile_ = 0;
+      }
+      map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false, tile_);
       if (row[x].equals("@")) {
         startX = x;
         startY = y;

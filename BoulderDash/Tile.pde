@@ -1,6 +1,7 @@
 class Tile {
   PImage image; // tile graphics
   Boolean canWalk, empty; // can the tile be mined, is it a clear space
+  Pickup pickup;
 
   Tile(PImage i, Boolean cw, Boolean e) {
     image = i;

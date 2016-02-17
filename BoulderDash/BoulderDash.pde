@@ -19,7 +19,7 @@ PImage backgroundimage;
 void setup() {
   background(backgroundColor);
   size(1280, 720);
-  loadMap("map.txt", "chars.txt");
+  loadMap("map.txt", "chars.txt", "pickups.txt");
   mainMenuSetup();
   img = loadImage("graphics/tempModel.png");
   player.setCoordinates(startX*32, startY*32+8);

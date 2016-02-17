@@ -100,6 +100,7 @@ class Player {
   }
 
   boolean is_mineable(int gridX, int gridY) {
+    println(" edessä olevan tiilen tile_type: " + map[gridX][gridY].tile_type);
     if (map[gridX][gridY].tile_type !=10) {
       return true;
     } else {

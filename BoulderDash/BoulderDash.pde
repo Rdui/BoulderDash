@@ -21,7 +21,7 @@ void setup() {
   loadMap("map.txt", "chars.txt");
   mainMenuSetup();
   img = loadImage("graphics/tempModel.png");
-  player.setCoordinates(1*32, 1*32+8);
+  player.setCoordinates(startX*32, startY*32+8);
 }
 
 void printStory() {

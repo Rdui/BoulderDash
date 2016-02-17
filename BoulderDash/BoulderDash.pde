@@ -59,13 +59,8 @@ void draw() {
     //background(backgroundimage);
 
     image(backgroundimage, player.x/100, player.y/100, width, height);
-    for (int y = 0; y < map[0].length; y++) {
-      for (int x = 0; x < map.length; x++) {
-        Tile tile = map[x][y];
-        if (!tile.empty)
-          image(map[x][y].image, x*32, y*32+8);
-      }
-    }
+    drawMap();
+    
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();

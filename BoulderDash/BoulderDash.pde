@@ -13,7 +13,7 @@ byte state = State.WAIT_USER_INPUT;
 
 color backgroundColor = color(22);
 
-Player player = new Player(0,0);
+Player player = new Player(0, 0);
 PImage img;
 PImage backgroundimage;
 void setup() {
@@ -34,7 +34,7 @@ void printStory() {
   text("He has his smartphone with him and all necessary things to alert help", width/2, height/3+50);
   text("BUT, because " + playerName + " is such a manly man, he won't accept help from anyone!", width/2, height/3+70);
   text(playerName + " only has his boisterous biceps, his cutting edge brains and random tools found in the cave to aid him.", width/2, height/3+90);
-  text("Good luck " + playerName + "!",width/2, height/3 + 120);
+  text("Good luck " + playerName + "!", width/2, height/3 + 120);
   textSize(20);
   text("Press any key to continue", width/2, height/3 + 150);
 }
@@ -55,12 +55,11 @@ void draw() {
     printStory();
     break;
   case State.GAME:
-    backgroundimage = loadImage("graphics/waterfall-cave-1280x720.jpg");
-    //background(backgroundimage);
 
-    image(backgroundimage, player.x/100, player.y/100, width, height);
+    drawBackground();
     drawMap();
-    
+    drawScore();
+
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
@@ -68,6 +67,13 @@ void draw() {
     // players name: String playerName
     break;
   }
+}
+
+void drawScore() {
+  fill(255, 255, 255);
+  textSize(25);
+  textAlign(CENTER);
+  text(player.score, width/2, 32);
 }
 // switch case structure to monitor state of the game
 void keyTyped() {

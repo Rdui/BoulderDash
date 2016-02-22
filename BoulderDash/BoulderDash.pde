@@ -73,7 +73,7 @@ void drawScore() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(CENTER);
-  text(player.score, width/2, 32);
+  text("Score:"+player.score, width/2, 32);
 }
 // switch case structure to monitor state of the game
 void keyTyped() {

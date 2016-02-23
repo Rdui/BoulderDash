@@ -16,10 +16,14 @@ class Tile {
     else if(tile == 2){
      tile_hp = 30; 
     }
+    else if(tile == 0){
+      tile_hp = 2;
+    }
   }
   
   void destroy(){
    tile_type = 0;
    empty = true;
+   tile_hp = 2;
   }
 }

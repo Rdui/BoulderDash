@@ -54,7 +54,7 @@ class Player {
      
         y -= speed;
         this.drawPlayer();
-        delay(40);
+        //delay(40);
         checkPickup();
       }
     } else if (down == 1 && gridY < 21) {
@@ -71,7 +71,7 @@ class Player {
         
         y += speed;
         this.drawPlayer();
-        delay(40);
+        //delay(40);
         checkPickup();
       }
     } else if (left == 1 && gridX > 0) {
@@ -88,7 +88,7 @@ class Player {
         
         x -= speed;
         this.drawPlayer();
-        delay(40);
+        //delay(40);
         checkPickup();
       } else {
         println("seinä");
@@ -107,7 +107,7 @@ class Player {
         
         x += speed;
         this.drawPlayer();
-        delay(40);
+        //delay(40);
         checkPickup();
       }
     }

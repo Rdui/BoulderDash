@@ -17,4 +17,9 @@ class Tile {
      tile_hp = 30; 
     }
   }
+  
+  void destroy(){
+   tile_type = 0;
+   empty = true;
+  }
 }

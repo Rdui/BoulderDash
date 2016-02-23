@@ -37,11 +37,6 @@ class Player {
     //println(this.x + " " + this.y);
   }
 
-  void erasePlayer() {
-    //fill(backgroundColor);
-    //rect(x, y, 32, 32);
-  }
-
   void move() {
     int gridX = this.getGridPosX();
     int gridY = this.getGridPosY();
@@ -52,12 +47,11 @@ class Player {
           map[gridX][gridY-1].tile_hp -= 1;
           return;
         }
-        map[gridX][gridY-1].empty = true;
-        map[gridX][gridY-1].tile_type = 0;
+        map[gridX][gridY-1].destroy();
       }
 
       if (map[gridX][gridY-1].empty == true) {
-        this.erasePlayer();
+     
         y -= speed;
         this.drawPlayer();
         delay(40);
@@ -69,12 +63,12 @@ class Player {
           map[gridX][gridY+1].tile_hp -= 1;
           return;
         }
-        map[gridX][gridY+1].empty = true;
-        map[gridX][gridY+1].tile_type = 0;
+        map[gridX][gridY+1].destroy();
+       
       }
 
       if (map[gridX][gridY+1].empty == true) {
-        this.erasePlayer();
+        
         y += speed;
         this.drawPlayer();
         delay(40);
@@ -86,12 +80,12 @@ class Player {
           map[gridX-1][gridY].tile_hp -= 1;
           return;
         }
-        map[gridX-1][gridY].empty = true;
-        map[gridX-1][gridY].tile_type = 0;
+        map[gridX-1][gridY].destroy();
+        
       }
 
       if (map[gridX-1][gridY].empty == true) {
-        this.erasePlayer();
+        
         x -= speed;
         this.drawPlayer();
         delay(40);
@@ -105,12 +99,12 @@ class Player {
           map[gridX+1][gridY].tile_hp -= 1;
           return;
         }
-        map[gridX+1][gridY].empty = true;
-        map[gridX+1][gridY].tile_type = 0;
+        map[gridX+1][gridY].destroy();
+       
       }
 
       if (map[gridX+1][gridY].empty == true) {
-        this.erasePlayer();
+        
         x += speed;
         this.drawPlayer();
         delay(40);

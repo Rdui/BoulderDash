@@ -1,6 +1,8 @@
-import java.util.HashMap; //<>// //<>// //<>// //<>// //<>// //<>//
+import java.util.HashMap;  //<>//
+import java.util.List;
 
 Tile[][] map;
+List<Creep> creeps = new ArrayList<Creep>();
 int startX; // player start point location
 int startY;
 int tile_;
@@ -24,14 +26,17 @@ void loadMap(String mapPath, String charPath, String pickupPath) {
   for (int y = 0; y < mapLines.length; y++) {
     String[] row = split(mapLines[y], ' ');
     for (int x = 0; x < row.length; x++) {
-      if (row[x].equals("w")) { //// tarkistetaan minkätyyppinen tiili on (mitä vaikeampi tiili on rikkoa, sitä suurempi numero sille annetaan.)
+      if (row[x].equals("w")) { // tarkistetaan minkätyyppinen tiili on (mitä vaikeampi tiili on rikkoa, sitä suurempi numero sille annetaan.)
         tile_ = 10;
       } else if (row[x].equals("s")) {
         tile_ = 2;
       } else if (row[x].equals("g")) {
         tile_ = 1;
-      } else if (row[x].equals("#") || row[x].equals("@")) {
+      } else if (row[x].equals("#")) {
         tile_ = 0;
+      } else if (row[x].equals("!")) {
+        tile_ = 0;
+        creeps.add(new Creep(x,y,loadImage("graphics/creep.png")));
       }
       map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false, tile_);
       if (row[x].equals("@")) {

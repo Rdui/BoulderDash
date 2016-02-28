@@ -63,6 +63,15 @@ void draw() {
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
+    for (Creep creep : creeps)
+    {
+      if (abs(second()-lastMove) > 1)
+      {
+        creep.moveRandom();
+        lastMove = second();
+      }
+      creep.draw();
+    }
     // Game starting function should be called here
     // players name: String playerName
     break;

@@ -1,5 +1,3 @@
-import java.util.Random;
-
 int lastMove = 0;
 
 class Creep {
@@ -13,19 +11,31 @@ class Creep {
   }
 
   void moveRandom() {
-    Random random = new Random();
-    if (random.nextInt(2) == 1) {
-      int randX = random.nextInt(2)*random.nextInt(2)==1?1:-1;
-      if (x+randX > 0 && x+randX < map.length)
-        x += randX;
-    } else {
-      int randY = random.nextInt(2)*random.nextInt(2)==1?1:-1;
-      if (y+randY > 0 && y+randY < map[0].length)
-        y += randY;
+    List<Position> positions = new ArrayList<Position>();
+    if (x+1 < map.length && map[x+1][y].empty)
+      positions.add(new Position(x+1, y));
+    if (y+1 < map[0].length && map[x][y+1].empty)
+      positions.add(new Position(x, y+1));
+    if (x-1 >= 0 && map[x-1][y].empty)
+      positions.add(new Position(x-1, y));
+    if (y-1 >= map[0].length-1 && map[x][y-1].empty)
+      positions.add(new Position(x, y-1));
+    if (positions.size() > 0) {
+      int i = (int)random(-1, positions.size());
+      x = positions.get(i).x;
+      y = positions.get(i).y;
     }
   }
 
   void draw() {
-    image(icon, 32*x, 32*y);
+    image(icon, 32*x, 32*y+8);
+  }
+}
+
+public class Position {
+  public int x, y;
+  public Position(int x_, int y_) {
+    x = x_;
+    y=y_;
   }
 }

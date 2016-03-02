@@ -2,7 +2,7 @@ import g4p_controls.*;
 
 // Gamestate is used to define the state of the game
 // mainmenu, intro, game, gameover etc. 
-interface State {
+  interface State {
   byte WAIT_USER_INPUT = 0;
   byte STORY = 1;
   byte GAME= 2;

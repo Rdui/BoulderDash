@@ -115,8 +115,7 @@ class Player {
   
   void drop_bomb(Bomb bomb){
     bombs.add(bomb);
-    println(bombs.size());
-    map[this.getGridPosX()][this.getGridPosY()].set_bomb(bomb);
+    bomb.setPosition(this.getGridPosX(), this.getGridPosY());
     
   }
 

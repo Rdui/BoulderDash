@@ -22,18 +22,17 @@ class Tile {
       tile_hp = 2;
     }
   }
-  
+  //destroys this tile
   void destroy(){
    tile_type = 0;
    empty = true;
    tile_hp = 2;
   }
   
+  // sets an active bomb in the tile
   void set_bomb(Bomb bomb){
     bomb_ = bomb;
     bomb_.setPosition(player.getGridPosX(), player.getGridPosY());
-    //bomb_.setPosition(player.getGridPosX(), player.getGridPosY());
-    
   }
   
 }

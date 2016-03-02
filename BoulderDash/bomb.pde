@@ -29,6 +29,7 @@ class Bomb {
     pos_y = y;
   }
   
+  // draws and checks if the bomb should explode
   void draw(){
     println("pommi piirretty");
     println(bomb_type);

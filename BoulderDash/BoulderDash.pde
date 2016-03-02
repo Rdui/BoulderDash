@@ -2,7 +2,7 @@ import g4p_controls.*;
 
 // Gamestate is used to define the state of the game
 // mainmenu, intro, game, gameover etc. 
-  interface State {
+interface State {
   byte WAIT_USER_INPUT = 0;
   byte STORY = 1;
   byte GAME= 2;
@@ -63,15 +63,15 @@ void draw() {
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
-    for (Creep creep : creeps)
+    for (int i = 0; i < creeps.size(); i++)
     {
       if (abs(second()-lastMove) > 1)
-      {
-        creep.moveRandom();
-        lastMove = second();
-      }
-      creep.draw();
+        creeps.get(i).moveRandom();
+      creeps.get(i).draw();
     }
+    if (abs(second()-lastMove) > 1)
+      lastMove = second();
+
     // Game starting function should be called here
     // players name: String playerName
     break;

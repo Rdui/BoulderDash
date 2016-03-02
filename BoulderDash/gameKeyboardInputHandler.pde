@@ -13,8 +13,6 @@ void movementKeyPressed() {
   } else if (key == 'd' || key == 'D') {
     right = 1;
   }
-  if (keyCode == ESC)
-    endGame();
 }
 
 void movementKeyReleased() {

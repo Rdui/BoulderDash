@@ -43,7 +43,7 @@ class Player {
 
     if (up == 1 && gridY > 0) {
       if (this.is_mineable(gridX, gridY-1) == true) {
-        if(map[gridX][gridY-1].tile_hp > 0){
+        if (map[gridX][gridY-1].tile_hp > 0) {
           map[gridX][gridY-1].tile_hp -= 1;
           return;
         }
@@ -51,43 +51,44 @@ class Player {
       }
 
       if (map[gridX][gridY-1].empty == true) {
-     
+
         y -= speed;
         this.drawPlayer();
+        checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
         checkPickup();
       }
     } else if (down == 1 && gridY < 21) {
       if ( this.is_mineable(gridX, gridY+1) == true) {
-        if(map[gridX][gridY+1].tile_hp > 0){
+        if (map[gridX][gridY+1].tile_hp > 0) {
           map[gridX][gridY+1].tile_hp -= 1;
           return;
         }
         map[gridX][gridY+1].destroy();
-       
       }
 
       if (map[gridX][gridY+1].empty == true) {
-        
+
         y += speed;
         this.drawPlayer();
+        checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
         checkPickup();
       }
     } else if (left == 1 && gridX > 0) {
       if (this.is_mineable(gridX-1, gridY) == true) {
-        if(map[gridX-1][gridY].tile_hp > 0){
+        if (map[gridX-1][gridY].tile_hp > 0) {
           map[gridX-1][gridY].tile_hp -= 1;
           return;
         }
         map[gridX-1][gridY].destroy();
-        
       }
 
       if (map[gridX-1][gridY].empty == true) {
-        
+
         x -= speed;
         this.drawPlayer();
+        checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
         checkPickup();
       } else {
@@ -95,18 +96,18 @@ class Player {
       }
     } else if (right == 1 && gridX < 39) {
       if (this.is_mineable(gridX+1, gridY) == true) {
-        if(map[gridX+1][gridY].tile_hp > 0){
+        if (map[gridX+1][gridY].tile_hp > 0) {
           map[gridX+1][gridY].tile_hp -= 1;
           return;
         }
         map[gridX+1][gridY].destroy();
-       
       }
 
       if (map[gridX+1][gridY].empty == true) {
-        
+
         x += speed;
         this.drawPlayer();
+        checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
         checkPickup();
       }
@@ -138,4 +139,10 @@ class Player {
       println(gridX, gridY);
     }
   }
+}
+
+void checkCreep(int x, int y) {
+  for (Creep creep : creeps)
+    if (creep.x == x && creep.y == y)
+      endGame();
 }

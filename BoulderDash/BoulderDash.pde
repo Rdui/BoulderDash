@@ -16,6 +16,7 @@ byte state = State.WAIT_USER_INPUT;
 color backgroundColor = color(22);
 
 Player player = new Player(0, 0);
+Inventory inventory = new Inventory();
 PImage img;
 PImage bomb_1_img;
 PImage backgroundimage;
@@ -69,6 +70,8 @@ void draw() {
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
+    inventory.rotation();
+    
     for (int i = 0; i < creeps.size(); i++)
     {
       if (abs(second()-lastMove) > 1)

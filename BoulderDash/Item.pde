@@ -6,3 +6,20 @@ class Pickup {
     score = s;
   }
 }
+
+class Inventory {
+  int item = 0;
+  
+  void rotation() {
+    if (rotateleft == 1) {
+      --item;
+      println(item);
+    }
+    if (rotateright == 1) {
+      ++item;
+      
+      println(item);
+    }
+  }
+  
+}

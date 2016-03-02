@@ -15,6 +15,7 @@ color backgroundColor = color(22);
 
 Player player = new Player(0, 0);
 PImage img;
+PImage bomb_1_img;
 PImage backgroundimage;
 void setup() {
   background(backgroundColor);
@@ -22,6 +23,7 @@ void setup() {
   loadMap("map.txt", "chars.txt", "pickups.txt");
   mainMenuSetup();
   img = loadImage("graphics/tempModel.png");
+  bomb_1_img = loadImage("graphics/bomb_1.png");
   player.setCoordinates(startX*32, startY*32+8);
 }
 
@@ -72,6 +74,13 @@ void draw() {
       }
       creep.draw();
     }
+    
+    for(int i = 0; i < bombs.size(); ++i){
+      bombs.get(i).draw();
+      if(bombs.get(i).bomb_timer == 0){
+         bombs.remove(bombs.get(i)); 
+      }
+    }
     // Game starting function should be called here
     // players name: String playerName
     break;
@@ -108,6 +117,7 @@ void keyPressed() {
     break;
   case State.GAME:
     movementKeyPressed();
+    bombKeyPressed();
     break;
   }
 }

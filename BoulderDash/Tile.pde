@@ -4,6 +4,8 @@ class Tile {
   Pickup pickup;
   int tile_type;
   int tile_hp;
+  
+  Bomb bomb_;
 
   Tile(PImage i, Boolean cw, Boolean e, int tile) {
     image = i;
@@ -26,4 +28,12 @@ class Tile {
    empty = true;
    tile_hp = 2;
   }
+  
+  void set_bomb(Bomb bomb){
+    bomb_ = bomb;
+    bomb_.setPosition(player.getGridPosX(), player.getGridPosY());
+    //bomb_.setPosition(player.getGridPosX(), player.getGridPosY());
+    
+  }
+  
 }

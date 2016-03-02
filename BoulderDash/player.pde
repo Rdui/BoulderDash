@@ -112,6 +112,13 @@ class Player {
       }
     }
   }
+  
+  void drop_bomb(Bomb bomb){
+    bombs.add(bomb);
+    println(bombs.size());
+    map[this.getGridPosX()][this.getGridPosY()].set_bomb(bomb);
+    
+  }
 
   boolean is_mineable(int gridX, int gridY) {
     println(" edessä olevan tiilen tile_type: " + map[gridX][gridY].tile_type);

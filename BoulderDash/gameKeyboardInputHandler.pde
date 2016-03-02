@@ -32,3 +32,15 @@ void movementKeyReleased(){
      right = 0;
   }
 }
+
+void bombKeyPressed(){
+  
+  if(key == ' '){
+    println("space");
+    Bomb bomb = new Bomb(1);
+    player.drop_bomb(bomb);
+    
+    
+  }
+  
+}

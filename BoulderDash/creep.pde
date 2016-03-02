@@ -24,6 +24,8 @@ class Creep {
       int i = (int)random(-1, positions.size());
       x = positions.get(i).x;
       y = positions.get(i).y;
+      if(x == player.x && y == player.y)
+        endGame();
     }
   }
 

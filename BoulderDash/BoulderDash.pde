@@ -1,4 +1,5 @@
 import g4p_controls.*;
+import java.io.File;
 
 // Gamestate is used to define the state of the game
 // mainmenu, intro, game, gameover etc. 
@@ -6,6 +7,7 @@ interface State {
   byte WAIT_USER_INPUT = 0;
   byte STORY = 1;
   byte GAME= 2;
+  byte END = 3;
 }
 
 
@@ -16,6 +18,8 @@ color backgroundColor = color(22);
 Player player = new Player(0, 0);
 PImage img;
 PImage backgroundimage;
+String[] scores;
+
 void setup() {
   background(backgroundColor);
   size(1280, 720);
@@ -74,6 +78,8 @@ void draw() {
 
     // Game starting function should be called here
     // players name: String playerName
+    break;
+  case State.END:
     break;
   }
 }
@@ -135,4 +141,35 @@ void mousePressed() {
 
     break;
   }
+}
+
+void endGame() {
+  if (loadStrings("scores.txt")==null) {
+    PrintWriter output;
+    output = createWriter("scores.txt");
+    output.println(player.score+" "+playerName);
+    output.flush();
+    output.close();
+  } else {
+    String[] strings = loadStrings("scores.txt");
+    saveStrings("scores.txt", new String[]{});
+    PrintWriter output = createWriter("scores.txt");
+    Boolean found = false;
+    int i = 0;
+    while (i < strings.length) {
+      if ((int(split(strings[i], ' ')[0]) < player.score && !found)) {
+        found = true;
+        output.println(player.score+" "+playerName);
+      } else {
+        output.println(strings[i]);
+        i++;
+      }
+    }
+    if (!found)
+      output.println(player.score+" "+playerName);
+    output.flush();
+    output.close();
+  }
+  scores = loadStrings("scores.txt");
+  state = State.END;
 }

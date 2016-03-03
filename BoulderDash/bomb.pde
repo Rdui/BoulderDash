@@ -2,7 +2,8 @@ class Bomb {
   Tile tile;
   int delay;
   PImage bombIcon;
-  PImage explosion;
+  PImage exp_vert;
+  PImage exp_hori;
   int bomb_type;
   
   int explosion_radius;
@@ -19,6 +20,8 @@ class Bomb {
       explosion_radius = 2;
       explosion_shape = 0;
       bombIcon = bomb_1_img;
+      exp_vert = exp_vert_img;
+      exp_hori = exp_hori_img;
       bomb_timer = 50;
     }
   }
@@ -34,7 +37,6 @@ class Bomb {
     println("pommi piirretty");
     println(bomb_type);
     if(bomb_type == 1){
-      
       image(bombIcon, pos_x*32, pos_y*32+8);
     }
     this.bomb_timer -= 1;
@@ -52,15 +54,19 @@ class Bomb {
       for(int i = 1; i <= explosion_radius; i++){
         if(pos_x + i <= 39){
           map[pos_x+i][pos_y].destroy();
+          image(exp_vert, (pos_x+i)*32, pos_y*32+8);
         }
         if(pos_x - i >= 0){
           map[pos_x-i][pos_y].destroy();
+          image(exp_vert, (pos_x-i)*32, pos_y*32+8);
         }
         if(pos_y + i <= 21){
           map[pos_x][pos_y+i].destroy();
+          image(exp_hori, pos_x*32, (pos_y+i)*32+8);
         }
         if(pos_y - i >= 0){
           map[pos_x][pos_y-i].destroy();
+          image(exp_hori, pos_x*32, (pos_y-i)*32+8);
         }
       }
     }

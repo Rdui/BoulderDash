@@ -19,6 +19,8 @@ Player player = new Player(0, 0);
 Inventory inventory = new Inventory();
 PImage img;
 PImage bomb_1_img;
+PImage exp_hori_img;
+PImage exp_vert_img;
 PImage backgroundimage;
 String[] scores;
 
@@ -29,6 +31,8 @@ void setup() {
   mainMenuSetup();
   img = loadImage("graphics/tempModel.png");
   bomb_1_img = loadImage("graphics/bomb_1.png");
+  exp_hori_img = loadImage("graphics/exp_horizontal.png");
+  exp_vert_img = loadImage("graphics/exp_vertical.png");
   player.setCoordinates(startX*32, startY*32+8);
 }
 

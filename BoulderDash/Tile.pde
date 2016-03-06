@@ -29,6 +29,7 @@ class Tile {
    tile_hp = 2;
   }
   
+  
   // sets an active bomb in the tile
   void set_bomb(Bomb bomb){
     bomb_ = bomb;

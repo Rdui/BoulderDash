@@ -50,6 +50,30 @@ void printStory() {
   text("Press any key to continue", width/2, height/3 + 150);
 }
 
+void printScores(){ /// prints the scores.txt file into the highscore view
+  background(0);
+  fill(0, 102, 153);
+  textAlign(CENTER);
+  String[] lines =loadStrings("scores.txt");
+  textSize(32);
+  text("HIGHSCORE", width/2,40);
+  textAlign(LEFT);
+  text("Player", 465,100);
+  text("Points", 730,100);
+  textSize(14);
+  int gum = 1;
+  for (String x: lines){
+    String[] info = x.split(" ");
+    text(gum+ ". "+ info[1], 465, 130+(gum*20));
+    text(info[0], 730, 130+(gum*20));
+    gum +=1;
+    if (gum == 16){
+      println("dsa");
+      break;
+    }
+  }
+}
+
 void storyEnd() {
   state = State.GAME;
 }
@@ -99,6 +123,7 @@ void draw() {
     // players name: String playerName
     break;
   case State.END:
+    printScores();
     break;
   }
 }

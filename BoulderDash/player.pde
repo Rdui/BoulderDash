@@ -136,7 +136,6 @@ class Player {
     if (map[gridX][gridY].pickup != null) {
       player.score += map[gridX][gridY].pickup.score;
       map[gridX][gridY].pickup = null;
-      println(gridX, gridY);
     }
   }
 }

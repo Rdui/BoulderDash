@@ -98,7 +98,7 @@ void draw() {
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
-    inventory.rotation();
+    player.inventory();
     
     for (int i = 0; i < creeps.size(); i++)
     {

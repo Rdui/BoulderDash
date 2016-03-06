@@ -5,8 +5,8 @@ class Player {
   float x = 0;
   float y = 0;
   float speed = 32;
-
-
+  int selectedItem = -1;
+  int MAXITEMS = 10;
 
 
   Player(int _x, int _y) {
@@ -137,6 +137,25 @@ class Player {
       player.score += map[gridX][gridY].pickup.score;
       map[gridX][gridY].pickup = null;
       println(gridX, gridY);
+    }
+  }
+  
+  void inventory() {
+    if (rotateleft == 1 && changedItem == 0) {
+      changedItem = 1;
+      --selectedItem;
+      if (selectedItem < 0) {
+        selectedItem = -1;
+      }
+      println(selectedItem);
+    }
+    if (rotateright == 1 && changedItem == 0) {
+      changedItem = 1;
+      ++selectedItem;
+      if (selectedItem > MAXITEMS) {
+        selectedItem = MAXITEMS;
+      }
+      println(selectedItem);
     }
   }
 }

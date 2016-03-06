@@ -4,6 +4,7 @@ float left = 0;
 float right = 0;
 float rotateleft = 0;
 float rotateright = 0;
+int changedItem = 0;
 
 void movementKeyPressed() {
   if (key == 'w' || key == 'W') {
@@ -32,8 +33,10 @@ void movementKeyReleased() {
     right = 0;
   } else if (key == 'q' || key == 'Q') {
     rotateleft = 0;
+    changedItem = 0;
   } else if (key == 'e' || key == 'E') {
     rotateright = 0;
+    changedItem = 0;
   }
 }
 

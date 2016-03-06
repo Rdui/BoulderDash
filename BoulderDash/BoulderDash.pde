@@ -135,8 +135,8 @@ void draw() {
     break;
   case State.END:
     printScores();
-    startButton = new GButton(this, 250, 600, 300, 50, "New Game!");
-    quitButton = new GButton(this, 250, 600, 300, 50, "New Game!");
+    startButton = new GButton(this, 300, 600, 300, 50, "New Game!");
+    quitButton = new GButton(this, 690, 600, 300, 50, "Exit to desktop");
     break;
   }
 }

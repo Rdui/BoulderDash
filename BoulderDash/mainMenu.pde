@@ -3,6 +3,7 @@
 
 String playerName = "";
 GButton startButton;
+GButton quitButton;
 GEvent buttonEvent;
 
 void mainMenuSetup(){

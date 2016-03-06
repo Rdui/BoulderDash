@@ -1,4 +1,4 @@
-import java.util.HashMap;  //<>//
+import java.util.HashMap;  //<>// //<>//
 import java.util.List;
 
 Tile[][] map;
@@ -37,7 +37,10 @@ void loadMap(String mapPath, String charPath, String pickupPath) {
         tile_ = 0;
       } else if (row[x].equals("!")) {
         tile_ = 0;
-        creeps.add(new Creep(x,y,loadImage("graphics/creep.png")));
+        creeps.add(new Creep(x,y,loadImage("graphics/creep.png"), false));
+      }else if (row[x].equals("?")) {
+        tile_ = 0;
+        creeps.add(new Creep(x,y,loadImage("graphics/worm.png"), true));
       }
       map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false, tile_);
       if (row[x].equals("@")) {

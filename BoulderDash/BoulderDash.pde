@@ -16,7 +16,7 @@ byte state = State.WAIT_USER_INPUT;
 color backgroundColor = color(22);
 
 Player player = new Player(0, 0);
-Inventory inventory = new Inventory();
+
 PImage img;
 PImage bomb_1_img;
 PImage exp_hori_img;
@@ -94,11 +94,12 @@ void draw() {
     drawBackground();
     drawMap();
     drawScore();
+    drawItem();
 
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
-    inventory.rotation();
+    player.inventory();
     
     for (int i = 0; i < creeps.size(); i++)
     {
@@ -134,6 +135,14 @@ void drawScore() {
   textAlign(CENTER);
   text("Score:"+player.score, width/2, 32);
 }
+
+void drawItem() {
+  fill(255, 255, 255);
+  textSize(25);
+  textAlign(LEFT);
+  text("Items: "+player.printItem(), 0, 32);
+}
+
 // switch case structure to monitor state of the game
 void keyTyped() {
   switch(state) {

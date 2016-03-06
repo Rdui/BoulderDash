@@ -5,8 +5,10 @@ class Player {
   float x = 0;
   float y = 0;
   float speed = 32;
-
-
+  int selectedItem = -1;
+  int MAXITEMS = 1;
+  int lastSlot = 0;
+  Pickup[] items = new Pickup[MAXITEMS];
 
 
   Player(int _x, int _y) {
@@ -135,7 +137,44 @@ class Player {
     int gridY = this.getGridPosY();
     if (map[gridX][gridY].pickup != null) {
       player.score += map[gridX][gridY].pickup.score;
+      if (lastSlot < MAXITEMS) {
+        player.items[lastSlot]= map[gridX][gridY].pickup;
+        lastSlot++;
+      }
+      // else { //inventory is full }
       map[gridX][gridY].pickup = null;
+    }
+  }
+  
+  void inventory() {
+    if (rotateleft == 1 && changedItem == 0) {
+      changedItem = 1;
+      --selectedItem;
+      if (selectedItem < 0) {
+        selectedItem = -1;
+      }
+      println(selectedItem);
+    }
+    if (rotateright == 1 && changedItem == 0) {
+      changedItem = 1;
+      ++selectedItem;
+      if (selectedItem >= MAXITEMS) {
+        selectedItem = MAXITEMS-1;
+      }
+      println(selectedItem);
+    }
+  }
+  
+  String printItem() {
+    if (selectedItem == -1 || lastSlot == 0) {
+      return "None";
+    }
+    else if (selectedItem < lastSlot) {
+      return items[selectedItem].name;
+    }
+    else {
+      selectedItem = lastSlot-1;
+      return items[selectedItem].name;
     }
   }
 }

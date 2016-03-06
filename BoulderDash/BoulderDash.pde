@@ -21,6 +21,7 @@ PImage img;
 PImage bomb_1_img;
 PImage exp_hori_img;
 PImage exp_vert_img;
+PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
 
@@ -33,6 +34,7 @@ void setup() {
   bomb_1_img = loadImage("graphics/bomb_1.png");
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
+  exp_middle_img = loadImage("graphics/exp_middle.png");
   player.setCoordinates(startX*32, startY*32+8);
 }
 
@@ -115,6 +117,14 @@ void draw() {
          bombs.remove(bombs.get(i)); 
       }
     }
+    
+    for(int i = 0; i < flames.size(); ++i){
+      flames.get(i).draw();
+      if(flames.get(i).flame_time == 0){
+         flames.remove(flames.get(i)); 
+      }
+    }
+    
 
     if (abs(second()-lastMove) > 1)
       lastMove = second();
@@ -125,6 +135,8 @@ void draw() {
     break;
   case State.END:
     printScores();
+    startButton = new GButton(this, 250, 600, 300, 50, "New Game!");
+    quitButton = new GButton(this, 250, 600, 300, 50, "New Game!");
     break;
   }
 }

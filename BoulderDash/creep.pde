@@ -1,3 +1,5 @@
+import java.security.SecureRandom;
+
 int lastMove = 0;
 
 class Creep {
@@ -14,16 +16,21 @@ class Creep {
 
   void moveRandom() {
     List<Position> positions = new ArrayList<Position>();
-    if (x+1 < map.length && (map[x+1][y].empty || (canMine && map[x+1][y].tile_hp==10)))
+    if (x+1 < map.length && (map[x+1][y].empty || (canMine && map[x+1][y].tile_hp==10))) {
       positions.add(new Position(x+1, y));
-    if (y+1 < map[0].length && (map[x][y+1].empty || (canMine && map[x][y+1].tile_hp==10)))
+    }
+    if (y+1 < map[0].length && (map[x][y+1].empty || (canMine && map[x][y+1].tile_hp==10))) {
       positions.add(new Position(x, y+1));
-    if (x-1 >= 0 && (map[x-1][y].empty ||(canMine && map[x-1][y].tile_hp==10)))
+    }
+    if (x-1 >= 0 && (map[x-1][y].empty ||(canMine && map[x-1][y].tile_hp==10))) {
       positions.add(new Position(x-1, y));
-    if (y-1 >= map[0].length-1 && (map[x][y-1].empty || (canMine && map[x][y-1].tile_hp==10)))
+    }
+    if (y-1 >= 0 && (map[x][y-1].empty || (canMine && map[x][y-1].tile_hp==10))) {
       positions.add(new Position(x, y-1));
+    }
     if (positions.size() > 0) {
-      int i = (int)random(-1, positions.size());
+      SecureRandom srandom = new SecureRandom();
+      int i = srandom.nextInt(positions.size());
       x = positions.get(i).x;
       y = positions.get(i).y;
       map[x][y].empty = true;

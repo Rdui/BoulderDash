@@ -103,10 +103,12 @@ void draw() {
     
     for (int i = 0; i < creeps.size(); i++)
     {
-      if (abs(second()-lastMove) > 1)
+      if (abs(second()-lastMove) > 0.5)
         creeps.get(i).moveRandom();
       creeps.get(i).draw();
     }
+    if (abs(second()-lastMove) > 0.5)
+      lastMove = second();
 
     
     for(int i = 0; i < bombs.size(); ++i){
@@ -115,9 +117,6 @@ void draw() {
          bombs.remove(bombs.get(i)); 
       }
     }
-
-    if (abs(second()-lastMove) > 1)
-      lastMove = second();
 
 
     // Game starting function should be called here

@@ -2,6 +2,7 @@ class Bomb {
   Tile tile;
   int delay;
   PImage bombIcon;
+  PImage bombIcon2;
   
   int bomb_type;
   
@@ -22,6 +23,16 @@ class Bomb {
       
       bomb_timer = 50;
     }
+    else if(bombType == 2) {
+      bomb_type = bombType; 
+      explosion_radius = 4;
+      explosion_shape = 0;
+      bombIcon = bomb_2_img;
+      
+      bomb_timer = 50;
+    }
+    
+   
   }
   
   
@@ -34,9 +45,9 @@ class Bomb {
   void draw(){
     println("pommi piirretty");
     println(bomb_type);
-    if(bomb_type == 1){
-      image(bombIcon, pos_x*32, pos_y*32+8);
-    }
+
+    image(bombIcon, pos_x*32, pos_y*32+8);
+    
     this.bomb_timer -= 1;
     
     if(this.bomb_timer == 0){

@@ -1,6 +1,8 @@
 300 d
 300 sad
 200 dsad
+200 dd
+200 dd
 100 asd
 100 dsad
 100 sdsa
@@ -29,3 +31,11 @@
 0 dsad
 0 asda
 0 dsada
+0 asdsad
+0 asdsad
+0 dsada
+0 dasd
+0 dasd
+0 dsad
+0 dsad
+0 dsad

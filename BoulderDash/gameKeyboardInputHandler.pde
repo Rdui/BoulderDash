@@ -44,10 +44,14 @@ void bombKeyPressed(){
   
   if(key == ' '){
     println("space");
-    Bomb bomb = new Bomb(1);
-    player.drop_bomb(bomb);
-    
-    
+    if (player.selectedItem == -1){
+      Bomb bomb = new Bomb(1);
+      player.drop_bomb(bomb);
+    }
+    else if(player.selectedItem == 0){
+      Bomb bomb = new Bomb(2);
+      player.drop_bomb(bomb);
+    }
   }
   
 }

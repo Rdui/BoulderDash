@@ -4,6 +4,7 @@ import java.util.List;
 Tile[][] map;
 List<Creep> creeps = new ArrayList<Creep>();
 List<Bomb> bombs = new ArrayList<Bomb>();
+List<Flame> flames = new ArrayList<Flame>();
 int startX; // player start point location
 int startY;
 int tile_;

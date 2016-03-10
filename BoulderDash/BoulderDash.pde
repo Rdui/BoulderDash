@@ -19,8 +19,10 @@ Player player = new Player(0, 0);
 
 PImage img;
 PImage bomb_1_img;
+PImage bomb_2_img;
 PImage exp_hori_img;
 PImage exp_vert_img;
+PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
 
@@ -29,10 +31,15 @@ void setup() {
   size(1280, 720);
   loadMap("map.txt", "chars.txt", "pickups.txt");
   mainMenuSetup();
+  
   img = loadImage("graphics/tempModel.png");
   bomb_1_img = loadImage("graphics/bomb_1.png");
+  bomb_2_img = loadImage("graphics/bomb_2.png");
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
+  exp_middle_img = loadImage("graphics/exp_middle.png");
+  
+  
   player.setCoordinates(startX*32, startY*32+8);
 }
 
@@ -117,6 +124,14 @@ void draw() {
          bombs.remove(bombs.get(i)); 
       }
     }
+    
+    for(int i = 0; i < flames.size(); ++i){
+      flames.get(i).draw();
+      if(flames.get(i).flame_time == 0){
+         flames.remove(flames.get(i)); 
+      }
+    }
+    
 
 
     // Game starting function should be called here
@@ -124,6 +139,8 @@ void draw() {
     break;
   case State.END:
     printScores();
+    startButton = new GButton(this, 300, 600, 300, 50, "New Game!");
+    quitButton = new GButton(this, 690, 600, 300, 50, "Exit to desktop");
     break;
   }
 }

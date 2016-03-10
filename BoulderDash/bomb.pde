@@ -2,8 +2,8 @@ class Bomb {
   Tile tile;
   int delay;
   PImage bombIcon;
-  PImage exp_vert;
-  PImage exp_hori;
+  PImage bombIcon2;
+  
   int bomb_type;
   
   int explosion_radius;
@@ -20,10 +20,19 @@ class Bomb {
       explosion_radius = 2;
       explosion_shape = 0;
       bombIcon = bomb_1_img;
-      exp_vert = exp_vert_img;
-      exp_hori = exp_hori_img;
+      
       bomb_timer = 50;
     }
+    else if(bombType == 2) {
+      bomb_type = bombType; 
+      explosion_radius = 4;
+      explosion_shape = 0;
+      bombIcon = bomb_2_img;
+      
+      bomb_timer = 50;
+    }
+    
+   
   }
   
   
@@ -36,22 +45,25 @@ class Bomb {
   void draw(){
     println("pommi piirretty");
     println(bomb_type);
-    if(bomb_type == 1){
-      image(bombIcon, pos_x*32, pos_y*32+8);
-    }
+
+    image(bombIcon, pos_x*32, pos_y*32+8);
+    
     this.bomb_timer -= 1;
     
     if(this.bomb_timer == 0){
       this.explode();
     }
   }
-    
+
 
   
   void explode() { // clears breakable things from the exploding bombs blast radius
     
     if(explosion_shape == 0){
       kill(pos_x, pos_y);
+      Flame middle = new Flame(0);
+      middle.makeFlame(pos_x, pos_y);
+      
       for(int i = 1; i <= explosion_radius; i++){
         if(pos_x + i <= 39){
           if (map[pos_x+i][pos_y].tile_type == 10){
@@ -59,7 +71,9 @@ class Bomb {
           }
           map[pos_x+i][pos_y].destroy(); // destroys the tile in that position, if it can be destroyed
           kill(pos_x+i, pos_y); // checks if the player or a creep is in that position and kills it
-          image(exp_vert, (pos_x+i)*32, pos_y*32+8);
+          Flame flame = new Flame(1);
+          flame.makeFlame(pos_x+i, pos_y);
+          //image(exp_vert, (pos_x+i)*32, pos_y*32+8);
         }
       }
       for(int i = 1; i <= explosion_radius; i++){
@@ -69,7 +83,9 @@ class Bomb {
           }
           map[pos_x-i][pos_y].destroy();
           kill(pos_x-i, pos_y);
-          image(exp_vert, (pos_x-i)*32, pos_y*32+8);
+          Flame flame = new Flame(1);
+          flame.makeFlame(pos_x-i, pos_y);
+          //image(exp_vert, (pos_x-i)*32, pos_y*32+8);
         }
       }
       for(int i = 1; i <= explosion_radius; i++){
@@ -79,7 +95,9 @@ class Bomb {
           }
           map[pos_x][pos_y+i].destroy();
           kill(pos_x, pos_y+i);
-          image(exp_hori, pos_x*32, (pos_y+i)*32+8);
+          Flame flame = new Flame(2);
+          flame.makeFlame(pos_x, pos_y+i);
+          //image(exp_hori, pos_x*32, (pos_y+i)*32+8);
         }
       }
       for(int i = 1; i <= explosion_radius; i++){
@@ -89,7 +107,9 @@ class Bomb {
           }
           map[pos_x][pos_y-i].destroy();
           kill(pos_x, pos_y-i);
-          image(exp_hori, pos_x*32, (pos_y-i)*32+8);
+          Flame flame = new Flame(2);
+          flame.makeFlame(pos_x, pos_y-i);
+          //image(exp_hori, pos_x*32, (pos_y-i)*32+8);
         }
       }  
     }

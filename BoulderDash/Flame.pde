@@ -55,4 +55,6 @@ class Flame {
 
     this.flame_time -= 1;
   }
+  
+
 }

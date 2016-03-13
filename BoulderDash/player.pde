@@ -1,5 +1,3 @@
-
-
 class Player {
   int score = 0;
   float x = 0;

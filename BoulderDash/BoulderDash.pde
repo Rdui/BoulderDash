@@ -26,6 +26,8 @@ PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
 
+
+
 void setup() {
   background(backgroundColor);
   size(1280, 720);
@@ -75,7 +77,6 @@ void printScores(){ /// prints the scores.txt file into the highscore view
     text(info[0], 730, 130+(gum*20));
     gum +=1;
     if (gum == 16){
-      println("dsa");
       break;
     }
   }
@@ -139,11 +140,11 @@ void draw() {
     break;
   case State.END:
     printScores();
-    startButton = new GButton(this, 300, 600, 300, 50, "New Game!");
-    quitButton = new GButton(this, 690, 600, 300, 50, "Exit to desktop");
-    break;
+    
+    
   }
 }
+
 
 void drawScore() {
   fill(255, 255, 255);
@@ -210,6 +211,23 @@ void mousePressed() {
   case State.GAME:
 
     break;
+    
+  case State.END:
+    if (mousePressed){
+      if(mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650){
+        println("new game");
+        state = State.WAIT_USER_INPUT;
+        
+        deleteHighscoreButtons();
+        deleteHighscoreButtons();
+        
+        setup();
+      }
+      if(mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650){
+        println("exit game");
+        exit();
+      }
+    }
   }
 }
 
@@ -241,5 +259,10 @@ void endGame() {
     output.close();
   }
   scores = loadStrings("scores.txt");
+
+
   state = State.END;
+  
+  
+  highscoreSetup();
 }

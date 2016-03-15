@@ -26,6 +26,9 @@ PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
 
+GButton newGameButton;
+GButton exitButton;
+
 
 
 void setup() {
@@ -218,10 +221,16 @@ void mousePressed() {
         println("new game");
         state = State.WAIT_USER_INPUT;
         
-        deleteHighscoreButtons();
-        deleteHighscoreButtons();
+        flames.clear();
+        bombs.clear();
+        creeps.clear();
+        
+        resetKeyboardInputs();
+        
         
         setup();
+        
+        deleteHighscoreButtons();
       }
       if(mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650){
         println("exit game");
@@ -232,6 +241,7 @@ void mousePressed() {
 }
 
 void endGame() {
+  state = State.END;
   if (loadStrings("scores.txt")==null) {
     PrintWriter output;
     output = createWriter("scores.txt");

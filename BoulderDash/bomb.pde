@@ -127,6 +127,7 @@ class Bomb {
   
   void kill(int x, int y){
     if(player.getGridPosX() == x && player.getGridPosY() == y){
+      player.setCoordinates(255, 255);
       endGame();
     }
     // tähän voisi laittaa tarkastelun siitä osuuko pommin räjähdys creeppiiiinn

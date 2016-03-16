@@ -40,6 +40,13 @@ void movementKeyReleased() {
   }
 }
 
+void resetKeyboardInputs(){
+  up = 0;
+  down = 0;
+  left = 0;
+  right = 0;
+}
+
 void bombKeyPressed(){
   
   if(key == ' '){

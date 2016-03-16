@@ -7,7 +7,7 @@ class Player {
   int MAXITEMS = 1;
   int lastSlot = 0;
   int keys = 0;
-  Pickup[] items = new Pickup[MAXITEMS];
+  List<Item> inventory = new ArrayList<Item>();
 
 
   Player(int _x, int _y) {
@@ -44,8 +44,8 @@ class Player {
 
     if (up == 1 && gridY > 0) {
       if (this.is_mineable(gridX, gridY-1) == true) {
-        if (map[gridX][gridY-1].tile_hp > 0) {
-          map[gridX][gridY-1].tile_hp -= 1;
+        if (map[gridX][gridY-1].tileHp > 0) {
+          map[gridX][gridY-1].tileHp -= 1;
           return;
         }
         map[gridX][gridY-1].destroy();
@@ -57,12 +57,12 @@ class Player {
         this.drawPlayer();
         checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
-        checkPickup();
+        checkItem();
       }
     } else if (down == 1 && gridY < 21) {
       if ( this.is_mineable(gridX, gridY+1) == true) {
-        if (map[gridX][gridY+1].tile_hp > 0) {
-          map[gridX][gridY+1].tile_hp -= 1;
+        if (map[gridX][gridY+1].tileHp > 0) {
+          map[gridX][gridY+1].tileHp -= 1;
           return;
         }
         map[gridX][gridY+1].destroy();
@@ -74,12 +74,12 @@ class Player {
         this.drawPlayer();
         checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
-        checkPickup();
+        checkItem();
       }
     } else if (left == 1 && gridX > 0) {
       if (this.is_mineable(gridX-1, gridY) == true) {
-        if (map[gridX-1][gridY].tile_hp > 0) {
-          map[gridX-1][gridY].tile_hp -= 1;
+        if (map[gridX-1][gridY].tileHp > 0) {
+          map[gridX-1][gridY].tileHp -= 1;
           return;
         }
         map[gridX-1][gridY].destroy();
@@ -91,14 +91,14 @@ class Player {
         this.drawPlayer();
         checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
-        checkPickup();
+        checkItem();
       } else {
         println("seinä");
       }
     } else if (right == 1 && gridX < 39) {
       if (this.is_mineable(gridX+1, gridY) == true) {
-        if (map[gridX+1][gridY].tile_hp > 0) {
-          map[gridX+1][gridY].tile_hp -= 1;
+        if (map[gridX+1][gridY].tileHp > 0) {
+          map[gridX+1][gridY].tileHp -= 1;
           return;
         }
         map[gridX+1][gridY].destroy();
@@ -110,70 +110,30 @@ class Player {
         this.drawPlayer();
         checkCreep(getGridPosX(), getGridPosY());
         //delay(40);
-        checkPickup();
+        checkItem();
       }
     }
   }
-  
-  void drop_bomb(Bomb bomb){
-    bombs.add(bomb);
-    bomb.setPosition(this.getGridPosX(), this.getGridPosY());
-    
-  }
 
+  // can the tile be mined
   boolean is_mineable(int gridX, int gridY) {
-    println(" edessä olevan tiilen tile_type: " + map[gridX][gridY].tile_type);
-    if (map[gridX][gridY].tile_type !=10) {
+    if (map[gridX][gridY].tileHp > -1) {
       return true;
     } else {
       return false;
     }
   }
 
-  void checkPickup()
+  // does our current tile have an item
+  void checkItem()
   {
     int gridX = this.getGridPosX();
     int gridY = this.getGridPosY();
-    if (map[gridX][gridY].pickup != null) {
-      player.score += map[gridX][gridY].pickup.score;
-      if (lastSlot < MAXITEMS) {
-        player.items[lastSlot]= map[gridX][gridY].pickup;
-        lastSlot++;
-      }
-      // else { //inventory is full }
-      map[gridX][gridY].pickup = null;
-    }
-  }
-  
-  void inventory() {
-    if (rotateleft == 1 && changedItem == 0) {
-      changedItem = 1;
-      --selectedItem;
-      if (selectedItem < 0) {
-        selectedItem = -1;
-      }
-      println(selectedItem);
-    }
-    if (rotateright == 1 && changedItem == 0) {
-      changedItem = 1;
-      ++selectedItem;
-      if (selectedItem >= MAXITEMS) {
-        selectedItem = MAXITEMS-1;
-      }
-      println(selectedItem);
-    }
-  }
-  
-  String printItem() {
-    if (selectedItem == -1 || lastSlot == 0) {
-      return "None";
-    }
-    else if (selectedItem < lastSlot) {
-      return items[selectedItem].name;
-    }
-    else {
-      selectedItem = lastSlot-1;
-      return items[selectedItem].name;
+    if (map[gridX][gridY].item != null) {
+      Item item = map[gridX][gridY].item;
+      player.score += map[gridX][gridY].item.score;
+      player.inventory.add(item);
+      map[gridX][gridY].item = null;
     }
   }
 }

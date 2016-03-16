@@ -34,7 +34,7 @@ GButton exitButton;
 void setup() {
   background(backgroundColor);
   size(1280, 720);
-  loadMap("map.txt", "chars.txt", "pickups.txt");
+  loadMap("Maps/map0.txt", "chars.txt");
   mainMenuSetup();
   
   img = loadImage("graphics/tempModel.png");
@@ -43,7 +43,6 @@ void setup() {
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
-  
   
   player.setCoordinates(startX*32, startY*32+8);
 }
@@ -110,7 +109,6 @@ void draw() {
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
-    player.inventory();
     
     for (int i = 0; i < creeps.size(); i++)
     {
@@ -160,7 +158,6 @@ void drawItem() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
-  text("Items: "+player.printItem(), 0, 32);
 }
 
 // switch case structure to monitor state of the game
@@ -187,7 +184,7 @@ void keyPressed() {
     break;
   case State.GAME:
     movementKeyPressed();
-    bombKeyPressed();
+    useKeyPressed();
     break;
   }
 }

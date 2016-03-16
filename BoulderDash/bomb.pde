@@ -1,136 +1,104 @@
-class Bomb {
-  Tile tile;
-  int delay;
-  PImage bombIcon;
-  PImage bombIcon2;
-  
+class Bomb extends Item {
+  Tile tile; // reference to tile the bomb is on
+  int delay; // bomb time in s
+  PImage icon;
   int bomb_type;
-  
-  int explosion_radius;
-  int explosion_shape;
-  
-  int pos_x;
-  int pos_y;
-  
+  int radius;
+  int shape;
+  int x;
+  int y;
   int bomb_timer;
-  
-  Bomb(int bombType) {
-    if(bombType == 1) {
-      bomb_type = bombType; 
-      explosion_radius = 2;
-      explosion_shape = 0;
-      bombIcon = bomb_1_img;
-      
-      bomb_timer = 50;
-    }
-    else if(bombType == 2) {
-      bomb_type = bombType; 
-      explosion_radius = 4;
-      explosion_shape = 0;
-      bombIcon = bomb_2_img;
-      
-      bomb_timer = 50;
-    }
-    
-   
-  }
-  
-  
-  void setPosition(int x, int y){
-    pos_x = x;
-    pos_y = y;
-  }
-  
-  // draws and checks if the bomb should explode
-  void draw(){
-    println("pommi piirretty");
-    println(bomb_type);
 
-    image(bombIcon, pos_x*32, pos_y*32+8);
-    
+  Bomb(PImage icon_, int radius_, int shape_) {
+    super(icon_, 0, true);
+    icon = icon_;
+    radius = radius_;
+    shape = shape_;
+  }
+  
+  void Use(Item item){
+    Bomb bomb = (Bomb)item;
+    bombs.add(bomb);
+    bomb.setPosition(player.getGridPosX(), player.getGridPosY());
+  }
+
+
+  void setPosition(int x_, int y_) {
+    x = x_;
+    y = y_;
+  }
+
+  // draws and checks if the bomb should explode
+  void draw() {
+    image(icon, x*32, y*32+8);
     this.bomb_timer -= 1;
-    
-    if(this.bomb_timer == 0){
+    if (this.bomb_timer == 0) {
       this.explode();
     }
   }
 
 
-  
-  void explode() { // clears breakable things from the exploding bombs blast radius
-    
-    if(explosion_shape == 0){
-      kill(pos_x, pos_y);
+  // clears breakable things from the exploding bombs blast radius
+  void explode() {
+    if (shape == 0) {
+      kill(x, y);
       Flame middle = new Flame(0);
-      middle.makeFlame(pos_x, pos_y);
-      
-      for(int i = 1; i <= explosion_radius; i++){
-        if(pos_x + i <= 39){
-          if (map[pos_x+i][pos_y].tile_type == 10){
+      middle.makeFlame(x, y);
+
+      for (int i = 1; i <= radius; i++) {
+        if (x + i <= 39) {
+          if (map[x+i][y].empty == true) {
             continue;
           }
-          map[pos_x+i][pos_y].destroy(); // destroys the tile in that position, if it can be destroyed
-          kill(pos_x+i, pos_y); // checks if the player or a creep is in that position and kills it
+          map[x+i][y].destroy(); // destroys the tile in that position, if it can be destroyed
+          kill(x+i, y); // checks if the player or a creep is in that position and kills it
           Flame flame = new Flame(1);
-          flame.makeFlame(pos_x+i, pos_y);
-          //image(exp_vert, (pos_x+i)*32, pos_y*32+8);
+          flame.makeFlame(x+i, y);
+          //image(exp_vert, (x+i)*32, y*32+8);
         }
       }
-      for(int i = 1; i <= explosion_radius; i++){
-        if(pos_x - i >= 0){
-          if (map[pos_x-i][pos_y].tile_type == 10){
+      for (int i = 1; i <= radius; i++) {
+        if (x - i >= 0) {
+          if (map[x-i][y].empty) {
             continue;
           }
-          map[pos_x-i][pos_y].destroy();
-          kill(pos_x-i, pos_y);
+          map[x-i][y].destroy();
+          kill(x-i, y);
           Flame flame = new Flame(1);
-          flame.makeFlame(pos_x-i, pos_y);
-          //image(exp_vert, (pos_x-i)*32, pos_y*32+8);
+          flame.makeFlame(x-i, y);
         }
       }
-      for(int i = 1; i <= explosion_radius; i++){
-        if(pos_y + i <= 21){
-          if (map[pos_x][pos_y+1].tile_type == 10){
+      for (int i = 1; i <= radius; i++) {
+        if (y + i <= 21) {
+          if (map[x][y+1].empty) {
             continue;
           }
-          map[pos_x][pos_y+i].destroy();
-          kill(pos_x, pos_y+i);
+          map[x][y+i].destroy();
+          kill(x, y+i);
           Flame flame = new Flame(2);
-          flame.makeFlame(pos_x, pos_y+i);
-          //image(exp_hori, pos_x*32, (pos_y+i)*32+8);
+          flame.makeFlame(x, y+i);
+          //image(exp_hori, x*32, (y+i)*32+8);
         }
       }
-      for(int i = 1; i <= explosion_radius; i++){
-        if(pos_y - i >= 0){
-          if (map[pos_x][pos_y-1].tile_type == 10){
+      for (int i = 1; i <= radius; i++) {
+        if (y - i >= 0) {
+          if (map[x][y-1].empty) {
             continue;
           }
-          map[pos_x][pos_y-i].destroy();
-          kill(pos_x, pos_y-i);
+          map[x][y-i].destroy();
+          kill(x, y-i);
           Flame flame = new Flame(2);
-          flame.makeFlame(pos_x, pos_y-i);
-          //image(exp_hori, pos_x*32, (pos_y-i)*32+8);
+          flame.makeFlame(x, y-i);
+          //image(exp_hori, x*32, (y-i)*32+8);
         }
-      }  
+      }
     }
-    /*else if(explosion_shape == 1){
-      map[pos_x+1][pos_y].destroy();
-      map[pos_x][pos_y+1].destroy();
-      map[pos_x-1][pos_y].destroy();
-      map[pos_x][pos_y-1].destroy();
-      map[pos_x+2][pos_y].destroy();
-      map[pos_x][pos_y+2].destroy();
-      map[pos_x-2][pos_y].destroy();
-      map[pos_x][pos_y-2].destroy();
-    }*/
   }
-  
-  void kill(int x, int y){
-    if(player.getGridPosX() == x && player.getGridPosY() == y){
-      player.setCoordinates(255, 255);
+
+  void kill(int x, int y) {
+    if (player.getGridPosX() == x && player.getGridPosY() == y) {
       endGame();
     }
     // tähän voisi laittaa tarkastelun siitä osuuko pommin räjähdys creeppiiiinn
-    
   }
 }

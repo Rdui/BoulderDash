@@ -16,16 +16,16 @@ class Creep {
 
   void moveRandom() {
     List<Position> positions = new ArrayList<Position>();
-    if (x+1 < map.length && (map[x+1][y].empty || (canMine && map[x+1][y].tile_hp==10))) {
+    if (x+1 < map.length && (map[x+1][y].empty || (canMine && map[x+1][y].empty))) {
       positions.add(new Position(x+1, y));
     }
-    if (y+1 < map[0].length && (map[x][y+1].empty || (canMine && map[x][y+1].tile_hp==10))) {
+    if (y+1 < map[0].length && (map[x][y+1].empty || (canMine && map[x][y+1].empty))) {
       positions.add(new Position(x, y+1));
     }
-    if (x-1 >= 0 && (map[x-1][y].empty ||(canMine && map[x-1][y].tile_hp==10))) {
+    if (x-1 >= 0 && (map[x-1][y].empty ||(canMine && map[x-1][y].empty))) {
       positions.add(new Position(x-1, y));
     }
-    if (y-1 >= 0 && (map[x][y-1].empty || (canMine && map[x][y-1].tile_hp==10))) {
+    if (y-1 >= 0 && (map[x][y-1].empty || (canMine && map[x][y-1].empty))) {
       positions.add(new Position(x, y-1));
     }
     if (positions.size() > 0) {

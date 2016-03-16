@@ -269,10 +269,6 @@ void endGame() {
     output.close();
   }
   scores = loadStrings("scores.txt");
-
-
   state = State.END;
-  
-  
   highscoreSetup();
 }

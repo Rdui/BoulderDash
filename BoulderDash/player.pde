@@ -6,6 +6,7 @@ class Player {
   int selectedItem = -1;
   int MAXITEMS = 1;
   int lastSlot = 0;
+  int keys = 0;
   Pickup[] items = new Pickup[MAXITEMS];
 
 

@@ -1,39 +1,27 @@
 class Tile {
+  char c;
   PImage image; // tile graphics
   Boolean canWalk, empty; // can the tile be mined, is it a clear space
-  Pickup pickup;
-  int tile_type;
-  int tile_hp;
+  Item item; // item hidden in tile
+  int tileHp;
+  Bomb bomb;
   
-  Bomb bomb_;
-
-  Tile(PImage i, Boolean cw, Boolean e, int tile) {
+  Tile(PImage i, Boolean cw, Boolean e, int hp) {
     image = i;
     canWalk = cw;
     empty = e;
-    tile_type = tile;
-    if(tile == 1){
-     tile_hp = 10; 
-    }
-    else if(tile == 2){
-     tile_hp = 30; 
-    }
-    else if(tile == 0){
-      tile_hp = 2;
-    }
+    tileHp = hp;
   }
+  
   //destroys this tile
   void destroy(){
-   tile_type = 0;
    empty = true;
-   tile_hp = 2;
+   tileHp = 2;
   }
-  
   
   // sets an active bomb in the tile
-  void set_bomb(Bomb bomb){
-    bomb_ = bomb;
-    bomb_.setPosition(player.getGridPosX(), player.getGridPosY());
+  void set_bomb(Bomb bomb_){
+    bomb = bomb_;
+    bomb.setPosition(player.getGridPosX(), player.getGridPosY());
   }
-  
 }

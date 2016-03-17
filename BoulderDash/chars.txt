@@ -1,5 +1,8 @@
-g basic_mineable.png
-s hard_mineable.png
-w not_mineable.png
-#
-@
+// tiles: char, icon file name, mining duration (-1 unminable)
+// bombs: 
+ground g basic_mineable.png 10
+tile s hard_mineable.png 30
+tile w not_mineable.png -1
+bomb b bomb1.png 2 0
+bom h bomb2.png 4 0
+empty #

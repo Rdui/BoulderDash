@@ -9,18 +9,30 @@ int startX; // player start point location
 int startY;
 int tile_;
 PImage bgTile;
+Tile groundTile;
 
-void loadMap(String mapPath, String charPath, String pickupPath) {
+void loadMap(String mapPath, String charPath) {
   bgTile = loadImage("graphics/bg.png");
-  HashMap<String, PImage> tiles = new HashMap<String, PImage>();
+  HashMap<String, Tile> tiles = new HashMap<String, Tile>();
 
   String[] charLines = loadStrings(charPath); // map data lines as a string
   for (int i = 0; i < charLines.length; i++) {
     String[] split = split(charLines[i], ' '); 
-    if (split.length == 2) 
-      tiles.put(split[0], loadImage("graphics/"+split[1]));
-    else
-      tiles.put(split[0], null);
+    switch(split[0]) {
+    case "tile":
+      tiles.put(split[1], new Tile(loadImage("graphics/"+split[2]), false, false, int(split[3])));
+      break;
+    case "empty":
+      tiles.put(split[1], new Tile(null, true, true, 2));
+      break;
+    case "ground":
+      tiles.put(split[1], new Tile(loadImage("graphics/"+split[2]), true, true, int(split[3])));
+    case "bomb":
+      Tile tile = groundTile;
+      tile.item =  new Bomb(loadImage(split[2]), int(split[3]), int(split[4])); 
+      tiles.put(split[1], tile);
+      break;
+    }
   }
 
   String[] mapLines = loadStrings(mapPath);
@@ -38,30 +50,16 @@ void loadMap(String mapPath, String charPath, String pickupPath) {
         tile_ = 0;
       } else if (row[x].equals("!")) {
         tile_ = 0;
-        creeps.add(new Creep(x,y,loadImage("graphics/creep.png"), false));
-      }else if (row[x].equals("?")) {
+        creeps.add(new Creep(x, y, loadImage("graphics/creep.png"), false));
+      } else if (row[x].equals("?")) {
         tile_ = 0;
-        creeps.add(new Creep(x,y,loadImage("graphics/worm.png"), true));
+        creeps.add(new Creep(x, y, loadImage("graphics/worm.png"), true));
       }
-      map[x][y] = new Tile(tiles.get(row[x]), true, tiles.get(row[x]) == null ? true : false, tile_);
+      map[x][y] = tiles.get(row[x]);
       if (row[x].equals("@")) {
         startX = x;
         startY = y;
       }
-    }
-  }
-
-  String[] pickupLines = loadStrings(pickupPath); // pickup data lines as a string
-  for (int i = 0; i < pickupLines.length; i++) {
-    String[] row = split(pickupLines[i], ' ');
-    Pickup pickup = new Pickup(loadImage("graphics/"+row[0]), int(row[1]));
-    int j = 2;
-    while (true) {
-      map[j][j+1].pickup = pickup;
-      if (j+2 < row.length)
-        j += 2;
-      else
-        break;
     }
   }
 }
@@ -72,8 +70,6 @@ void drawMap() {
       Tile tile = map[x][y];
       if (!tile.empty)
         image(map[x][y].image, x*32, y*32+8);
-      if (map[x][y].pickup != null)
-        image(map[x][y].pickup.icon, x*32, y*32+8);
     }
   }
 }

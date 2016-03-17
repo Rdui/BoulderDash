@@ -26,13 +26,16 @@ PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
 
+GButton newGameButton;
+GButton exitButton;
+
 
 
 void setup() {
   frameRate(60);
   background(backgroundColor);
   size(1280, 720);
-  loadMap("map.txt", "chars.txt", "pickups.txt");
+  loadMap("Maps/map0.txt", "chars.txt");
   mainMenuSetup();
   
   img = loadImage("graphics/tempModel.png");
@@ -41,7 +44,6 @@ void setup() {
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
-  
   
   player.setCoordinates(startX*32, startY*32+8);
 }
@@ -108,7 +110,6 @@ void draw() {
     //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
-    player.inventory();
     
     for (int i = 0; i < creeps.size(); i++)
     {
@@ -158,7 +159,6 @@ void drawItem() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
-  text("Items: "+player.printItem(), 0, 32);
 }
 
 // switch case structure to monitor state of the game
@@ -185,7 +185,7 @@ void keyPressed() {
     break;
   case State.GAME:
     movementKeyPressed();
-    bombKeyPressed();
+    useKeyPressed();
     break;
   }
 }
@@ -219,10 +219,16 @@ void mousePressed() {
         println("new game");
         state = State.WAIT_USER_INPUT;
         
-        deleteHighscoreButtons();
-        deleteHighscoreButtons();
+        flames.clear();
+        bombs.clear();
+        creeps.clear();
+        
+        resetKeyboardInputs();
+        
         
         setup();
+        
+        deleteHighscoreButtons();
       }
       if(mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650){
         println("exit game");
@@ -233,6 +239,7 @@ void mousePressed() {
 }
 
 void endGame() {
+  state = State.END;
   if (loadStrings("scores.txt")==null) {
     PrintWriter output;
     output = createWriter("scores.txt");
@@ -260,10 +267,6 @@ void endGame() {
     output.close();
   }
   scores = loadStrings("scores.txt");
-
-
   state = State.END;
-  
-  
   highscoreSetup();
 }

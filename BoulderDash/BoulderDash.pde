@@ -29,6 +29,7 @@ String[] scores;
 
 
 void setup() {
+  frameRate(60);
   background(backgroundColor);
   size(1280, 720);
   loadMap("map.txt", "chars.txt", "pickups.txt");

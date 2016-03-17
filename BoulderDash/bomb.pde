@@ -1,25 +1,32 @@
 class Bomb extends Item {
   Tile tile; // reference to tile the bomb is on
   int delay; // bomb time in s
-  PImage icon;
   int bomb_type;
   int radius;
   int shape;
   int x;
   int y;
-  int bomb_timer;
+  int bombTimer;
 
-  Bomb(PImage icon_, int radius_, int shape_) {
-    super(icon_, 0, true);
-    icon = icon_;
+  Bomb(PImage icon_, int radius_, int shape_, int delay_, String name) {
+    super(icon_, 0, true, name);
     radius = radius_;
     shape = shape_;
+    delay = delay_;
   }
-  
-  void Use(Item item){
-    Bomb bomb = (Bomb)item;
+
+  Bomb(Bomb another) {
+    super(another.icon, another.score, true, another.itemName);
+    radius = another.radius;
+    shape = another.shape;
+    delay = another.delay;
+  }
+
+  void Use(Item item) {
+    Bomb bomb = new Bomb((Bomb)item);
     bombs.add(bomb);
     bomb.setPosition(player.getGridPosX(), player.getGridPosY());
+    bomb.bombTimer = millis()+delay;
   }
 
 
@@ -31,10 +38,6 @@ class Bomb extends Item {
   // draws and checks if the bomb should explode
   void draw() {
     image(icon, x*32, y*32+8);
-    this.bomb_timer -= 1;
-    if (this.bomb_timer == 0) {
-      this.explode();
-    }
   }
 
 

@@ -35,7 +35,7 @@ void loadMap(String mapPath, String charPath) {
       break;
     case "bomb":
       tile = groundTile;
-      tile.item =  new Bomb(loadImage("graphics/"+split[2]), int(split[3]), int(split[4])); 
+      tile.item =  new Bomb(loadImage("graphics/"+split[2]), int(split[3]), int(split[4]), int(split[5]), split[6]+" "+split[7]); 
       tiles.put(split[1], tile);
       break;
     }
@@ -46,16 +46,16 @@ void loadMap(String mapPath, String charPath) {
     String[] row = split(mapLines[y], ' ');
     for (int x = 0; x < row.length; x++) {
       if (row[x].equals("!")) {
-        map[x][y] = new Tile(groundTile);
+        map[x][y] = new Tile(emptyTile);
         creeps.add(new Creep(x, y, loadImage("graphics/creep.png"), false));
       } else if (row[x].equals("?"))
       {
-        map[x][y] = new Tile(groundTile);
+        map[x][y] = new Tile(emptyTile);
         creeps.add(new Creep(x, y, loadImage("graphics/worm.png"), true));
       } else if (row[x].equals("@")) {
         startX = x;
         startY = y;
-        map[x][y] = new Tile(groundTile);
+        map[x][y] = new Tile(emptyTile);
       } else {
         map[x][y] = new Tile(tiles.get(row[x]));
       }

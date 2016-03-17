@@ -36,8 +36,6 @@ class Player {
 
   void drawPlayer() {
     image(icon, x, y);
-    //println(this.getGridPosX() + " " + this.getGridPosY());
-    //println(this.x + " " + this.y);
   }
 
   void move() {

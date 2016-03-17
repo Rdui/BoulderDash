@@ -42,6 +42,8 @@ void setup() {
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
   player.setCoordinates(startX*32, startY*32+8);
+  player.inventory.add(new Bomb(loadImage("graphics/smallbomb.png"),2,0,2, "Bomb"));
+  player.selectedItem = 0;
 }
 
 void printStory() {
@@ -57,34 +59,6 @@ void printStory() {
   textSize(20);
   text("Press any key to continue", width/2, height/3 + 150);
 }
-
-void printScores() { /// prints the scores.txt file into the highscore view
-  background(0);
-  fill(0, 102, 153);
-  textAlign(CENTER);
-  String[] lines =loadStrings("scores.txt");
-  textSize(32);
-  text("HIGHSCORE", width/2, 40);
-  textAlign(LEFT);
-  text("Player", 465, 100);
-  text("Points", 730, 100);
-  textSize(14);
-  int gum = 1;
-  for (String x : lines) {
-    String[] info = x.split(" ");
-    text(gum+ ". "+ info[1], 465, 130+(gum*20));
-    text(info[0], 730, 130+(gum*20));
-    gum +=1;
-    if (gum == 16) {
-      break;
-    }
-  }
-}
-
-void storyEnd() {
-  state = State.GAME;
-}
-
 
 // switch case structure to monitor state of the game
 void draw() {
@@ -117,7 +91,7 @@ void draw() {
 
     for (int i = 0; i < bombs.size(); ++i) {
       bombs.get(i).draw();
-      if (bombs.get(i).bomb_timer == 0) {
+      if (bombs.get(i).bombTimer <= millis()) {
         bombs.remove(bombs.get(i));
       }
     }
@@ -134,6 +108,33 @@ void draw() {
   }
 }
 
+void printScores() { /// prints the scores.txt file into the highscore view
+  background(0);
+  fill(0, 102, 153);
+  textAlign(CENTER);
+  String[] lines =loadStrings("scores.txt");
+  textSize(32);
+  text("HIGHSCORE", width/2, 40);
+  textAlign(LEFT);
+  text("Player", 465, 100);
+  text("Points", 730, 100);
+  textSize(14);
+  int gum = 1;
+  for (String x : lines) {
+    String[] info = x.split(" ");
+    text(gum+ ". "+ info[1], 465, 130+(gum*20));
+    text(info[0], 730, 130+(gum*20));
+    gum +=1;
+    if (gum == 16) {
+      break;
+    }
+  }
+}
+
+void storyEnd() {
+  state = State.GAME;
+}
+
 
 void drawScore() {
   fill(255, 255, 255);
@@ -146,6 +147,8 @@ void drawItem() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
+  if(player.selectedItem > -1);
+  text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
 }
 
 // switch case structure to monitor state of the game

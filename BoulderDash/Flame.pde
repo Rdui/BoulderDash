@@ -18,7 +18,6 @@ class Flame {
   }
 
   void setPosition(int x, int y) {
-    println(x+y);
     pos_x = x;
     pos_y = y;
   }
@@ -55,6 +54,4 @@ class Flame {
 
     this.flame_time -= 1;
   }
-  
-
 }

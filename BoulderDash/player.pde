@@ -5,10 +5,9 @@ class Player {
   PImage icon;
   float speed = 32;
   int selectedItem = -1;
-  int MAXITEMS = 1;
-  int lastSlot = 0;
   int keys = 0;
   List<Item> inventory = new ArrayList<Item>();
+  int bombsLeft = 1;
 
 
   Player(int _x, int _y, PImage icon_) {

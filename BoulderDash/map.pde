@@ -15,6 +15,7 @@ void loadMap(String mapPath, String charPath) {
   bgTile = loadImage("graphics/bg.png");
   HashMap<String, Tile> tiles = new HashMap<String, Tile>();
 
+  // 
   String[] charLines = loadStrings(charPath); // map data lines as a string
   for (int i = 0; i < charLines.length; i++) {
     String[] split = split(charLines[i], ' '); 
@@ -40,6 +41,7 @@ void loadMap(String mapPath, String charPath) {
       break;
     }
   }
+  
   String[] mapLines = loadStrings(mapPath);
   map = new Tile[split(mapLines[0], ' ').length][mapLines.length];
   for (int y = 0; y < mapLines.length; y++) {

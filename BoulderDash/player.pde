@@ -2,6 +2,7 @@ class Player {
   int score = 0;
   float x = 0;
   float y = 0;
+  PImage icon;
   float speed = 32;
   int selectedItem = -1;
   int MAXITEMS = 1;
@@ -10,9 +11,10 @@ class Player {
   List<Item> inventory = new ArrayList<Item>();
 
 
-  Player(int _x, int _y) {
+  Player(int _x, int _y, PImage icon_) {
     x = _x;
     y = _y;
+    icon = icon_;
   }
 
   void setCoordinates(int _x, int _y) {
@@ -33,7 +35,7 @@ class Player {
   }
 
   void drawPlayer() {
-    image(img, x, y);
+    image(icon, x, y);
     //println(this.getGridPosX() + " " + this.getGridPosY());
     //println(this.x + " " + this.y);
   }

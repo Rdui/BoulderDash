@@ -9,7 +9,7 @@ int startX; // player start point location
 int startY;
 int tile_;
 PImage bgTile;
-Tile groundTile;
+Tile groundTile, emptyTile;
 
 void loadMap(String mapPath, String charPath) {
   bgTile = loadImage("graphics/bg.png");
@@ -18,47 +18,46 @@ void loadMap(String mapPath, String charPath) {
   String[] charLines = loadStrings(charPath); // map data lines as a string
   for (int i = 0; i < charLines.length; i++) {
     String[] split = split(charLines[i], ' '); 
+    Tile tile;
     switch(split[0]) {
     case "tile":
       tiles.put(split[1], new Tile(loadImage("graphics/"+split[2]), false, false, int(split[3])));
       break;
     case "empty":
-      tiles.put(split[1], new Tile(null, true, true, 2));
+      tile = new Tile(null, true, true, 2);
+      emptyTile = tile;
+      tiles.put(split[1], tile);
       break;
     case "ground":
-      tiles.put(split[1], new Tile(loadImage("graphics/"+split[2]), true, true, int(split[3])));
+      tile = new Tile(loadImage("graphics/"+split[2]), false, false, int(split[3]));
+      groundTile = tile;
+      tiles.put(split[1], tile);
+      break;
     case "bomb":
-      Tile tile = groundTile;
-      tile.item =  new Bomb(loadImage(split[2]), int(split[3]), int(split[4])); 
+      tile = groundTile;
+      tile.item =  new Bomb(loadImage("graphics/"+split[2]), int(split[3]), int(split[4])); 
       tiles.put(split[1], tile);
       break;
     }
   }
-
   String[] mapLines = loadStrings(mapPath);
   map = new Tile[split(mapLines[0], ' ').length][mapLines.length];
   for (int y = 0; y < mapLines.length; y++) {
     String[] row = split(mapLines[y], ' ');
     for (int x = 0; x < row.length; x++) {
-      if (row[x].equals("w")) { // tarkistetaan minkätyyppinen tiili on (mitä vaikeampi tiili on rikkoa, sitä suurempi numero sille annetaan.)
-        tile_ = 10;
-      } else if (row[x].equals("s")) {
-        tile_ = 2;
-      } else if (row[x].equals("g")) {
-        tile_ = 1;
-      } else if (row[x].equals("#")) {
-        tile_ = 0;
-      } else if (row[x].equals("!")) {
-        tile_ = 0;
+      if (row[x].equals("!")) {
+        map[x][y] = new Tile(groundTile);
         creeps.add(new Creep(x, y, loadImage("graphics/creep.png"), false));
-      } else if (row[x].equals("?")) {
-        tile_ = 0;
+      } else if (row[x].equals("?"))
+      {
+        map[x][y] = new Tile(groundTile);
         creeps.add(new Creep(x, y, loadImage("graphics/worm.png"), true));
-      }
-      map[x][y] = tiles.get(row[x]);
-      if (row[x].equals("@")) {
+      } else if (row[x].equals("@")) {
         startX = x;
         startY = y;
+        map[x][y] = new Tile(groundTile);
+      } else {
+        map[x][y] = new Tile(tiles.get(row[x]));
       }
     }
   }

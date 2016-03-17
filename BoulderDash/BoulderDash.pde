@@ -15,7 +15,7 @@ byte state = State.WAIT_USER_INPUT;
 
 color backgroundColor = color(22);
 
-Player player = new Player(0, 0);
+Player player;
 
 PImage img;
 PImage bomb_1_img;
@@ -32,19 +32,15 @@ GButton exitButton;
 
 
 void setup() {
+  player = new Player(0, 0, loadImage("graphics/player.png"));
   frameRate(60);
   background(backgroundColor);
   size(1280, 720);
   loadMap("Maps/map0.txt", "chars.txt");
   mainMenuSetup();
-  
-  img = loadImage("graphics/tempModel.png");
-  bomb_1_img = loadImage("graphics/bomb_1.png");
-  bomb_2_img = loadImage("graphics/bomb_2.png");
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
-  
   player.setCoordinates(startX*32, startY*32+8);
 }
 
@@ -62,24 +58,24 @@ void printStory() {
   text("Press any key to continue", width/2, height/3 + 150);
 }
 
-void printScores(){ /// prints the scores.txt file into the highscore view
+void printScores() { /// prints the scores.txt file into the highscore view
   background(0);
   fill(0, 102, 153);
   textAlign(CENTER);
   String[] lines =loadStrings("scores.txt");
   textSize(32);
-  text("HIGHSCORE", width/2,40);
+  text("HIGHSCORE", width/2, 40);
   textAlign(LEFT);
-  text("Player", 465,100);
-  text("Points", 730,100);
+  text("Player", 465, 100);
+  text("Points", 730, 100);
   textSize(14);
   int gum = 1;
-  for (String x: lines){
+  for (String x : lines) {
     String[] info = x.split(" ");
     text(gum+ ". "+ info[1], 465, 130+(gum*20));
     text(info[0], 730, 130+(gum*20));
     gum +=1;
-    if (gum == 16){
+    if (gum == 16) {
       break;
     }
   }
@@ -106,11 +102,9 @@ void draw() {
     drawMap();
     drawScore();
     drawItem();
-
-    //println(startX + " " + startY);
     player.move();
     player.drawPlayer();
-    
+
     for (int i = 0; i < creeps.size(); i++)
     {
       if (abs(second()-lastMove) > 0.5)
@@ -120,30 +114,23 @@ void draw() {
     if (abs(second()-lastMove) > 0.5)
       lastMove = second();
 
-    
-    for(int i = 0; i < bombs.size(); ++i){
+
+    for (int i = 0; i < bombs.size(); ++i) {
       bombs.get(i).draw();
-      if(bombs.get(i).bomb_timer == 0){
-         bombs.remove(bombs.get(i)); 
+      if (bombs.get(i).bomb_timer == 0) {
+        bombs.remove(bombs.get(i));
       }
     }
-    
-    for(int i = 0; i < flames.size(); ++i){
+
+    for (int i = 0; i < flames.size(); ++i) {
       flames.get(i).draw();
-      if(flames.get(i).flame_time == 0){
-         flames.remove(flames.get(i)); 
+      if (flames.get(i).flame_time == 0) {
+        flames.remove(flames.get(i));
       }
     }
-    
-
-
-    // Game starting function should be called here
-    // players name: String playerName
     break;
   case State.END:
     printScores();
-    
-    
   }
 }
 
@@ -212,25 +199,25 @@ void mousePressed() {
   case State.GAME:
 
     break;
-    
+
   case State.END:
-    if (mousePressed){
-      if(mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650){
+    if (mousePressed) {
+      if (mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650) {
         println("new game");
         state = State.WAIT_USER_INPUT;
-        
+
         flames.clear();
         bombs.clear();
         creeps.clear();
-        
+
         resetKeyboardInputs();
-        
-        
+
+
         setup();
-        
+
         deleteHighscoreButtons();
       }
-      if(mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650){
+      if (mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650) {
         println("exit game");
         exit();
       }

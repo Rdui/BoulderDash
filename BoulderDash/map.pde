@@ -1,10 +1,11 @@
 import java.util.HashMap;  //<>// //<>//
 import java.util.List;
 
-Tile[][] map;
+Tile[][] map; // the actual map
 List<Creep> creeps = new ArrayList<Creep>();
 List<Bomb> bombs = new ArrayList<Bomb>();
 List<Flame> flames = new ArrayList<Flame>();
+List<AbstractItem> pickups = new ArrayList<AbstractItem>(); // items that can be picked up by walking over them
 int startX; // player start point location
 int startY;
 int tile_;
@@ -25,9 +26,9 @@ void loadMap(String mapPath, String charPath) {
       tiles.put(split[1], new Tile(loadImage("graphics/"+split[2]), false, false, int(split[3])));
       break;
     case "empty":
-      tile = new Tile(null, true, true, 2);
+      tile = new Tile(createImage(32, 32, ARGB), true, true, 2);
       emptyTile = tile;
-      tiles.put(split[1], tile);
+      tiles.put(split[1], emptyTile);
       break;
     case "ground":
       tile = new Tile(loadImage("graphics/"+split[2]), false, false, int(split[3]));
@@ -41,7 +42,7 @@ void loadMap(String mapPath, String charPath) {
       break;
     }
   }
-  
+
   String[] mapLines = loadStrings(mapPath);
   map = new Tile[split(mapLines[0], ' ').length][mapLines.length];
   for (int y = 0; y < mapLines.length; y++) {

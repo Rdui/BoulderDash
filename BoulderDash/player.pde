@@ -6,7 +6,7 @@ class Player {
   float speed = 32;
   int selectedItem = -1;
   int keys = 0;
-  List<Item> inventory = new ArrayList<Item>();
+  List<AbstractItem> inventory = new ArrayList<AbstractItem>();
   int bombsLeft = 1;
 
 
@@ -14,6 +14,9 @@ class Player {
     x = _x;
     y = _y;
     icon = icon_;
+    setCoordinates(startX*32, startY*32+8);
+    inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    selectedItem = 0;
   }
 
   void setCoordinates(int _x, int _y) {
@@ -129,7 +132,7 @@ class Player {
     int gridX = this.getX();
     int gridY = this.getY();
     if (map[gridX][gridY].item != null) {
-      Item item = map[gridX][gridY].item;
+      AbstractItem item = map[gridX][gridY].item;
       player.score += map[gridX][gridY].item.score;
       player.inventory.add(item);
       map[gridX][gridY].item = null;

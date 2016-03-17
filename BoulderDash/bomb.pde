@@ -1,4 +1,4 @@
-class Bomb extends Item {
+class Bomb extends AbstractItem {
   Tile tile; // reference to tile the bomb is on
   int delay; // bomb time in s
   int bomb_type;
@@ -23,7 +23,7 @@ class Bomb extends Item {
     delay = another.delay;
   }
 
-  void Use(Item item) {
+  void Use(AbstractItem item) {
     if (player.bombsLeft > 0) {
       Bomb bomb = new Bomb((Bomb)item);
       bomb.setPosition(player.getX(), player.getY());
@@ -39,18 +39,32 @@ class Bomb extends Item {
     y = y_;
   }
 
-  // clears breakable things from the exploding bombs blast radius
+  // calls the righ shape constructor
   void explode() {
     player.bombsLeft++;
     if (shape == 0)
       plusExplosion();
   }
-
+  // radius increases plus length
   void plusExplosion() {
     flames.add(new Flame(loadImage("graphics/explosionmiddle.png"), x, y, 15));
-    for (int fx = -radius; fx <= radius; fx++)
+    for (int fx = (x-radius > -1 ? -radius : -x); fx <= radius; fx++) {
+      if (map[x+fx][y].item != null) {
+        pickups.add(map[x+fx][y].item);
+        map[x+fx][y].item.x = x+fx;
+        map[x+fx][y].item.y =y;
+      }
+      map[x+fx][y].destroy();
       flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x+fx, y, 15));
-    for (int fy = -radius; fy <= radius; fy++)
+    }
+    for (int fy = (y-radius > -1 ? -radius : -y); fy <= radius; fy++) {
       flames.add(new Flame(loadImage("graphics/explosionvertical.png"), x, y+fy, 15));
+      if (map[x][y+fy].item != null) {
+        pickups.add(map[x][y+fy].item);
+        map[x][y+fy].item.x = x;
+        map[x][y+fy].item.y =y+fy;
+      }
+      map[x][y+fy].destroy();
+    }
   }
 }

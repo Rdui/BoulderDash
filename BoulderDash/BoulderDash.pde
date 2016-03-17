@@ -32,18 +32,15 @@ GButton exitButton;
 
 
 void setup() {
-  player = new Player(0, 0, loadImage("graphics/player.png"));
+  size(1280, 720);
   frameRate(60);
   background(backgroundColor);
-  size(1280, 720);
   loadMap("Maps/map0.txt", "chars.txt");
+  player = new Player(0, 0, loadImage("graphics/player.png"));
   mainMenuSetup();
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
-  player.setCoordinates(startX*32, startY*32+8);
-  player.inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
-  player.selectedItem = 0;
 }
 
 void printStory() {
@@ -75,8 +72,9 @@ void draw() {
     drawMap();
     processFlames();
     processBombs();
+    drawPickups();
     drawScore();
-    drawItem();
+    drawInventory();
     player.move();
     player.drawPlayer();
 
@@ -161,7 +159,7 @@ void drawScore() {
   text("Score:"+player.score, width/2, 32);
 }
 
-void drawItem() {
+void drawInventory() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
@@ -169,6 +167,11 @@ void drawItem() {
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
 }
 
+void drawPickups(){
+  for(AbstractItem item : pickups){
+   image(item.icon, 32*item.x, 32*item.y*8); 
+  }
+}
 // switch case structure to monitor state of the game
 void keyTyped() {
   switch(state) {
@@ -223,15 +226,17 @@ void mousePressed() {
 
   case State.END:
     if (mousePressed) {
+      flames.clear();
+      bombs.clear();
+      creeps.clear();
+      pickups.clear();
       if (mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650) {
-        println("new game");
         state = State.WAIT_USER_INPUT;
         resetKeyboardInputs();
         setup();
         deleteHighscoreButtons();
       }
       if (mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650) {
-        println("exit game");
         exit();
       }
     }
@@ -239,9 +244,6 @@ void mousePressed() {
 }
 
 void endGame() {
-  flames.clear();
-  bombs.clear();
-  creeps.clear();
   state = State.END;
   if (loadStrings("scores.txt")==null) {
     PrintWriter output;

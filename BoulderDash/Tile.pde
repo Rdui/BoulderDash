@@ -30,6 +30,6 @@ class Tile {
   // sets an active bomb in the tile
   void set_bomb(Bomb bomb_) {
     bomb = bomb_;
-    bomb.setPosition(player.getGridPosX(), player.getGridPosY());
+    bomb.setPosition(player.getX(), player.getY());
   }
 }

@@ -42,7 +42,7 @@ void setup() {
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
   player.setCoordinates(startX*32, startY*32+8);
-  player.inventory.add(new Bomb(loadImage("graphics/smallbomb.png"),2,0,2, "Bomb"));
+  player.inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
   player.selectedItem = 0;
 }
 
@@ -71,9 +71,10 @@ void draw() {
     printStory();
     break;
   case State.GAME:
-
     drawBackground();
     drawMap();
+    processFlames();
+    processBombs();
     drawScore();
     drawItem();
     player.move();
@@ -85,27 +86,44 @@ void draw() {
         creeps.get(i).moveRandom();
       creeps.get(i).draw();
     }
+
     if (abs(second()-lastMove) > 0.5)
       lastMove = second();
-
-
-    for (int i = 0; i < bombs.size(); ++i) {
-      bombs.get(i).draw();
-      if (bombs.get(i).bombTimer <= millis()) {
-        bombs.remove(bombs.get(i));
-      }
-    }
-
-    for (int i = 0; i < flames.size(); ++i) {
-      flames.get(i).draw();
-      if (flames.get(i).flame_time == 0) {
-        flames.remove(flames.get(i));
-      }
-    }
     break;
   case State.END:
     printScores();
   }
+}
+
+void processFlames() {
+  List<Flame> deadFlames = new ArrayList<Flame>();
+  Boolean dead = false;
+  for (Flame flame : flames) {
+    image(flame.image, 32*flame.x, 32*flame.y+8);
+    if (player.getX() == flame.x && player.getY() == flame.y) {
+      dead = true;
+      break;
+    }
+    if (millis() >= flame.flameTimer)
+      deadFlames.add(flame);
+  }
+  if (dead)
+    endGame();
+  for (Flame deadFlame : deadFlames)
+    flames.remove(deadFlame);
+}
+
+void processBombs() {
+  List<Bomb> explodedBombs = new ArrayList<Bomb>();
+  for (Bomb bomb : bombs) {
+    image(bomb.icon, bomb.x*32, bomb.y*32+8);
+    if (bomb.explosive && bomb.bombTimer <= millis()) {
+      explodedBombs.add(bomb);
+      bomb.explode();
+    }
+  }
+  for (Bomb explodedBomb : explodedBombs)
+    bombs.remove(explodedBomb);
 }
 
 void printScores() { /// prints the scores.txt file into the highscore view
@@ -147,7 +165,7 @@ void drawItem() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
-  if(player.selectedItem > -1);
+  if (player.selectedItem > -1);
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
 }
 
@@ -208,16 +226,8 @@ void mousePressed() {
       if (mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650) {
         println("new game");
         state = State.WAIT_USER_INPUT;
-
-        flames.clear();
-        bombs.clear();
-        creeps.clear();
-
         resetKeyboardInputs();
-
-
         setup();
-
         deleteHighscoreButtons();
       }
       if (mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650) {
@@ -229,6 +239,9 @@ void mousePressed() {
 }
 
 void endGame() {
+  flames.clear();
+  bombs.clear();
+  creeps.clear();
   state = State.END;
   if (loadStrings("scores.txt")==null) {
     PrintWriter output;

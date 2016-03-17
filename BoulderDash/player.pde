@@ -21,13 +21,13 @@ class Player {
     y = _y;
   }
 
-  int getGridPosX() {
+  int getX() {
     int gridX = 0;
     gridX = round(x)/32;
     return gridX;
   }
 
-  int getGridPosY() {
+  int getY() {
     int gridY = 0;
     gridY = round(y)/32;
     return gridY;
@@ -38,8 +38,8 @@ class Player {
   }
 
   void move() {
-    int gridX = this.getGridPosX();
-    int gridY = this.getGridPosY();
+    int gridX = this.getX();
+    int gridY = this.getY();
 
     if (up == 1 && gridY > 0) {
       if (this.is_mineable(gridX, gridY-1) == true) {
@@ -54,7 +54,7 @@ class Player {
 
         y -= speed;
         this.drawPlayer();
-        checkCreep(getGridPosX(), getGridPosY());
+        checkCreep(getX(), getY());
         //delay(40);
         checkItem();
       }
@@ -71,7 +71,7 @@ class Player {
 
         y += speed;
         this.drawPlayer();
-        checkCreep(getGridPosX(), getGridPosY());
+        checkCreep(getX(), getY());
         //delay(40);
         checkItem();
       }
@@ -88,7 +88,7 @@ class Player {
 
         x -= speed;
         this.drawPlayer();
-        checkCreep(getGridPosX(), getGridPosY());
+        checkCreep(getX(), getY());
         //delay(40);
         checkItem();
       } else {
@@ -107,7 +107,7 @@ class Player {
 
         x += speed;
         this.drawPlayer();
-        checkCreep(getGridPosX(), getGridPosY());
+        checkCreep(getX(), getY());
         //delay(40);
         checkItem();
       }
@@ -126,8 +126,8 @@ class Player {
   // does our current tile have an item
   void checkItem()
   {
-    int gridX = this.getGridPosX();
-    int gridY = this.getGridPosY();
+    int gridX = this.getX();
+    int gridY = this.getY();
     if (map[gridX][gridY].item != null) {
       Item item = map[gridX][gridY].item;
       player.score += map[gridX][gridY].item.score;

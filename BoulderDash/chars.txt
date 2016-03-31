@@ -3,6 +3,7 @@
 ground g basic_mineable.png 10
 tile s hard_mineable.png 30
 tile w not_mineable.png -1
+tile b boulder.png -1
 bomb h bigbomb.png 4 0 2 Bigger bomb
 score c coin.png 1000
 empty #

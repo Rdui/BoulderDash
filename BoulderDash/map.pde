@@ -6,6 +6,7 @@ List<Creep> creeps = new ArrayList<Creep>();
 List<Bomb> bombs = new ArrayList<Bomb>();
 List<Flame> flames = new ArrayList<Flame>();
 List<AbstractItem> pickups = new ArrayList<AbstractItem>(); // items that can be picked up by walking over them
+List<Boulder> boulders = new ArrayList<Boulder>();
 int startX; // player start point location
 int startY;
 int tile_;
@@ -48,6 +49,7 @@ void loadMap(String mapPath, String charPath) {
   map = new Tile[split(mapLines[0], ' ').length][mapLines.length];
   for (int y = 0; y < mapLines.length; y++) {
     String[] row = split(mapLines[y], ' ');
+    //println(row[0], row[1], row[2]);
     for (int x = 0; x < row.length; x++) {
       if (row[x].equals("!")) {
         map[x][y] = new Tile(emptyTile);
@@ -60,7 +62,12 @@ void loadMap(String mapPath, String charPath) {
         startX = x;
         startY = y;
         map[x][y] = new Tile(emptyTile);
-      } else {
+      } else if (row[x].equals("b")){
+          map[x][y] = new Tile(emptyTile);
+          boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
+      }
+      
+      else {
         map[x][y] = new Tile(tiles.get(row[x]));
       }
     }

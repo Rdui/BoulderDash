@@ -1,3 +1,5 @@
+GButton newGameButton;
+GButton exitButton;
 
 void highscoreSetup(){
   newGameButton = new GButton(this, 300, 600, 300, 50, "New Game!");

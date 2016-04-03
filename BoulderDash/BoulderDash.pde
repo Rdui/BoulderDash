@@ -26,8 +26,8 @@ PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
 
-GButton newGameButton;
-GButton exitButton;
+
+int time = 0;
 
 
 
@@ -41,6 +41,7 @@ void setup() {
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
+
 }
 
 void printStory() {
@@ -72,6 +73,7 @@ void draw() {
     drawMap();
     processFlames();
     processBombs();
+    processBoulders();
     drawPickups();
     drawScore();
     drawInventory();
@@ -92,6 +94,19 @@ void draw() {
     printScores();
   }
 }
+void processBoulders() { // checks if the boulder has free spece underneath it -> falling animation
+  for (Boulder boulder : boulders) {
+    image(boulder.image, 32*boulder.x, 32*boulder.y+8);
+    if(millis()- time > 1000){
+      if (map[boulder.x][boulder.y+1].empty == true){
+        println("ID");
+        boulder.y += 1;
+        time = millis();
+      }
+    }
+  }
+}
+  
 
 void processFlames() {
   List<Flame> deadFlames = new ArrayList<Flame>();

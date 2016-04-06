@@ -27,7 +27,7 @@ PImage backgroundimage;
 String[] scores;
 
 
-int time = 0;
+int time = 0, mapCount = 0;
 
 
 
@@ -35,13 +35,12 @@ void setup() {
   size(1280, 720);
   frameRate(60);
   background(backgroundColor);
-  loadMap("Maps/map0.txt", "chars.txt");
+  loadMap("Maps/map"+mapCount+".txt", "chars.txt");
   player = new Player(0, 0, loadImage("graphics/player.png"));
   mainMenuSetup();
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
-
 }
 
 void printStory() {
@@ -75,9 +74,9 @@ void draw() {
     processBombs();
     drawBoulders();
     processBoulders();
-    drawPickups();
     drawScore();
     drawInventory();
+    drawKeycount();
     player.move();
     player.drawPlayer();
 
@@ -99,6 +98,7 @@ void drawBoulders() { // draws the boulders in the boulders list.
 
   for (Boulder boulder : boulders) {
     image(boulder.image, 32*boulder.x, 32*boulder.y+8);
+<<<<<<< HEAD
   }
 }
 
@@ -150,6 +150,11 @@ Boolean creepIsBelow(int x, int y){
       if(creep.x == x && creep.y == y+1){
         return true;
       }
+=======
+    if (millis()- time > 1000) {
+      boulder.y += 1;
+      time = millis();
+>>>>>>> 76ae5f1ed2c71d3d8d82b76e27bcab2c462dce65
     }
     return false;
 }
@@ -161,12 +166,15 @@ Boolean playerIsBelow(int x, int y){
   return false;
 }
 
+<<<<<<< HEAD
 void boulderHit(int x, int y, Boolean momentum ){
   if (player.getX() == x && player.getY() == y+1 && momentum == true){
     endGame();
   }
 }
 
+=======
+>>>>>>> 76ae5f1ed2c71d3d8d82b76e27bcab2c462dce65
 
 void processFlames() {
   List<Flame> deadFlames = new ArrayList<Flame>();
@@ -242,11 +250,13 @@ void drawInventory() {
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
 }
 
-void drawPickups(){
-  for(AbstractItem item : pickups){
-   image(item.icon, 32*item.x, 32*item.y*8); 
-  }
+void drawKeycount() {
+  fill(255, 255, 255);
+  textSize(25);
+  textAlign(RIGHT);
+  text("Keys: "+player.keys+"/3", 1280, 32);
 }
+
 // switch case structure to monitor state of the game
 void keyTyped() {
   switch(state) {
@@ -301,11 +311,14 @@ void mousePressed() {
 
   case State.END:
     if (mousePressed) {
+<<<<<<< HEAD
       flames.clear();
       bombs.clear();
       creeps.clear();
       pickups.clear();
       boulders.clear();
+=======
+>>>>>>> 76ae5f1ed2c71d3d8d82b76e27bcab2c462dce65
       if (mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650) {
         state = State.WAIT_USER_INPUT;
         resetKeyboardInputs();
@@ -350,4 +363,24 @@ void endGame() {
   scores = loadStrings("scores.txt");
   state = State.END;
   highscoreSetup();
+  clearMap();
+}
+
+void clearMap() {
+  flames.clear();
+  bombs.clear();
+  creeps.clear();
+  pickups.clear();
+  boulders.clear();
+}
+
+void newLevel() {
+  mapCount++;
+  clearMap();
+  resetKeyboardInputs();   
+  loadMap("Maps/map"+mapCount+".txt", "chars.txt");
+  player.reset();
+  exp_hori_img = loadImage("graphics/exp_horizontal.png");
+  exp_vert_img = loadImage("graphics/exp_vertical.png");
+  exp_middle_img = loadImage("graphics/exp_middle.png");
 }

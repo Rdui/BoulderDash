@@ -18,6 +18,15 @@ class Player {
     inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
     selectedItem = 0;
   }
+  
+  void reset(){
+    x = 0;
+    y = 0;
+    keys = 0;
+    setCoordinates(startX*32, startY*32+8);
+    inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    selectedItem = 0;
+  }
 
   void setCoordinates(int _x, int _y) {
     x = _x;
@@ -40,6 +49,7 @@ class Player {
     image(icon, x, y);
   }
 
+  // reduce tile health to the direction we are moving or move if there is no tile
   void move() {
     int gridX = this.getX();
     int gridY = this.getY();
@@ -56,9 +66,7 @@ class Player {
       if (map[gridX][gridY-1].empty == true) {
 
         y -= speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       }
     } else if (down == 1 && gridY < 21) {
@@ -69,13 +77,9 @@ class Player {
         }
         map[gridX][gridY+1].destroy();
       }
-
       if (map[gridX][gridY+1].empty == true) {
-
         y += speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       }
     } else if (left == 1 && gridX > 0) {
@@ -86,13 +90,9 @@ class Player {
         }
         map[gridX-1][gridY].destroy();
       }
-
       if (map[gridX-1][gridY].empty == true) {
-
         x -= speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       } else {
         println("seinä");
@@ -107,11 +107,8 @@ class Player {
       }
 
       if (map[gridX+1][gridY].empty == true) {
-
         x += speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       }
     }
@@ -146,13 +143,24 @@ class Player {
       AbstractItem item = map[gridX][gridY].item;
       player.score += map[gridX][gridY].item.score;
       player.inventory.add(item);
+      pickups.remove(map[gridX][gridY].item);
       map[gridX][gridY].item = null;
     }
+    if (map[gridX][gridY].portalkey)
+    {
+      map[gridX][gridY].portalkey = false;
+      player.keys += 1;
+    }
+    if (map[gridX][gridY].portal && player.keys == 3)
+      newLevel();
   }
 }
 
 void checkCreep(int x, int y) {
+  Boolean flag = false;
   for (Creep creep : creeps)
     if (creep.x == x && creep.y == y)
-      endGame();
+      flag = true;
+  if (flag)
+    endGame();
 }

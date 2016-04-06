@@ -1,8 +1,11 @@
 // tiles: char, icon file name, mining duration (-1 unminable)
 // bombs: 
 ground g basic_mineable.png 10
+empty #
 tile s hard_mineable.png 30
 tile w not_mineable.png -1
 bomb h bigbomb.png 4 0 2 Bigger bomb
-score c coin.png 1000
-empty #
+score c coin.png 1000 Coin
+score C chest.png 10000 Chest
+portal P
+portalkey p

@@ -10,11 +10,13 @@ List<Boulder> boulders = new ArrayList<Boulder>();
 int startX; // player start point location
 int startY;
 int tile_;
-PImage bgTile;
+PImage bgTile, keyicon, portalicon;
 Tile groundTile, emptyTile;
 
 void loadMap(String mapPath, String charPath) {
   bgTile = loadImage("graphics/bg.png");
+  keyicon = loadImage("graphics/key.png");
+  portalicon = loadImage("graphics/portal.png");
   HashMap<String, Tile> tiles = new HashMap<String, Tile>();
 
   // 
@@ -37,11 +39,25 @@ void loadMap(String mapPath, String charPath) {
       tiles.put(split[1], tile);
       break;
     case "bomb":
-      tile = groundTile;
+      tile = new Tile(groundTile);
       tile.item =  new Bomb(loadImage("graphics/"+split[2]), int(split[3]), int(split[4]), int(split[5]), split[6]+" "+split[7]); 
       tiles.put(split[1], tile);
       break;
-    
+    case "portal":
+      tile = new Tile(groundTile);
+      tile.portal = true;
+      tiles.put(split[1], tile);
+      break;
+    case "portalkey":
+      tile = new Tile(groundTile);
+      tile.portalkey = true;
+      tiles.put(split[1], tile);
+      break;
+    case "score":
+      tile = new Tile(groundTile);
+      tile.item = new Coin(loadImage("graphics/"+split[2]), int(split[3]), split[4]);
+      tiles.put(split[1], tile);
+      break;
     }
   }
 
@@ -62,6 +78,7 @@ void loadMap(String mapPath, String charPath) {
         startX = x;
         startY = y;
         map[x][y] = new Tile(emptyTile);
+<<<<<<< HEAD
       } else if (row[x].equals("b")){
           map[x][y] = new Tile(emptyTile);
           boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true, false)); /// adds boulders to the boulders array that is used in processBoulders function
@@ -69,17 +86,37 @@ void loadMap(String mapPath, String charPath) {
       
       else {
         map[x][y] = new Tile(tiles.get(row[x]));
+=======
+      } else if (row[x].equals("b")) {
+        map[x][y] = new Tile(emptyTile);
+        boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
+      } else {
+        if (tiles.containsKey(row[x])) {
+          map[x][y] = new Tile(tiles.get(row[x]));
+          //if (row[x].equals("P"))
+          //  if (map[x][y].portal)
+          //    println("asd");
+        } else
+          println("Illegal character in map, check map and char data!");
+>>>>>>> 76ae5f1ed2c71d3d8d82b76e27bcab2c462dce65
       }
     }
   }
 }
 
+// draw map tiles and items
 void drawMap() {
   for (int y = 0; y < map[0].length; y++) {
     for (int x = 0; x < map.length; x++) {
       Tile tile = map[x][y];
-      if (!tile.empty)
+      if (!tile.empty) {
         image(map[x][y].image, x*32, y*32+8);
+      } else if (tile.portalkey) { // portal keys on empty tiles
+        image(keyicon, x*32, y*32+8);
+      } else if (tile.item != null)
+        image(tile.item.icon, x*32, y*32+8);
+      if (tile.portal)
+        image(portalicon, x*32, y*32+8);
     }
   }
 }

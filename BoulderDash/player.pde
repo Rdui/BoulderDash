@@ -126,6 +126,11 @@ class Player {
       pickups.remove(map[gridX][gridY].item);
       map[gridX][gridY].item = null;
     }
+    if (map[gridX][gridY].portalkey)
+    {
+      map[gridX][gridY].portalkey = false;
+      player.keys += 1;
+    }
   }
 }
 

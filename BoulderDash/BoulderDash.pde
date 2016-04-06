@@ -75,6 +75,7 @@ void draw() {
     processBoulders();
     drawScore();
     drawInventory();
+    drawKeycount();
     player.move();
     player.drawPlayer();
 
@@ -175,6 +176,13 @@ void drawInventory() {
   textAlign(LEFT);
   if (player.selectedItem > -1);
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
+}
+
+void drawKeycount(){
+  fill(255, 255, 255);
+  textSize(25);
+  textAlign(RIGHT);
+  text("Keys: "+player.keys+"/3", 1280, 32);
 }
 
 // switch case structure to monitor state of the game

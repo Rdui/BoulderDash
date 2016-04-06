@@ -10,11 +10,12 @@ List<Boulder> boulders = new ArrayList<Boulder>();
 int startX; // player start point location
 int startY;
 int tile_;
-PImage bgTile;
+PImage bgTile, keyicon;
 Tile groundTile, emptyTile;
 
 void loadMap(String mapPath, String charPath) {
   bgTile = loadImage("graphics/bg.png");
+  keyicon = loadImage("graphics/key.png");
   HashMap<String, Tile> tiles = new HashMap<String, Tile>();
 
   // 
@@ -69,6 +70,10 @@ void loadMap(String mapPath, String charPath) {
       } else if (row[x].equals("b")) {
         map[x][y] = new Tile(emptyTile);
         boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
+      } else if (row[x].equals("0")) {
+        Tile tile = new Tile(groundTile);
+        tile.portalkey = true;
+        map[x][y] = tile;
       } else {
         map[x][y] = new Tile(tiles.get(row[x]));
       }
@@ -76,12 +81,17 @@ void loadMap(String mapPath, String charPath) {
   }
 }
 
+// draw map tiles and items
 void drawMap() {
   for (int y = 0; y < map[0].length; y++) {
     for (int x = 0; x < map.length; x++) {
       Tile tile = map[x][y];
       if (!tile.empty)
         image(map[x][y].image, x*32, y*32+8);
+      else if (tile.portalkey) // portal keys on empty tiles
+        image(keyicon, x*32, y*32+8);
+      else if (tile.item != null)
+        image(tile.item.icon, x*32, y*32+8);
     }
   }
 }

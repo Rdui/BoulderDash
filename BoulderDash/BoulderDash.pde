@@ -73,7 +73,6 @@ void draw() {
     processFlames();
     processBombs();
     processBoulders();
-    drawPickups();
     drawScore();
     drawInventory();
     player.move();
@@ -178,11 +177,6 @@ void drawInventory() {
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
 }
 
-void drawPickups() {
-  for (AbstractItem item : pickups) {
-    image(item.icon, 32*item.x, 32*item.y+8);
-  }
-}
 // switch case structure to monitor state of the game
 void keyTyped() {
   switch(state) {

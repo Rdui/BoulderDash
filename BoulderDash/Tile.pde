@@ -1,7 +1,7 @@
 class Tile {
   char c;
   PImage image; // tile graphics
-  Boolean canWalk, empty; // can the tile be mined, is it a clear space
+  Boolean canWalk, empty, portalkey = false; // can the tile be mined, is it a clear space
   AbstractItem item; // item hidden in tile
   int tileHp;
   Bomb bomb;

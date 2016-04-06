@@ -27,7 +27,7 @@ PImage backgroundimage;
 String[] scores;
 
 
-int time = 0;
+int time = 0, mapCount = 0;
 
 
 
@@ -35,7 +35,7 @@ void setup() {
   size(1280, 720);
   frameRate(60);
   background(backgroundColor);
-  loadMap("Maps/map0.txt", "chars.txt");
+  loadMap("Maps/map"+mapCount+".txt", "chars.txt");
   player = new Player(0, 0, loadImage("graphics/player.png"));
   mainMenuSetup();
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
@@ -239,10 +239,6 @@ void mousePressed() {
 
   case State.END:
     if (mousePressed) {
-      flames.clear();
-      bombs.clear();
-      creeps.clear();
-      pickups.clear();
       if (mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650) {
         state = State.WAIT_USER_INPUT;
         resetKeyboardInputs();
@@ -287,4 +283,24 @@ void endGame() {
   scores = loadStrings("scores.txt");
   state = State.END;
   highscoreSetup();
+  clearMap();
+}
+
+void clearMap() {
+  flames.clear();
+  bombs.clear();
+  creeps.clear();
+  pickups.clear();
+  boulders.clear();
+}
+
+void newLevel() {
+  mapCount++;
+  clearMap();
+  resetKeyboardInputs();   
+  loadMap("Maps/map"+mapCount+".txt", "chars.txt");
+  player.reset();
+  exp_hori_img = loadImage("graphics/exp_horizontal.png");
+  exp_vert_img = loadImage("graphics/exp_vertical.png");
+  exp_middle_img = loadImage("graphics/exp_middle.png");
 }

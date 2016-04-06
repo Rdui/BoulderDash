@@ -18,6 +18,15 @@ class Player {
     inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
     selectedItem = 0;
   }
+  
+  void reset(){
+    x = 0;
+    y = 0;
+    keys = 0;
+    setCoordinates(startX*32, startY*32+8);
+    inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    selectedItem = 0;
+  }
 
   void setCoordinates(int _x, int _y) {
     x = _x;
@@ -131,15 +140,16 @@ class Player {
       map[gridX][gridY].portalkey = false;
       player.keys += 1;
     }
-    if(map[gridX][gridY].portal && player.keys == 3)
-    {
-      
-    }
+    if (map[gridX][gridY].portal && player.keys == 3)
+      newLevel();
   }
 }
 
 void checkCreep(int x, int y) {
+  Boolean flag = false;
   for (Creep creep : creeps)
     if (creep.x == x && creep.y == y)
-      endGame();
+      flag = true;
+  if (flag)
+    endGame();
 }

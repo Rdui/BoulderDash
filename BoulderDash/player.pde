@@ -45,7 +45,7 @@ class Player {
     int gridY = this.getY();
 
     if (up == 1 && gridY > 0) {
-      if (this.is_mineable(gridX, gridY-1) == true) {
+      if (this.is_mineable(gridX, gridY-1)) {
         if (map[gridX][gridY-1].tileHp > 0) {
           map[gridX][gridY-1].tileHp -= 1;
           return;
@@ -119,9 +119,20 @@ class Player {
 
   // can the tile be mined
   boolean is_mineable(int gridX, int gridY) {
+    for (Boulder boulder : boulders) {
+      if(boulder.x == gridX && boulder.y == gridY){
+        println(boulder.x);
+        println(gridX);
+        println(boulder.y);
+        println(gridY);
+        return false;
+      }
+    }
     if (map[gridX][gridY].tileHp > -1) {
       return true;
-    } else {
+    }
+    
+    else {
       return false;
     }
   }

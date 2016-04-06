@@ -40,6 +40,7 @@ class Player {
     image(icon, x, y);
   }
 
+  // reduce tile health to the direction we are moving or move if there is no tile
   void move() {
     int gridX = this.getX();
     int gridY = this.getY();
@@ -56,9 +57,7 @@ class Player {
       if (map[gridX][gridY-1].empty == true) {
 
         y -= speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       }
     } else if (down == 1 && gridY < 21) {
@@ -69,13 +68,9 @@ class Player {
         }
         map[gridX][gridY+1].destroy();
       }
-
       if (map[gridX][gridY+1].empty == true) {
-
         y += speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       }
     } else if (left == 1 && gridX > 0) {
@@ -86,13 +81,9 @@ class Player {
         }
         map[gridX-1][gridY].destroy();
       }
-
       if (map[gridX-1][gridY].empty == true) {
-
         x -= speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       } else {
         println("seinä");
@@ -107,11 +98,8 @@ class Player {
       }
 
       if (map[gridX+1][gridY].empty == true) {
-
         x += speed;
-        this.drawPlayer();
         checkCreep(getX(), getY());
-        //delay(40);
         checkItem();
       }
     }
@@ -135,6 +123,7 @@ class Player {
       AbstractItem item = map[gridX][gridY].item;
       player.score += map[gridX][gridY].item.score;
       player.inventory.add(item);
+      pickups.remove(map[gridX][gridY].item);
       map[gridX][gridY].item = null;
     }
   }

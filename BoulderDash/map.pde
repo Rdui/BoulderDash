@@ -66,8 +66,6 @@ void loadMap(String mapPath, String charPath) {
         boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
       } else {
         map[x][y] = new Tile(tiles.get(row[x]));
-        if(row[x].equals("h"))
-          println(map[x][y].item);
       }
     }
   }

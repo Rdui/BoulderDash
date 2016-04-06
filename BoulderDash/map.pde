@@ -41,6 +41,11 @@ void loadMap(String mapPath, String charPath) {
       tile.item =  new Bomb(loadImage("graphics/"+split[2]), int(split[3]), int(split[4]), int(split[5]), split[6]+" "+split[7]); 
       tiles.put(split[1], tile);
       break;
+    case "score":
+      tile = new Tile(groundTile);
+      tile.item = new Coin(loadImage("graphics/"+split[2]), int(split[3]), split[4]);
+      tiles.put(split[1], tile);
+      break;
     }
   }
 

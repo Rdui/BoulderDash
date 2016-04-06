@@ -178,7 +178,7 @@ void drawInventory() {
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
 }
 
-void drawKeycount(){
+void drawKeycount() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(RIGHT);

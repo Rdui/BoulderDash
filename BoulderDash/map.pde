@@ -10,12 +10,13 @@ List<Boulder> boulders = new ArrayList<Boulder>();
 int startX; // player start point location
 int startY;
 int tile_;
-PImage bgTile, keyicon;
+PImage bgTile, keyicon, portalicon;
 Tile groundTile, emptyTile;
 
 void loadMap(String mapPath, String charPath) {
   bgTile = loadImage("graphics/bg.png");
   keyicon = loadImage("graphics/key.png");
+  portalicon = loadImage("graphics/portal.png");
   HashMap<String, Tile> tiles = new HashMap<String, Tile>();
 
   // 
@@ -40,6 +41,16 @@ void loadMap(String mapPath, String charPath) {
     case "bomb":
       tile = new Tile(groundTile);
       tile.item =  new Bomb(loadImage("graphics/"+split[2]), int(split[3]), int(split[4]), int(split[5]), split[6]+" "+split[7]); 
+      tiles.put(split[1], tile);
+      break;
+    case "portal":
+      tile = new Tile(groundTile);
+      tile.portal = true;
+      tiles.put(split[1], tile);
+      break;
+    case "portalkey":
+      tile = new Tile(groundTile);
+      tile.portalkey = true;
       tiles.put(split[1], tile);
       break;
     case "score":
@@ -70,12 +81,14 @@ void loadMap(String mapPath, String charPath) {
       } else if (row[x].equals("b")) {
         map[x][y] = new Tile(emptyTile);
         boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
-      } else if (row[x].equals("0")) {
-        Tile tile = new Tile(groundTile);
-        tile.portalkey = true;
-        map[x][y] = tile;
       } else {
-        map[x][y] = new Tile(tiles.get(row[x]));
+        if (tiles.containsKey(row[x])) {
+          map[x][y] = new Tile(tiles.get(row[x]));
+          //if (row[x].equals("P"))
+          //  if (map[x][y].portal)
+          //    println("asd");
+        } else
+          println("Illegal character in map, check map and char data!");
       }
     }
   }
@@ -86,12 +99,14 @@ void drawMap() {
   for (int y = 0; y < map[0].length; y++) {
     for (int x = 0; x < map.length; x++) {
       Tile tile = map[x][y];
-      if (!tile.empty)
+      if (!tile.empty) {
         image(map[x][y].image, x*32, y*32+8);
-      else if (tile.portalkey) // portal keys on empty tiles
+      } else if (tile.portalkey) { // portal keys on empty tiles
         image(keyicon, x*32, y*32+8);
-      else if (tile.item != null)
+      } else if (tile.item != null)
         image(tile.item.icon, x*32, y*32+8);
+      if (tile.portal)
+        image(portalicon, x*32, y*32+8);
     }
   }
 }

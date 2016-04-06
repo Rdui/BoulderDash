@@ -131,6 +131,10 @@ class Player {
       map[gridX][gridY].portalkey = false;
       player.keys += 1;
     }
+    if(map[gridX][gridY].portal && player.keys == 3)
+    {
+      
+    }
   }
 }
 

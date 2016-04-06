@@ -37,11 +37,10 @@ void loadMap(String mapPath, String charPath) {
       tiles.put(split[1], tile);
       break;
     case "bomb":
-      tile = groundTile;
+      tile = new Tile(groundTile);
       tile.item =  new Bomb(loadImage("graphics/"+split[2]), int(split[3]), int(split[4]), int(split[5]), split[6]+" "+split[7]); 
       tiles.put(split[1], tile);
       break;
-    
     }
   }
 
@@ -62,13 +61,13 @@ void loadMap(String mapPath, String charPath) {
         startX = x;
         startY = y;
         map[x][y] = new Tile(emptyTile);
-      } else if (row[x].equals("b")){
-          map[x][y] = new Tile(emptyTile);
-          boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
-      }
-      
-      else {
+      } else if (row[x].equals("b")) {
+        map[x][y] = new Tile(emptyTile);
+        boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
+      } else {
         map[x][y] = new Tile(tiles.get(row[x]));
+        if(row[x].equals("h"))
+          println(map[x][y].item);
       }
     }
   }

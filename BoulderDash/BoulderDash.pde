@@ -41,7 +41,6 @@ void setup() {
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
-
 }
 
 void printStory() {
@@ -97,16 +96,13 @@ void draw() {
 void processBoulders() { // checks if the boulder has free spece underneath it -> falling animation
   for (Boulder boulder : boulders) {
     image(boulder.image, 32*boulder.x, 32*boulder.y+8);
-    if(millis()- time > 1000){
-      if (map[boulder.x][boulder.y+1].empty == true){
-        println("ID");
-        boulder.y += 1;
-        time = millis();
-      }
+    if (millis()- time > 1000) {
+      boulder.y += 1;
+      time = millis();
     }
   }
 }
-  
+
 
 void processFlames() {
   List<Flame> deadFlames = new ArrayList<Flame>();
@@ -182,9 +178,9 @@ void drawInventory() {
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
 }
 
-void drawPickups(){
-  for(AbstractItem item : pickups){
-   image(item.icon, 32*item.x, 32*item.y*8); 
+void drawPickups() {
+  for (AbstractItem item : pickups) {
+    image(item.icon, 32*item.x, 32*item.y+8);
   }
 }
 // switch case structure to monitor state of the game

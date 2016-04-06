@@ -19,6 +19,7 @@ class Tile {
     this.canWalk = another.canWalk;
     this.empty = another.empty;
     this.tileHp = another.tileHp;
+    this.item = another.item;
   }
 
   //destroys this tile

@@ -78,7 +78,7 @@ void loadMap(String mapPath, String charPath) {
         startX = x;
         startY = y;
         map[x][y] = new Tile(emptyTile);
-<<<<<<< HEAD
+
       } else if (row[x].equals("b")){
           map[x][y] = new Tile(emptyTile);
           boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true, false)); /// adds boulders to the boulders array that is used in processBoulders function
@@ -86,19 +86,6 @@ void loadMap(String mapPath, String charPath) {
       
       else {
         map[x][y] = new Tile(tiles.get(row[x]));
-=======
-      } else if (row[x].equals("b")) {
-        map[x][y] = new Tile(emptyTile);
-        boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true)); /// adds boulders to the boulders array that is used in processBoulders function
-      } else {
-        if (tiles.containsKey(row[x])) {
-          map[x][y] = new Tile(tiles.get(row[x]));
-          //if (row[x].equals("P"))
-          //  if (map[x][y].portal)
-          //    println("asd");
-        } else
-          println("Illegal character in map, check map and char data!");
->>>>>>> 76ae5f1ed2c71d3d8d82b76e27bcab2c462dce65
       }
     }
   }

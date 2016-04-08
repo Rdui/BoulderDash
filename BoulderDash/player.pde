@@ -95,7 +95,6 @@ class Player {
         checkCreep(getX(), getY());
         checkItem();
       } else {
-        println("seinä");
       }
     } else if (right == 1 && gridX < 39) {
       if (this.is_mineable(gridX+1, gridY) == true) {
@@ -118,10 +117,6 @@ class Player {
   boolean is_mineable(int gridX, int gridY) {
     for (Boulder boulder : boulders) {
       if(boulder.x == gridX && boulder.y == gridY){
-        println(boulder.x);
-        println(gridX);
-        println(boulder.y);
-        println(gridY);
         return false;
       }
     }

@@ -15,7 +15,7 @@ class Player {
     y = _y;
     icon = icon_;
     setCoordinates(startX*32, startY*32+8);
-    inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    inventory.add(basicBomb);
     selectedItem = 0;
   }
   

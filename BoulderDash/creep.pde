@@ -5,7 +5,7 @@ int lastMove = 0;
 class Creep {
   int x, y;
   PImage icon;
-  Boolean canMine;
+  Boolean canMine, suicide = false;
 
   Creep(int x_, int y_, PImage icon_, Boolean canMine_) {
     x = x_;
@@ -41,6 +41,18 @@ class Creep {
 
   void draw() {
     image(icon, 32*x, 32*y+8);
+  }
+  
+  void kill(){
+    creeps.remove(this);
+    // suicide creep implementation
+    if(suicide){
+      Bomb bomb = new Bomb(basicBomb);
+      bomb.setPosition(this.x, this.y);
+      bomb.bombTimer = millis()+2000;
+      bomb.explosive = true;
+      bombs.add(bomb);
+    }
   }
 }
 

@@ -25,6 +25,8 @@ PImage exp_vert_img;
 PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
+// normal bomb
+Bomb basicBomb;
 
 
 int time = 0, mapCount = 0;
@@ -32,7 +34,9 @@ int time = 0, mapCount = 0;
 
 
 void setup() {
-  mapCount = 2;
+  basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
+  // maps start with file named map+mapCount
+  mapCount = 0;
   size(1280, 720);
   frameRate(60);
   background(backgroundColor);
@@ -126,9 +130,11 @@ void processBoulders() {
           {
             if (creep.x == boulder.x && creep.y == boulder.y+1) {
               deadCreep = creep;
+              break;
             }
           }
-          creeps.remove(deadCreep);
+          if (deadCreep != null)
+            deadCreep.kill();
           boulder.y += 1;
         } else if (creepIsBelow(boulder.x, boulder.y) == true && boulder.hasMomentum == false) {//  creep is below a boulder but the boulder has no momentum
         }

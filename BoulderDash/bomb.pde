@@ -7,6 +7,7 @@ class Bomb extends AbstractItem {
   int x;
   int y;
   int bombTimer = 0;
+  int thisBombLeft = 2;
   Boolean explosive = false; // is this instance supposed to explode
 
   Bomb(PImage icon_, int radius_, int shape_, int delay_, String name) {
@@ -24,13 +25,14 @@ class Bomb extends AbstractItem {
   }
 
   void Use(AbstractItem item) {
-    if (player.bombsLeft > 0) {
+    if (thisBombLeft > 0) {
       Bomb bomb = new Bomb((Bomb)item);
       bomb.setPosition(player.getX(), player.getY());
       bombs.add(bomb);
       bomb.bombTimer = millis()+delay*1000;
       bomb.explosive = true;
-      player.bombsLeft--;
+      //player.bombsLeft--;
+      thisBombLeft--;
     }
   }
 
@@ -41,7 +43,7 @@ class Bomb extends AbstractItem {
 
   // calls the righ shape constructor
   void explode() {
-    player.bombsLeft++;
+    //player.bombsLeft++;
     if (shape == 0)
       plusExplosion();
   }

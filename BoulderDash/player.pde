@@ -7,7 +7,7 @@ class Player {
   int selectedItem = -1;
   int keys = 0;
   List<AbstractItem> inventory = new ArrayList<AbstractItem>();
-  int bombsLeft = 1;
+  int bombsLeft = 2;
 
 
   Player(int _x, int _y, PImage icon_) {

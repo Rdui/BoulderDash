@@ -43,6 +43,7 @@ class Creep {
     image(icon, 32*x, 32*y+8);
   }
   
+  // deletes a creep
   void kill(){
     creeps.remove(this);
     // suicide creep implementation

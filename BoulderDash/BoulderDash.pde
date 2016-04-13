@@ -87,9 +87,11 @@ void draw() {
 
     for (int i = 0; i < creeps.size(); i++)
     {
+      Creep creep = creeps.get(i);
       if (abs(second()-lastMove) > 0.5)
-        creeps.get(i).moveRandom();
-      creeps.get(i).draw();
+        creep.moveRandom();
+      if (creep != null)
+        creeps.get(i).draw();
     }
 
     if (abs(second()-lastMove) > 0.5)
@@ -181,6 +183,15 @@ void processFlames() {
       dead = true;
       break;
     }
+    Creep deadCreep = null;
+    for (Creep creep : creeps) {
+      if (creep.x == flame.x && creep.y == flame.y) {
+        deadCreep = creep;
+        break;
+      }
+    }
+    if (deadCreep != null)
+      deadCreep.kill();
     if (millis() >= flame.flameTimer)
       deadFlames.add(flame);
   }

@@ -175,6 +175,13 @@ void processFlames() {
       dead = true;
       break;
     }
+    Creep deadCreep = null;
+    for (Creep creep : creeps) {
+      if (creep.x == flame.x && creep.y == flame.y){
+        deadCreep = creep;
+      }
+    }
+    creeps.remove(deadCreep);
     if (millis() >= flame.flameTimer)
       deadFlames.add(flame);
   }

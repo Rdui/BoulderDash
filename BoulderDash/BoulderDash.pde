@@ -32,7 +32,7 @@ int time = 0, mapCount = 0;
 
 
 void setup() {
-  mapCount = 0;
+  mapCount = 2;
   size(1280, 720);
   frameRate(60);
   background(backgroundColor);

@@ -18,6 +18,7 @@ color backgroundColor = color(22);
 Player player;
 
 PImage img;
+PImage selector;
 PImage bomb_1_img;
 PImage bomb_2_img;
 PImage exp_hori_img;
@@ -35,13 +36,16 @@ void setup() {
   mapCount = 2;
   size(1280, 720);
   frameRate(60);
+  noSmooth();
   background(backgroundColor);
   loadMap("Maps/map"+mapCount+".txt", "chars.txt");
   player = new Player(0, 0, loadImage("graphics/player.png"));
   mainMenuSetup();
+  selector = loadImage("graphics/selected.png");
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
+  scale(0.1);
 }
 
 void printStory() {
@@ -60,6 +64,7 @@ void printStory() {
 
 // switch case structure to monitor state of the game
 void draw() {
+  
   background(backgroundColor);
   switch(state) {
   case State.WAIT_USER_INPUT:
@@ -69,6 +74,7 @@ void draw() {
     printStory();
     break;
   case State.GAME:
+    //println(frameRate);
     drawBackground();
     drawMap();
     processFlames();
@@ -243,8 +249,16 @@ void drawInventory() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
-  if (player.selectedItem > -1);
-  text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);
+  int axis = 10;
+  for (AbstractItem item: player.inventory){
+    image(item.icon, axis, 10);
+    if (player.inventory.get(player.selectedItem) == item){
+      image(selector, axis, 10);
+    }
+    axis += 40;
+  }
+  /*if (player.selectedItem > -1);
+  text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);*/
 }
 
 void drawKeycount() {

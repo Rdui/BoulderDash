@@ -5,6 +5,7 @@ abstract class AbstractItem {
   PImage icon;
   Boolean visible = false; // visible in inventory
   String itemName;
+  int thisBombLeft = 1;
   
   AbstractItem(PImage i, int s, Boolean v, String n) {
     icon = i;

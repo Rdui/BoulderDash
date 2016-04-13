@@ -7,7 +7,7 @@ class Bomb extends AbstractItem {
   int x;
   int y;
   int bombTimer = 0;
-  int thisBombLeft = 2;
+  
   Boolean explosive = false; // is this instance supposed to explode
 
   Bomb(PImage icon_, int radius_, int shape_, int delay_, String name) {

@@ -259,13 +259,15 @@ void drawInventory() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
-  int axis = 10;
+  int axis = 200;
   for (AbstractItem item: player.inventory){
     image(item.icon, axis, 10);
     if (player.inventory.get(player.selectedItem) == item){
       image(selector, axis, 10);
+      
     }
-    axis += 40;
+    text(item.thisBombLeft,axis+9,72);
+    axis += 48;
   }
   /*if (player.selectedItem > -1);
   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);*/

@@ -134,17 +134,31 @@ class Player {
   {
     int gridX = this.getX();
     int gridY = this.getY();
+    Boolean exists = false;
     if (map[gridX][gridY].item != null) {
-      AbstractItem item = map[gridX][gridY].item;
+      for(AbstractItem listItem: player.inventory){
+        if (listItem == map[gridX][gridY].item){
+          exists = true;
+          listItem.thisBombLeft += 1;
+        }
+      }
+      if(exists == false){
+         AbstractItem item = map[gridX][gridY].item;
+         player.inventory.add(item);
+      }
+   
+      
+      
       player.score += map[gridX][gridY].item.score;
-      player.inventory.add(item);
+      
       pickups.remove(map[gridX][gridY].item);
       map[gridX][gridY].item = null;
     }
-    if (map[gridX][gridY].portalkey)
+    if (map[gridX][gridY].portalkey);
     {
       map[gridX][gridY].portalkey = false;
       player.keys += 1;
+      println("yolo");
     }
     if (map[gridX][gridY].portal && player.keys == 3)
       newLevel();

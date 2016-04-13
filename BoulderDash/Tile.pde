@@ -1,4 +1,4 @@
-class Tile { //<>// //<>//
+class Tile { //<>// //<>// //<>//
   char c;
   PImage image; // tile graphics
   Boolean canWalk, empty, portalkey = false, portal = false; // can the tile be mined, is it a clear space
@@ -15,13 +15,13 @@ class Tile { //<>// //<>//
 
   // clone
   Tile(Tile another) {
-    this.image = another.image; //<>//
-    this.canWalk = another.canWalk;
-    this.empty = another.empty;
-    this.tileHp = another.tileHp;
-    this.item = another.item;
-    this.portal = another.portal;
-    this.portalkey = another.portalkey;
+      this.image = another.image;
+      this.canWalk = another.canWalk;
+      this.empty = another.empty;
+      this.tileHp = another.tileHp;
+      this.item = another.item;
+      this.portal = another.portal;
+      this.portalkey = another.portalkey;
   }
 
   //destroys this tile

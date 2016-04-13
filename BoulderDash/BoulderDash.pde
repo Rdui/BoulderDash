@@ -26,6 +26,8 @@ PImage exp_vert_img;
 PImage exp_middle_img;
 PImage backgroundimage;
 String[] scores;
+// normal bomb
+Bomb basicBomb;
 
 
 int time = 0, mapCount = 0;
@@ -33,7 +35,9 @@ int time = 0, mapCount = 0;
 
 
 void setup() {
-  mapCount = 2;
+  basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
+  // maps start with file named map+mapCount
+  mapCount = 0;
   size(1280, 720);
   frameRate(60);
   noSmooth();
@@ -89,9 +93,11 @@ void draw() {
 
     for (int i = 0; i < creeps.size(); i++)
     {
+      Creep creep = creeps.get(i);
       if (abs(second()-lastMove) > 0.5)
-        creeps.get(i).moveRandom();
-      creeps.get(i).draw();
+        creep.moveRandom();
+      if (creep != null)
+        creeps.get(i).draw();
     }
 
     if (abs(second()-lastMove) > 0.5)
@@ -132,9 +138,11 @@ void processBoulders() {
           {
             if (creep.x == boulder.x && creep.y == boulder.y+1) {
               deadCreep = creep;
+              break;
             }
           }
-          creeps.remove(deadCreep);
+          if (deadCreep != null)
+            deadCreep.kill();
           boulder.y += 1;
         } else if (creepIsBelow(boulder.x, boulder.y) == true && boulder.hasMomentum == false) {//  creep is below a boulder but the boulder has no momentum
         }
@@ -183,11 +191,13 @@ void processFlames() {
     }
     Creep deadCreep = null;
     for (Creep creep : creeps) {
-      if (creep.x == flame.x && creep.y == flame.y){
+      if (creep.x == flame.x && creep.y == flame.y) {
         deadCreep = creep;
+        break;
       }
     }
-    creeps.remove(deadCreep);
+    if (deadCreep != null)
+      deadCreep.kill();
     if (millis() >= flame.flameTimer)
       deadFlames.add(flame);
   }

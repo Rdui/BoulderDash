@@ -7,7 +7,7 @@ class Player {
   int selectedItem = -1;
   int keys = 0;
   List<AbstractItem> inventory = new ArrayList<AbstractItem>();
-  int bombsLeft = 1;
+  int bombsLeft = 2;
 
 
   Player(int _x, int _y, PImage icon_) {
@@ -15,7 +15,7 @@ class Player {
     y = _y;
     icon = icon_;
     setCoordinates(startX*32, startY*32+8);
-    inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    inventory.add(basicBomb);
     selectedItem = 0;
   }
   

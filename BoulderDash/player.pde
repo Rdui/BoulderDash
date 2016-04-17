@@ -154,13 +154,12 @@ class Player {
       pickups.remove(map[gridX][gridY].item);
       map[gridX][gridY].item = null;
     }
-    if (map[gridX][gridY].portalkey);
+    if (map[gridX][gridY].portalkey)
     {
       map[gridX][gridY].portalkey = false;
       player.keys += 1;
-      println("yolo");
     }
-    if (map[gridX][gridY].portal && player.keys == 3)
+    else if (map[gridX][gridY].portal && player.keys == 3)
       newLevel();
   }
 }

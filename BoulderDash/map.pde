@@ -66,7 +66,8 @@ void loadMap(String mapPath, String charPath) {
   for (int y = 0; y < mapLines.length; y++) {
     String[] row = split(mapLines[y], ' ');
     //println(row[0], row[1], row[2]);
-    for (int x = 0; x < row.length; x++) {
+    for (int x = 0; x < row.length; x++) 
+    {
       if (row[x].equals("!")) {
         map[x][y] = new Tile(emptyTile);
         creeps.add(new Creep(x, y, loadImage("graphics/creep.png"), false));
@@ -89,7 +90,7 @@ void loadMap(String mapPath, String charPath) {
         boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true, false)); /// adds boulders to the boulders array that is used in processBoulders function
       } else {
           map[x][y] = new Tile(tiles.get(row[x]));
-      }
+      }  
     }
   }
 }

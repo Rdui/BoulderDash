@@ -59,7 +59,6 @@ class Bomb extends AbstractItem {
         map[x+fx][y].item.x = x+fx;
         map[x+fx][y].item.y =y;
       }
-      
       map[x+fx][y].destroy();      
       flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x+fx, y, 15));
     }
@@ -67,13 +66,13 @@ class Bomb extends AbstractItem {
       if ( y+fy > 21 || y+fy <= 0 || map[x][y+fy].tileHp == -1 ){
         continue;
       }
-      flames.add(new Flame(loadImage("graphics/explosionvertical.png"), x, y+fy, 15));
       if (map[x][y+fy].item != null) {
         pickups.add(map[x][y+fy].item);
         map[x][y+fy].item.x = x;
         map[x][y+fy].item.y =y+fy;
       }
       map[x][y+fy].destroy();
+      flames.add(new Flame(loadImage("graphics/explosionvertical.png"), x, y+fy, 15));
     }
   }
 }

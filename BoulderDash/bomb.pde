@@ -7,7 +7,7 @@ class Bomb extends AbstractItem {
   int x;
   int y;
   int bombTimer = 0;
-  
+
   Boolean explosive = false; // is this instance supposed to explode
 
   Bomb(PImage icon_, int radius_, int shape_, int delay_, String name) {
@@ -51,7 +51,7 @@ class Bomb extends AbstractItem {
   void plusExplosion() {
     flames.add(new Flame(loadImage("graphics/explosionmiddle.png"), x, y, 15));
     for (int fx = (x-radius > -1 ? -radius : -x); fx <= radius; fx++) {
-      if ( x+fx > 39 || x+fx <= 0 || map[x+fx][y].tileHp == -1 ){
+      if ( x+fx > 39 || x+fx <= 0 || map[x+fx][y].tileHp == -1 ) {
         continue;
       }
       if (map[x+fx][y].item != null) {
@@ -63,9 +63,10 @@ class Bomb extends AbstractItem {
       flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x+fx, y, 15));
     }
     for (int fy = (y-radius > -1 ? -radius : -y); fy <= radius; fy++) {
+      if (map[x][y+fy].tileHp == -1)
       if ( y+fy > 21 || y+fy <= 0 || map[x][y+fy].tileHp == -1 ){
-        continue;
-      }
+       continue;
+       }
       if (map[x][y+fy].item != null) {
         pickups.add(map[x][y+fy].item);
         map[x][y+fy].item.x = x;

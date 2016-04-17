@@ -34,6 +34,7 @@ class Creep {
       x = positions.get(i).x;
       y = positions.get(i).y;
       map[x][y].empty = true;
+      map[x][y].tileHp = 2;
       if (x == player.getX() && y == player.getY())
         endGame();
     }

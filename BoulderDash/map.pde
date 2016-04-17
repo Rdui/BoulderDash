@@ -68,16 +68,16 @@ void loadMap(String mapPath, String charPath) {
     //println(row[0], row[1], row[2]);
     for (int x = 0; x < row.length; x++) 
     {
-      if (row[x].equals("!")) {
+      if (row[x].equals("!")) { // normal creep
         map[x][y] = new Tile(emptyTile);
         creeps.add(new Creep(x, y, loadImage("graphics/creep.png"), false));
       } else if (row[x].equals("?"))
       {
-        map[x][y] = new Tile(emptyTile);
+        map[x][y] = new Tile(emptyTile); // mining creep
         creeps.add(new Creep(x, y, loadImage("graphics/worm.png"), true));
       } else if (row[x].equals("+"))
       {
-        map[x][y] = new Tile(emptyTile);
+        map[x][y] = new Tile(emptyTile); // suicide creep
         Creep creep = new Creep(x, y, loadImage("graphics/bombcreep.png"), false);
         creep.suicide = true;
         creeps.add(creep);
@@ -90,7 +90,7 @@ void loadMap(String mapPath, String charPath) {
         boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true, false)); /// adds boulders to the boulders array that is used in processBoulders function
       } else {
           map[x][y] = new Tile(tiles.get(row[x]));
-      }  
+      } 
     }
   }
 }

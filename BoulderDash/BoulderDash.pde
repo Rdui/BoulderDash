@@ -68,7 +68,7 @@ void printStory() {
 
 // switch case structure to monitor state of the game
 void draw() {
-  
+
   background(backgroundColor);
   switch(state) {
   case State.WAIT_USER_INPUT:
@@ -121,7 +121,7 @@ void processBoulders() {
       map[boulder.x][boulder.y].empty = false;
       map[boulder.x][boulder.y].tileHp = -1;
       if (boulder.y <= 20 && map[boulder.x][boulder.y+1].empty == true) { // empty tile beneath the boulder
-        if ((playerIsBelow(boulder.x, boulder.y) == false && creepIsBelow(boulder.x, boulder.y) == false)) { // no tiles or players or creeps below the boulder
+        if (!playerIsBelow(boulder.x, boulder.y) && !creepIsBelow(boulder.x, boulder.y)) { // no tiles or players or creeps below the boulder
           boulder.hasMomentum = true;
           map[boulder.x][boulder.y].empty = true;
           map[boulder.x][boulder.y].tileHp = 2;
@@ -260,17 +260,16 @@ void drawInventory() {
   textSize(25);
   textAlign(LEFT);
   int axis = 200;
-  for (AbstractItem item: player.inventory){
+  for (AbstractItem item : player.inventory) {
     image(item.icon, axis, 10);
-    if (player.inventory.get(player.selectedItem) == item){
+    if (player.inventory.get(player.selectedItem) == item) {
       image(selector, axis, 10);
-      
     }
-    text(item.thisBombLeft,axis+9,72);
+    text(item.thisBombLeft, axis+9, 72);
     axis += 48;
   }
   /*if (player.selectedItem > -1);
-  text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);*/
+   text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);*/
 }
 
 void drawKeycount() {

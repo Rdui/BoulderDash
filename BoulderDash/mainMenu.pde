@@ -58,5 +58,14 @@ void handleButtonEvents(GButton button, GEvent event) {
       button.dispose();
       state = State.STORY;
     }
+  }if(button == levelSelectButton && event == GEvent.CLICKED){ // switch to level selection view
+    disposeButtons();
   }
+}
+
+// get rid of all buttons
+void disposeButtons(){
+    startButton.dispose();
+    levelSelectButton.dispose();
+    quitButton.dispose();
 }

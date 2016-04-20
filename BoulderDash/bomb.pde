@@ -63,8 +63,8 @@ class Bomb extends AbstractItem {
       flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x+fx, y, 15));
     }
     for (int fy = (y-radius > -1 ? -radius : -y); fy <= radius; fy++) {
-      if (map[x][y+fy].tileHp == -1)
-      if ( y+fy > 21 || y+fy <= 0 || map[x][y+fy].tileHp == -1 ){
+      //if (map[x][y+fy].tileHp == -1)
+      if ( y+fy > 21 || y+fy < 0 || map[x][y+fy].tileHp == -1 ){
        continue;
        }
       if (map[x][y+fy].item != null) {

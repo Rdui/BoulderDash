@@ -1,18 +1,20 @@
-// This file defines mainmenu functionality
+// This file defines main menu functionality
 
 
 String playerName = "";
 GButton startButton;
+GButton levelSelectButton;
 GButton quitButton;
 GEvent buttonEvent;
 
+// initialize buttons
 void mainMenuSetup() {
-  startButton = new GButton(this, width/2.9, height/2.2, 400, 50, "Aloita peli!");
+  startButton = new GButton(this, width/2.9, height/4, 400, 50, "Start new game");
+  levelSelectButton = new GButton(this, width/2.9, height/3, 400, 50, "Select a level");
+  quitButton = new GButton(this, width/2.9, height/2.4, 400, 50, "Exit");
 }
 
-
-void mainMenuDraw() {
-
+void nameSelectDraw() {
   // "Type player name"
   fill(255);
   textSize(30);

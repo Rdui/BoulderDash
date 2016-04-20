@@ -56,11 +56,14 @@ class Player {
 
     if (up == 1 && gridY > 0) {
       if (this.is_mineable(gridX, gridY-1)) {
-        if (map[gridX][gridY-1].tileHp >= 0) {
+        
+        if (map[gridX][gridY-1].tileHp > 0) {
+          println("tuhottu");
           map[gridX][gridY-1].tileHp -= 1;
           return;
         }
         map[gridX][gridY-1].destroy();
+        
       }
 
       if (map[gridX][gridY-1].empty == true) {
@@ -71,7 +74,7 @@ class Player {
       }
     } else if (down == 1 && gridY < 21) {
       if ( this.is_mineable(gridX, gridY+1) == true) {
-        if (map[gridX][gridY+1].tileHp >= 0) {
+        if (map[gridX][gridY+1].tileHp > 0) {
           map[gridX][gridY+1].tileHp -= 1;
           return;
         }
@@ -84,7 +87,7 @@ class Player {
       }
     } else if (left == 1 && gridX > 0) {
       if (this.is_mineable(gridX-1, gridY) == true) {
-        if (map[gridX-1][gridY].tileHp >= 0) {
+        if (map[gridX-1][gridY].tileHp > 0) {
           map[gridX-1][gridY].tileHp -= 1;
           return;
         }
@@ -98,7 +101,7 @@ class Player {
       }
     } else if (right == 1 && gridX < 39) {
       if (this.is_mineable(gridX+1, gridY) == true) {
-        if (map[gridX+1][gridY].tileHp >= 0) {
+        if (map[gridX+1][gridY].tileHp >  0) {
           map[gridX+1][gridY].tileHp -= 1;
           return;
         }

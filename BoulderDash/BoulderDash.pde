@@ -8,6 +8,7 @@ interface State {
   byte STORY = 1;
   byte GAME= 2;
   byte END = 3;
+  byte PAUSE = 4;
 }
 
 
@@ -69,7 +70,7 @@ void printStory() {
 // switch case structure to monitor state of the game
 void draw() {
 
-  background(backgroundColor);
+  
   switch(state) {
   case State.WAIT_USER_INPUT:
     mainMenuDraw();
@@ -78,6 +79,7 @@ void draw() {
     printStory();
     break;
   case State.GAME:
+    background(backgroundColor);
     //println(frameRate);
     drawBackground();
     drawMap();
@@ -103,8 +105,17 @@ void draw() {
     if (abs(second()-lastMove) > 0.5)
       lastMove = second();
     break;
+  
+  case State.PAUSE:
+    textAlign(CENTER);
+    fill(69,420,1337); // dank color
+    text("PAUSED", width/2, height/3+50);
+    text("press p to continue", width/2, height/3+100);
+    break;
+  
   case State.END:
     printScores();
+    break;
   }
 }
 void drawBoulders() { // draws the boulders in the boulders list.
@@ -117,11 +128,11 @@ void drawBoulders() { // draws the boulders in the boulders list.
 void processBoulders() {
   if (millis()- time > 500) {
     Boolean flag = false;
-    for (int i = boulders.size() - 1; i != 0 ; i--) {
+    for (int i = boulders.size() - 1; i >= 0 ; i--) {
       map[boulders.get(i).x][boulders.get(i).y].empty = false;
       map[boulders.get(i).x][boulders.get(i).y].tileHp = -1;
       if (boulders.get(i).y <= 20 && map[boulders.get(i).x][boulders.get(i).y+1].empty == true) { // empty tile beneath the boulder
-        println(boulders.get(i).y+"  " + boulders.get(i).x+ "  " +map[boulders.get(i).x][boulders.get(i).y].empty);
+        //println(boulders.get(i).y+"  " + boulders.get(i).x+ "  " +map[boulders.get(i).x][boulders.get(i).y].empty);
         if (!playerIsBelow(boulders.get(i).x,boulders.get(i).y) && !creepIsBelow(boulders.get(i).x, boulders.get(i).y)) { // no tiles or players or creeps below the boulder
           boulders.get(i).hasMomentum = true;
           map[boulders.get(i).x][boulders.get(i).y].empty = true;
@@ -292,6 +303,7 @@ void keyTyped() {
     break;
   case State.GAME:
     break;
+  case State.PAUSE:
   }
 }
 
@@ -303,8 +315,12 @@ void keyPressed() {
   case State.STORY:
     break;
   case State.GAME:
+    pauseKeyPressed();
     movementKeyPressed();
     useKeyPressed();
+    break;
+  case State.PAUSE:
+    movementKeyReleased();
     pauseKeyPressed();
     break;
   }
@@ -320,6 +336,8 @@ void keyReleased() {
   case State.GAME:
     movementKeyReleased();
     break;
+  case State.PAUSE:
+    movementKeyReleased();
   }
 }
 

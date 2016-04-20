@@ -51,11 +51,12 @@ void useKeyPressed() {
 
 void pauseKeyPressed() {
   if (key == 'p' || key ==  'P') {
-    if (looping){
-      noLoop();
+    if (state == State.GAME){
+      println("dsad");
+      state = State.PAUSE;
     }
     else{
-      loop();
+      state = State.GAME;
     }
   }
 }

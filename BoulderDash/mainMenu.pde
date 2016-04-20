@@ -1,18 +1,21 @@
-// This file defines mainmenu functionality
+// This file defines main menu functionality
 
 
 String playerName = "";
-GButton startButton;
+GButton newButton;
+GButton levelSelectButton;
 GButton quitButton;
+GButton startButton;
 GEvent buttonEvent;
 
+// initialize buttons
 void mainMenuSetup() {
-  startButton = new GButton(this, width/2.9, height/2.2, 400, 50, "Aloita peli!");
+  newGameButton = new GButton(this, width/2.9, height/4, 400, 50, "Start new game");
+  levelSelectButton = new GButton(this, width/2.9, height/3, 400, 50, "Select a level");
+  quitButton = new GButton(this, width/2.9, height/2.4, 400, 50, "Exit");
 }
 
-
-void mainMenuDraw() {
-
+void nameSelectDraw() {
   // "Type player name"
   fill(255);
   textSize(30);
@@ -56,5 +59,15 @@ void handleButtonEvents(GButton button, GEvent event) {
       button.dispose();
       state = State.STORY;
     }
+  }if(button == levelSelectButton && event == GEvent.CLICKED){ // switch to level selection view
+    disposeMainButtons();
+    state = State.SELECT_LEVEL;
   }
+}
+
+// get rid of main menu buttons
+void disposeMainButtons(){
+    newGameButton.dispose();
+    levelSelectButton.dispose();
+    quitButton.dispose();
 }

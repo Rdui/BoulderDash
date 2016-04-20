@@ -1,4 +1,4 @@
-class Tile { //<>// //<>// //<>//
+class Tile { //<>//
   char c;
   PImage image; // tile graphics
   Boolean canWalk, empty, portalkey = false, portal = false; // can the tile be mined, is it a clear space

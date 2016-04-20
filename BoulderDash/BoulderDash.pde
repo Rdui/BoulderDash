@@ -8,7 +8,10 @@ interface State {
   byte STORY = 1;
   byte GAME= 2;
   byte END = 3;
-  byte PAUSE = 4;
+  byte SELECT_LEVEL = 4;
+  byte NAME_INPUT = 5;
+  byte PAUSE = 6;
+
 }
 
 
@@ -73,7 +76,9 @@ void draw() {
   
   switch(state) {
   case State.WAIT_USER_INPUT:
-    mainMenuDraw();
+    break;
+  case State.NAME_INPUT:
+    nameSelectDraw();
     break;
   case State.STORY:
     printStory();
@@ -134,6 +139,7 @@ void processBoulders() {
       if (boulders.get(i).y <= 20 && map[boulders.get(i).x][boulders.get(i).y+1].empty == true) { // empty tile beneath the boulder
         //println(boulders.get(i).y+"  " + boulders.get(i).x+ "  " +map[boulders.get(i).x][boulders.get(i).y].empty);
         if (!playerIsBelow(boulders.get(i).x,boulders.get(i).y) && !creepIsBelow(boulders.get(i).x, boulders.get(i).y)) { // no tiles or players or creeps below the boulder
+
           boulders.get(i).hasMomentum = true;
           map[boulders.get(i).x][boulders.get(i).y].empty = true;
           map[boulders.get(i).x][boulders.get(i).y].tileHp = 2;

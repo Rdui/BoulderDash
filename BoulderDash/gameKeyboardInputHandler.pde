@@ -48,3 +48,14 @@ void useKeyPressed() {
     player.inventory.get(player.selectedItem).Use(player.inventory.get(player.selectedItem));
   }
 }
+
+void pauseKeyPressed() {
+  if (key == 'p' || key ==  'P') {
+    if (looping){
+      noLoop();
+    }
+    else{
+      loop();
+    }
+  }
+}

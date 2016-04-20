@@ -30,7 +30,7 @@ String[] scores;
 Bomb basicBomb;
 
 
-int time = 0, mapCount = 0;
+int time = 500, mapCount = 0;
 
 
 
@@ -117,37 +117,38 @@ void drawBoulders() { // draws the boulders in the boulders list.
 void processBoulders() {
   if (millis()- time > 500) {
     Boolean flag = false;
-    for (Boulder boulder : boulders) {
-      map[boulder.x][boulder.y].empty = false;
-      map[boulder.x][boulder.y].tileHp = -1;
-      if (boulder.y <= 20 && map[boulder.x][boulder.y+1].empty == true) { // empty tile beneath the boulder
-        if (!playerIsBelow(boulder.x, boulder.y) && !creepIsBelow(boulder.x, boulder.y)) { // no tiles or players or creeps below the boulder
-          boulder.hasMomentum = true;
-          map[boulder.x][boulder.y].empty = true;
-          map[boulder.x][boulder.y].tileHp = 2;
-          boulder.y += 1;
-          map[boulder.x][boulder.y].empty = false;
-          map[boulder.x][boulder.y].tileHp = -1;
-        } else if (playerIsBelow(boulder.x, boulder.y) == true && boulder.hasMomentum == true) { // boulder has momentum and the player is beneath it
+    for (int i = boulders.size() - 1; i != 0 ; i--) {
+      map[boulders.get(i).x][boulders.get(i).y].empty = false;
+      map[boulders.get(i).x][boulders.get(i).y].tileHp = -1;
+      if (boulders.get(i).y <= 20 && map[boulders.get(i).x][boulders.get(i).y+1].empty == true) { // empty tile beneath the boulder
+        println(boulders.get(i).y+"  " + boulders.get(i).x+ "  " +map[boulders.get(i).x][boulders.get(i).y].empty);
+        if (!playerIsBelow(boulders.get(i).x,boulders.get(i).y) && !creepIsBelow(boulders.get(i).x, boulders.get(i).y)) { // no tiles or players or creeps below the boulder
+          boulders.get(i).hasMomentum = true;
+          map[boulders.get(i).x][boulders.get(i).y].empty = true;
+          map[boulders.get(i).x][boulders.get(i).y].tileHp = 2;
+          boulders.get(i).y += 1;
+          map[boulders.get(i).x][boulders.get(i).y].empty = false;
+          map[boulders.get(i).x][boulders.get(i).y].tileHp = -1;
+        } else if (playerIsBelow(boulders.get(i).x, boulders.get(i).y) == true && boulders.get(i).hasMomentum == true) { // boulder has momentum and the player is beneath it
           flag = true;
           break;
-        } else if (playerIsBelow(boulder.x, boulder.y) == true && boulder.hasMomentum == false) {//  player is below but boulder has no momentum
-        } else if (creepIsBelow(boulder.x, boulder.y) == true && boulder.hasMomentum == true) { // boulder has momentum and a creep is beneath it
+        } else if (playerIsBelow(boulders.get(i).x, boulders.get(i).y) == true && boulders.get(i).hasMomentum == false) {//  player is below but boulder has no momentum
+        } else if (creepIsBelow(boulders.get(i).x, boulders.get(i).y) == true && boulders.get(i).hasMomentum == true) { // boulder has momentum and a creep is beneath it
           Creep deadCreep = null;
           for (Creep creep : creeps)
           {
-            if (creep.x == boulder.x && creep.y == boulder.y+1) {
+            if (creep.x == boulders.get(i).x && creep.y == boulders.get(i).y+1) {
               deadCreep = creep;
               break;
             }
           }
           if (deadCreep != null)
             deadCreep.kill();
-          boulder.y += 1;
-        } else if (creepIsBelow(boulder.x, boulder.y) == true && boulder.hasMomentum == false) {//  creep is below a boulder but the boulder has no momentum
+          boulders.get(i).y += 1;
+        } else if (creepIsBelow(boulders.get(i).x, boulders.get(i).y) == true && boulders.get(i).hasMomentum == false) {//  creep is below a boulder but the boulder has no momentum
         }
       } else {
-        boulder.hasMomentum = false;
+        boulders.get(i).hasMomentum = false;
       }
     }
     if (flag)
@@ -304,6 +305,7 @@ void keyPressed() {
   case State.GAME:
     movementKeyPressed();
     useKeyPressed();
+    pauseKeyPressed();
     break;
   }
 }

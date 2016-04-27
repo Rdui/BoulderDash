@@ -8,11 +8,16 @@ GButton quitButton;
 GButton startButton;
 GEvent buttonEvent;
 
-// initialize buttons
+// initialize main menu buttons
 void mainMenuSetup() {
   newGameButton = new GButton(this, width/2.9, height/4, 400, 50, "Start new game");
   levelSelectButton = new GButton(this, width/2.9, height/3, 400, 50, "Select a level");
   quitButton = new GButton(this, width/2.9, height/2.4, 400, 50, "Exit");
+}
+
+// initialize new game screen buttons
+void newGameSetup() {
+  startButton = new GButton(this, width/2.9, height/2, 400, 50, "Star new game");
 }
 
 void nameSelectDraw() {
@@ -55,13 +60,17 @@ void mainMenuKeyTyped() {
 void handleButtonEvents(GButton button, GEvent event) {
   if (button == startButton && event == GEvent.CLICKED) {
     String playerNametemp = playerName.replaceAll("\\s+", "");
-    if (playerNametemp.length() != 0) {
+    //if (playerNametemp.length() != 0) {
       button.dispose();
       state = State.STORY;
-    }
+    //}
   }if(button == levelSelectButton && event == GEvent.CLICKED){ // switch to level selection view
     disposeMainButtons();
     state = State.SELECT_LEVEL;
+  }if(button == newGameButton && event == GEvent.CLICKED){ // switch to player name prompt
+    disposeMainButtons();
+    newGameSetup();
+    state = State.NAME_INPUT;
   }
 }
 

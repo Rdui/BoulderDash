@@ -1,4 +1,3 @@
-GButton newGameButton;
 GButton exitButton;
 
 void highscoreSetup(){

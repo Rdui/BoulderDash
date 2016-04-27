@@ -3,7 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 String playerName = "";
-GButton newButton;
+GButton newGameButton;
 GButton levelSelectButton;
 GButton quitButton;
 GButton startButton;
@@ -39,7 +39,6 @@ void nameSelectDraw() {
   textSize(30);
   textAlign(CENTER);
   text("Type player name:", width/2, height/3);
-
   //textfield box
   fill(204, 153, 51);
   rectMode(CENTER);
@@ -74,14 +73,16 @@ void handleButtonEvents(GButton button, GEvent event) {
   if (button == startButton && event == GEvent.CLICKED) {
     String playerNametemp = playerName.replaceAll("\\s+", "");
     //if (playerNametemp.length() != 0) {
-      button.dispose();
-      state = State.STORY;
+    button.dispose();
+    state = State.STORY;
     //}
-  }if(button == levelSelectButton && event == GEvent.CLICKED){ // switch to level selection view
+  }
+  if (button == levelSelectButton && event == GEvent.CLICKED) { // switch to level selection view
     disposeMainButtons();
     levelSelectSetup();
     state = State.SELECT_LEVEL;
-  }if(button == newGameButton && event == GEvent.CLICKED){ // switch to player name prompt
+  }
+  if (button == newGameButton && event == GEvent.CLICKED) { // switch to player name prompt
     disposeMainButtons();
     newGameSetup();
     state = State.NAME_INPUT;
@@ -89,8 +90,14 @@ void handleButtonEvents(GButton button, GEvent event) {
 }
 
 // get rid of main menu buttons
-void disposeMainButtons(){
-    newGameButton.dispose();
-    levelSelectButton.dispose();
-    quitButton.dispose();
+void disposeMainButtons() {
+  newGameButton.setVisible(false);
+  levelSelectButton.setVisible(false);
+  quitButton.setVisible(false);
+  newGameButton.dispose();
+  levelSelectButton.dispose();
+  quitButton.dispose();
+  newGameButton = null;
+  levelSelectButton = null;
+  quitButton = null;
 }

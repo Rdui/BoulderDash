@@ -82,8 +82,7 @@ void printStory() {
 
 // switch case structure to monitor state of the game
 void draw() {
-
-  
+  background(22);
   switch(state) {
   case State.WAIT_USER_INPUT:
     break;
@@ -313,7 +312,7 @@ void drawKeycount() {
 // switch case structure to monitor state of the game
 void keyTyped() {
   switch(state) {
-  case State.WAIT_USER_INPUT:
+  case State.NAME_INPUT:
     mainMenuKeyTyped();
 
     break;

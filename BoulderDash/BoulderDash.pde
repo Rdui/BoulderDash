@@ -1,5 +1,6 @@
 import g4p_controls.*;
 import java.io.File;
+import ddf.minim.*;
 
 // Gamestate is used to define the state of the game
 // mainmenu, intro, game, gameover etc. 
@@ -36,7 +37,11 @@ Bomb basicBomb;
 
 int time = 500, mapCount = 0;
 
-
+  Minim minim;
+  AudioPlayer soundPickup;
+  AudioPlayer soundExplosion;
+  AudioPlayer soundGameOver;
+  
 
 void setup() {
   basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
@@ -54,6 +59,11 @@ void setup() {
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
   scale(0.1);
+  
+  minim = new Minim(this);
+  soundPickup = minim.loadFile("Sounds/beep.mp3");
+  soundExplosion = minim.loadFile("Sounds/explosion.mp3");
+  soundGameOver = minim.loadFile("Sounds/gameover.mp3");
 }
 
 void printStory() {
@@ -234,8 +244,11 @@ void processBombs() {
       bomb.explode();
     }
   }
-  for (Bomb explodedBomb : explodedBombs)
+  for (Bomb explodedBomb : explodedBombs){
+    soundExplosion.rewind();
+    soundExplosion.play();
     bombs.remove(explodedBomb);
+  }
 }
 
 void printScores() { /// prints the scores.txt file into the highscore view
@@ -373,6 +386,7 @@ void mousePressed() {
 }
 
 void endGame() {
+  soundGameOver.play();
   state = State.END;
   if (loadStrings("scores.txt")==null) {
     PrintWriter output;

@@ -136,10 +136,13 @@ class Player {
     int gridY = this.getY();
     Boolean exists = false;
     if (map[gridX][gridY].item != null) {
+      soundPickup.rewind();
+      soundPickup.play();
       for(AbstractItem listItem: player.inventory){
         if (listItem == map[gridX][gridY].item){
           exists = true;
           listItem.thisBombLeft += 1;
+          
         }
       }
       if(exists == false){

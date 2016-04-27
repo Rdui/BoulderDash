@@ -72,10 +72,10 @@ void mainMenuKeyTyped() {
 void handleButtonEvents(GButton button, GEvent event) {
   if (button == startButton && event == GEvent.CLICKED) {
     String playerNametemp = playerName.replaceAll("\\s+", "");
-    //if (playerNametemp.length() != 0) {
+    if (playerNametemp.length() != 0) {
     button.dispose();
     state = State.STORY;
-    //}
+    }
   }
   if (button == levelSelectButton && event == GEvent.CLICKED) { // switch to level selection view
     disposeMainButtons();

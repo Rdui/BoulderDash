@@ -12,7 +12,7 @@ interface State {
   byte SELECT_LEVEL = 4;
   byte NAME_INPUT = 5;
   byte PAUSE = 6;
-
+  byte GAMEOVER = 7;
 }
 
 
@@ -82,9 +82,11 @@ void printStory() {
 
 // switch case structure to monitor state of the game
 void draw() {
-  background(22);
+  
   switch(state) {
+
   case State.WAIT_USER_INPUT:
+    background(22);
     break;
   case State.NAME_INPUT:
     nameSelectDraw();
@@ -126,7 +128,6 @@ void draw() {
     text("PAUSED", width/2, height/3+50);
     text("press p to continue", width/2, height/3+100);
     break;
-  
   case State.END:
     printScores();
     break;
@@ -213,6 +214,7 @@ void processFlames() {
   for (Flame flame : flames) {
     image(flame.image, 32*flame.x, 32*flame.y+8);
     if (player.getX() == flame.x && player.getY() == flame.y) {
+      println("mio");
       dead = true;
       break;
     }
@@ -228,10 +230,11 @@ void processFlames() {
     if (millis() >= flame.flameTimer)
       deadFlames.add(flame);
   }
-  if (dead)
-    endGame();
+  
   for (Flame deadFlame : deadFlames)
     flames.remove(deadFlame);
+  if (dead)
+    endGame();
 }
 
 void processBombs() {
@@ -385,7 +388,6 @@ void mousePressed() {
 }
 
 void endGame() {
-  soundGameOver.play();
   state = State.END;
   if (loadStrings("scores.txt")==null) {
     PrintWriter output;

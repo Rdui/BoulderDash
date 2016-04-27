@@ -44,7 +44,6 @@ void setup() {
   frameRate(60);
   noSmooth();
   background(backgroundColor);
-  loadMap("Maps/map"+mapNumber+".txt", "chars.txt");
   player = new Player(0, 0, loadImage("graphics/player.png"));
   mainMenuSetup();
   selector = loadImage("graphics/selected.png");

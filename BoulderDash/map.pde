@@ -1,4 +1,4 @@
-import java.util.HashMap;  //<>// //<>//
+import java.util.HashMap;  //<>// //<>// //<>//
 import java.util.List;
 
 Tile[][] map; // the actual map
@@ -84,6 +84,7 @@ void loadMap(String mapPath, String charPath) {
       } else if (row[x].equals("@")) {
         startX = x;
         startY = y;
+        player.setCoordinates(startX*32, startY*32+8);
         map[x][y] = new Tile(emptyTile);
       } else if (row[x].equals("b")) {
         map[x][y] = new Tile(emptyTile);

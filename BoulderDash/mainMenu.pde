@@ -7,6 +7,8 @@ GButton quitButton;
 GButton startButton;
 GEvent buttonEvent;
 
+GButton[] levelButtons;
+
 // initialize main menu buttons
 void mainMenuSetup() {
   newGameButton = new GButton(this, width/2.9, height/4, 400, 50, "Start new game");
@@ -20,8 +22,9 @@ void newGameSetup() {
 }
 
 void levelSelectSetup() {
+  levelButtons = new GButton[mapCount];
   for(int i = 0; i < mapCount; i++){
-    new GButton(this, width/(64.0/9.0)+(i%3)*310, height/15+(i/3)*60, 300, 50, "Level "+(i+1));
+    levelButtons[i] = new GButton(this, width/(64.0/9.0)+(i%3)*310, height/15+(i/3)*60, 300, 50, "Level "+(i+1));
   }
 }
 
@@ -54,6 +57,7 @@ void mainMenuKeyTyped() {
       String playerNametemp = playerName.replaceAll("\\s+", "");
       if (playerNametemp.length() != 0) {
         startButton.dispose();
+        loadMap("Maps/map"+mapNumber+".txt","chars.txt");
         state = State.STORY;
       }
     }
@@ -64,10 +68,11 @@ void mainMenuKeyTyped() {
 void handleButtonEvents(GButton button, GEvent event) {
   if (button == startButton && event == GEvent.CLICKED) {
     String playerNametemp = playerName.replaceAll("\\s+", "");
-    //if (playerNametemp.length() != 0) {
+    if (playerNametemp.length() != 0) {
     button.dispose();
+  loadMap("Maps/map"+mapNumber+".txt", "chars.txt");
     state = State.STORY;
-    //}
+    }
   }
   if (button == levelSelectButton && event == GEvent.CLICKED) { // switch to level selection view
     disposeMainButtons();
@@ -76,6 +81,14 @@ void handleButtonEvents(GButton button, GEvent event) {
   }
   if (button == newGameButton && event == GEvent.CLICKED) { // switch to player name prompt
     disposeMainButtons();
+    newGameSetup();
+    state = State.NAME_INPUT;
+  }
+  if(state == State.SELECT_LEVEL && button.getText().split(" ")[0].equals("Level"))
+  {
+    mapNumber = int(button.getText().split(" ")[1])-1;
+    for(GButton levelButton : levelButtons)
+      levelButton.dispose();
     newGameSetup();
     state = State.NAME_INPUT;
   }

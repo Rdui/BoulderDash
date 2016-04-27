@@ -1,6 +1,4 @@
 // This file defines main menu functionality
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 String playerName = "";
 GButton newGameButton;
@@ -22,14 +20,8 @@ void newGameSetup() {
 }
 
 void levelSelectSetup() {
-  try
-  {
-    long levelCount = Files.list(Paths.get("your/path/here")).count();
-  }
-  catch (Exception ex)
-  {
-    new GLabel(this, (width/8)*3, 20, width/4, 50, ex.toString());
-    println(ex.toString());
+  for(int i = 0; i < mapCount; i++){
+    new GButton(this, width/(64.0/9.0)+(i%3)*310, height/15+(i/3)*60, 300, 50, "Level "+(i+1));
   }
 }
 

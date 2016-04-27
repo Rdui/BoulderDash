@@ -34,8 +34,8 @@ String[] scores;
 // normal bomb
 Bomb basicBomb;
 
-
-int time = 500, mapCount = 0;
+// mapnumber = current map, mapcount = number of maps
+int time = 500, mapNumber = 0, mapCount = 5;
 
   Minim minim;
   AudioPlayer soundPickup;
@@ -45,13 +45,10 @@ int time = 500, mapCount = 0;
 
 void setup() {
   basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
-  // maps start with file named map+mapCount
-  mapCount = 0;
   size(1280, 720);
   frameRate(60);
   noSmooth();
   background(backgroundColor);
-  loadMap("Maps/map"+mapCount+".txt", "chars.txt");
   player = new Player(0, 0, loadImage("graphics/player.png"));
   mainMenuSetup();
   selector = loadImage("graphics/selected.png");
@@ -430,10 +427,10 @@ void clearMap() {
 }
 
 void newLevel() {
-  mapCount++;
+  mapNumber++;
   clearMap();
   resetKeyboardInputs();   
-  loadMap("Maps/map"+mapCount+".txt", "chars.txt");
+  loadMap("Maps/map"+mapNumber+".txt", "chars.txt");
   player.reset();
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");

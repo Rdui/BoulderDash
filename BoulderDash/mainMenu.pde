@@ -1,6 +1,4 @@
 // This file defines main menu functionality
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 String playerName = "";
 GButton newGameButton;
@@ -8,6 +6,8 @@ GButton levelSelectButton;
 GButton quitButton;
 GButton startButton;
 GEvent buttonEvent;
+
+GButton[] levelButtons;
 
 // initialize main menu buttons
 void mainMenuSetup() {
@@ -22,14 +22,9 @@ void newGameSetup() {
 }
 
 void levelSelectSetup() {
-  try
-  {
-    long levelCount = Files.list(Paths.get("your/path/here")).count();
-  }
-  catch (Exception ex)
-  {
-    new GLabel(this, (width/8)*3, 20, width/4, 50, ex.toString());
-    println(ex.toString());
+  levelButtons = new GButton[mapCount];
+  for(int i = 0; i < mapCount; i++){
+    levelButtons[i] = new GButton(this, width/(64.0/9.0)+(i%3)*310, height/15+(i/3)*60, 300, 50, "Level "+(i+1));
   }
 }
 
@@ -62,6 +57,7 @@ void mainMenuKeyTyped() {
       String playerNametemp = playerName.replaceAll("\\s+", "");
       if (playerNametemp.length() != 0) {
         startButton.dispose();
+        loadMap("Maps/map"+mapNumber+".txt","chars.txt");
         state = State.STORY;
       }
     }
@@ -74,6 +70,7 @@ void handleButtonEvents(GButton button, GEvent event) {
     String playerNametemp = playerName.replaceAll("\\s+", "");
     if (playerNametemp.length() != 0) {
     button.dispose();
+  loadMap("Maps/map"+mapNumber+".txt", "chars.txt");
     state = State.STORY;
     }
   }
@@ -84,6 +81,14 @@ void handleButtonEvents(GButton button, GEvent event) {
   }
   if (button == newGameButton && event == GEvent.CLICKED) { // switch to player name prompt
     disposeMainButtons();
+    newGameSetup();
+    state = State.NAME_INPUT;
+  }
+  if(state == State.SELECT_LEVEL && button.getText().split(" ")[0].equals("Level"))
+  {
+    mapNumber = int(button.getText().split(" ")[1])-1;
+    for(GButton levelButton : levelButtons)
+      levelButton.dispose();
     newGameSetup();
     state = State.NAME_INPUT;
   }

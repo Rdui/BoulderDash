@@ -172,8 +172,10 @@ class Player {
       player.keys += 1;
       if(player.keys == 3)
         soundGateOpen.play();
-    } else if (map[gridX][gridY].portal && player.keys == 3)
-      newLevel();
+    } else if (map[gridX][gridY].portal && player.keys == 3){
+      fade = millis()+2000;
+      state = State.NEWLEVEL;
+    }
   }
 }
 

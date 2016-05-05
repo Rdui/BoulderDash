@@ -13,6 +13,7 @@ interface State {
   byte NAME_INPUT = 5;
   byte PAUSE = 6;
   byte GAMEOVER = 7;
+  byte NEWLEVEL = 8;
 }
 
 
@@ -134,6 +135,15 @@ void draw() {
 
     if (abs(second()-lastMove) > 0.5)
       lastMove = second();
+    break;
+  case State.NEWLEVEL:
+    textSize(25);
+    textAlign(CENTER);
+    text("LEVEL "+(mapNumber+1)+" CLEARED", width/2, height/2);
+    if(fade <= millis()){
+      fade = 0;
+      newLevel();
+    }
     break;
 
   case State.PAUSE:
@@ -461,6 +471,7 @@ void clearMap() {
 }
 
 void newLevel() {
+  state = State.GAME;
   soundLevelCleared.rewind();
   soundLevelCleared.play();
   mapNumber++;

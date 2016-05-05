@@ -41,6 +41,7 @@ Minim minim;
 AudioPlayer soundPickup;
 AudioPlayer soundExplosion;
 AudioPlayer soundGameOver;
+AudioPlayer soundLevelCleared;
 
 
 void setup() {
@@ -62,6 +63,7 @@ void setup() {
   soundPickup = minim.loadFile("Sounds/beep.mp3");
   soundExplosion = minim.loadFile("Sounds/explosion.mp3");
   soundGameOver = minim.loadFile("Sounds/gameover.mp3");
+  soundLevelCleared = minim.loadFile("Sounds/fanfare.mp3");
 }
 
 void printStory() {
@@ -102,9 +104,9 @@ void draw() {
     processBombs();
     drawBoulders();
     processBoulders();
+    player.drawPlayer();
     drawUI();
     player.move();
-    player.drawPlayer();
 
     for (int i = 0; i < creeps.size(); i++)
     {
@@ -287,17 +289,16 @@ void drawScore() {
 void drawInventory() {
   fill(255, 255, 255);
   textSize(25);
-  textAlign(LEFT);
-  int axis = 680;
-  for(int i = 0; i < 5; i++)
-  image(itembg, axis+i*32,10);
+  int axis = 640;
+  for (int i = 0; i < 5; i++)
+    image(itembg, axis+i*32, 8);
   for (AbstractItem item : player.inventory) {
-    image(item.icon, axis, 10);
+    image(item.icon, axis, 8);
     if (player.inventory.get(player.selectedItem) == item) {
-      image(selector, axis, 10);
+      image(selector, axis, 8);
     }
-    text(item.thisBombLeft, axis+9, 72);
-    axis += 48;
+    text(item.thisBombLeft, axis+16, 64);
+    axis += 32;
   }
   /*if (player.selectedItem > -1);
    text("Item: "+player.inventory.get(player.selectedItem).itemName, 0, 32);*/
@@ -306,7 +307,7 @@ void drawInventory() {
 void drawKeycount() {
   fill(227, 227, 107);
   textSize(25);
-  image(keyicon, 320, 8);
+  image(keyicon, 300, 8);
   text(player.keys+"/3", 364, 32);
 }
 
@@ -434,6 +435,8 @@ void clearMap() {
 }
 
 void newLevel() {
+  soundLevelCleared.rewind();
+  soundLevelCleared.play();
   mapNumber++;
   clearMap();
   resetKeyboardInputs();   

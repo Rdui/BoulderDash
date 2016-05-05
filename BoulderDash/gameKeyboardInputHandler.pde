@@ -6,12 +6,16 @@ float right = 0;
 void movementKeyPressed() {
   if (key == 'w' || key == 'W') {
     up = 1;
+    player.icon = playerIconUp;
   } else if (key == 's' || key == 'S') {
     down = 1;
+    player.icon = playerIconDown;
   } else if (key == 'a' || key == 'A') {
     left = 1;
+    player.icon = playerIconLeft;
   } else if (key == 'd' || key == 'D') {
     right = 1;
+    player.icon = playerIconRight;
   }
 }
 

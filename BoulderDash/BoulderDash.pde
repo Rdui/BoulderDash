@@ -21,6 +21,7 @@ byte state = State.WAIT_USER_INPUT;
 color backgroundColor = color(22);
 
 Player player;
+PImage playerIconUp, playerIconDown,playerIconLeft, playerIconRight;
 
 PImage img;
 PImage selector, itembg;
@@ -54,7 +55,11 @@ void setup() {
   frameRate(60);
   noSmooth();
   background(backgroundColor);
-  player = new Player(0, 0, loadImage("graphics/player.png"));
+  playerIconUp = loadImage("graphics/playerup.png");
+  playerIconDown = loadImage("graphics/playerdown.png");
+  playerIconLeft = loadImage("graphics/playerleft.png");
+  playerIconRight = loadImage("graphics/playerright.png");
+  player = new Player(0, 0, playerIconDown);
   mainMenuSetup();
   selector = loadImage("graphics/selected.png");
   itembg = loadImage("graphics/notselected.png");
@@ -95,6 +100,7 @@ void draw() {
 
   case State.WAIT_USER_INPUT:
     background(22);
+    drawCredits();
     break;
   case State.NAME_INPUT:
     background(22);
@@ -457,4 +463,10 @@ void newLevel() {
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
+}
+
+void drawCredits(){
+  textAlign(CENTER);
+  textSize(20);
+  text("Created by Lasse Linkola, Esa Niemi and Rudi Ritasalo",width/2,690);
 }

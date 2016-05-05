@@ -21,7 +21,7 @@ byte state = State.WAIT_USER_INPUT;
 color backgroundColor = color(22);
 
 Player player;
-PImage playerIconUp, playerIconDown,playerIconLeft, playerIconRight;
+PImage playerIconUp, playerIconDown, playerIconLeft, playerIconRight, playerIconDead;
 
 PImage img;
 PImage selector, itembg;
@@ -37,7 +37,7 @@ String[] scores;
 Bomb basicBomb;
 
 // mapnumber = current map, mapcount = number of maps
-int time = 500, mapNumber = 0, mapCount = 5;
+int time = 500, mapNumber = 0, mapCount = 5, fade = 0;
 
 Minim minim;
 AudioPlayer soundPickup;
@@ -59,6 +59,7 @@ void setup() {
   playerIconDown = loadImage("graphics/playerdown.png");
   playerIconLeft = loadImage("graphics/playerleft.png");
   playerIconRight = loadImage("graphics/playerright.png");
+  playerIconDead= loadImage("graphics/playerdead.png");
   player = new Player(0, 0, playerIconDown);
   mainMenuSetup();
   selector = loadImage("graphics/selected.png");
@@ -142,7 +143,13 @@ void draw() {
     text("press p to continue", width/2, height/3+100);
     break;
   case State.END:
-    printScores();
+    fade = fade == 0 ? millis() + 1000 : fade;
+    if (fade <= millis())
+    {
+      fade = -1;
+      highscoreSetup();
+      printScores();
+    }
     break;
   }
 }
@@ -254,7 +261,7 @@ void processBombs() {
   List<Bomb> explodedBombs = new ArrayList<Bomb>();
   for (Bomb bomb : bombs) {
     image(bomb.icon, bomb.x*32, bomb.y*32+8);
-    if(bomb.explosive && bomb.bombTimer % 1000 == 0){
+    if (bomb.explosive && bomb.bombTimer % 1000 == 0) {
       soundTick.rewind();
       soundTick.play();
     }
@@ -411,6 +418,9 @@ void mousePressed() {
 }
 
 void endGame() {
+  player.icon = playerIconDead;
+  soundGameOver.rewind();
+  soundGameOver.play();
   state = State.END;
   if (loadStrings("scores.txt")==null) {
     PrintWriter output;
@@ -439,8 +449,6 @@ void endGame() {
     output.close();
   }
   scores = loadStrings("scores.txt");
-  state = State.END;
-  highscoreSetup();
   clearMap();
 }
 
@@ -465,8 +473,8 @@ void newLevel() {
   exp_middle_img = loadImage("graphics/exp_middle.png");
 }
 
-void drawCredits(){
+void drawCredits() {
   textAlign(CENTER);
   textSize(20);
-  text("Created by Lasse Linkola, Esa Niemi and Rudi Ritasalo",width/2,690);
+  text("Created by Lasse Linkola, Esa Niemi and Rudi Ritasalo", width/2, 690);
 }

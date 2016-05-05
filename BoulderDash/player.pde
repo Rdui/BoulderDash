@@ -18,8 +18,8 @@ class Player {
     inventory.add(basicBomb);
     selectedItem = 0;
   }
-  
-  void reset(){
+
+  void reset() {
     x = 0;
     y = 0;
     keys = 0;
@@ -56,19 +56,21 @@ class Player {
 
     if (up == 1 && gridY > 0) {
       if (this.is_mineable(gridX, gridY-1)) {
-        
+
         if (map[gridX][gridY-1].tileHp > 0) {
           println("tuhottu");
           map[gridX][gridY-1].tileHp -= 1;
           return;
         }
         map[gridX][gridY-1].destroy();
-        
       }
 
       if (map[gridX][gridY-1].empty == true) {
 
         y -= speed;
+        if (!soundWalking.isPlaying())
+          soundWalking.rewind();
+        soundWalking.play();
         checkCreep(getX(), getY());
         checkItem();
       }
@@ -82,6 +84,9 @@ class Player {
       }
       if (map[gridX][gridY+1].empty == true) {
         y += speed;
+        if (!soundWalking.isPlaying())
+          soundWalking.rewind();
+        soundWalking.play();
         checkCreep(getX(), getY());
         checkItem();
       }
@@ -95,6 +100,9 @@ class Player {
       }
       if (map[gridX-1][gridY].empty == true) {
         x -= speed;
+        if (!soundWalking.isPlaying())
+          soundWalking.rewind();
+        soundWalking.play();
         checkCreep(getX(), getY());
         checkItem();
       } else {
@@ -110,6 +118,9 @@ class Player {
 
       if (map[gridX+1][gridY].empty == true) {
         x += speed;
+        if (!soundWalking.isPlaying())
+          soundWalking.rewind();
+        soundWalking.play();
         checkCreep(getX(), getY());
         checkItem();
       }
@@ -119,12 +130,13 @@ class Player {
   // can the tile be mined
   boolean is_mineable(int gridX, int gridY) {
     for (Boulder boulder : boulders) {
-      if(boulder.x == gridX && boulder.y == gridY){
+      if (boulder.x == gridX && boulder.y == gridY) {
         return false;
       }
-    }if (map[gridX][gridY].tileHp > -1) {
+    }
+    if (map[gridX][gridY].tileHp > -1) {
       return true;
-    }else {
+    } else {
       return false;
     }
   }
@@ -138,20 +150,19 @@ class Player {
     if (map[gridX][gridY].item != null) {
       soundPickup.rewind();
       soundPickup.play();
-      for(AbstractItem listItem: player.inventory){
-        if (listItem == map[gridX][gridY].item){
+      for (AbstractItem listItem : player.inventory) {
+        if (listItem == map[gridX][gridY].item) {
           exists = true;
           listItem.thisBombLeft += 1;
-          
         }
       }
-      if(exists == false){
-         AbstractItem item = map[gridX][gridY].item;
-         player.inventory.add(item);
+      if (exists == false) {
+        AbstractItem item = map[gridX][gridY].item;
+        player.inventory.add(item);
       }
-      
+
       player.score += map[gridX][gridY].item.score;
-      
+
       pickups.remove(map[gridX][gridY].item);
       map[gridX][gridY].item = null;
     }
@@ -159,8 +170,9 @@ class Player {
     {
       map[gridX][gridY].portalkey = false;
       player.keys += 1;
-    }
-    else if (map[gridX][gridY].portal && player.keys == 3)
+      if(player.keys == 3)
+        soundGateOpen.play();
+    } else if (map[gridX][gridY].portal && player.keys == 3)
       newLevel();
   }
 }

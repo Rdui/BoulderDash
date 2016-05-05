@@ -10,13 +10,14 @@ List<Boulder> boulders = new ArrayList<Boulder>();
 int startX; // player start point location
 int startY;
 int tile_;
-PImage bgTile, keyicon, portalicon;
+PImage bgTile, keyicon, portalicon, closedportalicon;
 Tile groundTile, emptyTile;
 
 void loadMap(String mapPath, String charPath) {
   bgTile = loadImage("graphics/bg.png");
   keyicon = loadImage("graphics/key.png");
   portalicon = loadImage("graphics/portal.png");
+  closedportalicon = loadImage("graphics/closedportal.png");
   HashMap<String, Tile> tiles = new HashMap<String, Tile>();
 
   // 
@@ -90,8 +91,8 @@ void loadMap(String mapPath, String charPath) {
         map[x][y] = new Tile(emptyTile);
         boulders.add(new Boulder(loadImage("graphics/boulder.png"), x, y, true, false)); /// adds boulders to the boulders array that is used in processBoulders function
       } else {
-          map[x][y] = new Tile(tiles.get(row[x]));
-      } 
+        map[x][y] = new Tile(tiles.get(row[x]));
+      }
     }
   }
 }
@@ -108,7 +109,10 @@ void drawMap() {
       } else if (tile.item != null)
         image(tile.item.icon, x*32, y*32+8);
       if (tile.portal)
-        image(portalicon, x*32, y*32+8);
+        if (player.keys == 3)
+          image(portalicon, x*32, y*32+8);
+        else
+          image(closedportalicon, x*32, y*32+8);
     }
   }
 }

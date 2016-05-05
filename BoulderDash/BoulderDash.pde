@@ -30,6 +30,7 @@ PImage exp_hori_img;
 PImage exp_vert_img;
 PImage exp_middle_img;
 PImage backgroundimage;
+PImage openPortalImage;
 String[] scores;
 // normal bomb
 Bomb basicBomb;
@@ -42,6 +43,9 @@ AudioPlayer soundPickup;
 AudioPlayer soundExplosion;
 AudioPlayer soundGameOver;
 AudioPlayer soundLevelCleared;
+AudioPlayer soundWalking;
+AudioPlayer soundTick;
+AudioPlayer soundGateOpen;
 
 
 void setup() {
@@ -57,6 +61,7 @@ void setup() {
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
+  openPortalImage = loadImage("graphics/portal.png");
   scale(0.1);
 
   minim = new Minim(this);
@@ -64,6 +69,9 @@ void setup() {
   soundExplosion = minim.loadFile("Sounds/explosion.mp3");
   soundGameOver = minim.loadFile("Sounds/gameover.mp3");
   soundLevelCleared = minim.loadFile("Sounds/fanfare.mp3");
+  soundWalking = minim.loadFile("Sounds/step.mp3");
+  soundTick = minim.loadFile("Sounds/tick.mp3");
+  soundGateOpen = minim.loadFile("Sounds/gateopen.mp3");
 }
 
 void printStory() {
@@ -240,6 +248,10 @@ void processBombs() {
   List<Bomb> explodedBombs = new ArrayList<Bomb>();
   for (Bomb bomb : bombs) {
     image(bomb.icon, bomb.x*32, bomb.y*32+8);
+    if(bomb.explosive && bomb.bombTimer % 1000 == 0){
+      soundTick.rewind();
+      soundTick.play();
+    }
     if (bomb.explosive && bomb.bombTimer <= millis()) {
       explodedBombs.add(bomb);
       bomb.explode();

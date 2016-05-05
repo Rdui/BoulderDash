@@ -23,7 +23,7 @@ color backgroundColor = color(22);
 Player player;
 
 PImage img;
-PImage selector;
+PImage selector, itembg;
 PImage bomb_1_img;
 PImage bomb_2_img;
 PImage exp_hori_img;
@@ -37,11 +37,11 @@ Bomb basicBomb;
 // mapnumber = current map, mapcount = number of maps
 int time = 500, mapNumber = 0, mapCount = 5;
 
-  Minim minim;
-  AudioPlayer soundPickup;
-  AudioPlayer soundExplosion;
-  AudioPlayer soundGameOver;
-  
+Minim minim;
+AudioPlayer soundPickup;
+AudioPlayer soundExplosion;
+AudioPlayer soundGameOver;
+
 
 void setup() {
   basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
@@ -52,11 +52,12 @@ void setup() {
   player = new Player(0, 0, loadImage("graphics/player.png"));
   mainMenuSetup();
   selector = loadImage("graphics/selected.png");
+  itembg = loadImage("graphics/notselected.png");
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
   exp_vert_img = loadImage("graphics/exp_vertical.png");
   exp_middle_img = loadImage("graphics/exp_middle.png");
   scale(0.1);
-  
+
   minim = new Minim(this);
   soundPickup = minim.loadFile("Sounds/beep.mp3");
   soundExplosion = minim.loadFile("Sounds/explosion.mp3");
@@ -79,13 +80,14 @@ void printStory() {
 
 // switch case structure to monitor state of the game
 void draw() {
-  
+
   switch(state) {
 
   case State.WAIT_USER_INPUT:
     background(22);
     break;
   case State.NAME_INPUT:
+    background(22);
     nameSelectDraw();
     break;
   case State.STORY:
@@ -100,9 +102,7 @@ void draw() {
     processBombs();
     drawBoulders();
     processBoulders();
-    drawScore();
-    drawInventory();
-    drawKeycount();
+    drawUI();
     player.move();
     player.drawPlayer();
 
@@ -118,10 +118,10 @@ void draw() {
     if (abs(second()-lastMove) > 0.5)
       lastMove = second();
     break;
-  
+
   case State.PAUSE:
     textAlign(CENTER);
-    fill(69,420,1337); // dank color
+    fill(69, 420, 1337); // dank color
     text("PAUSED", width/2, height/3+50);
     text("press p to continue", width/2, height/3+100);
     break;
@@ -140,12 +140,12 @@ void drawBoulders() { // draws the boulders in the boulders list.
 void processBoulders() {
   if (millis()- time > 500) {
     Boolean flag = false;
-    for (int i = boulders.size() - 1; i >= 0 ; i--) {
+    for (int i = boulders.size() - 1; i >= 0; i--) {
       map[boulders.get(i).x][boulders.get(i).y].empty = false;
       map[boulders.get(i).x][boulders.get(i).y].tileHp = -1;
       if (boulders.get(i).y <= 20 && map[boulders.get(i).x][boulders.get(i).y+1].empty == true) { // empty tile beneath the boulder
         //println(boulders.get(i).y+"  " + boulders.get(i).x+ "  " +map[boulders.get(i).x][boulders.get(i).y].empty);
-        if (!playerIsBelow(boulders.get(i).x,boulders.get(i).y) && !creepIsBelow(boulders.get(i).x, boulders.get(i).y)) { // no tiles or players or creeps below the boulder
+        if (!playerIsBelow(boulders.get(i).x, boulders.get(i).y) && !creepIsBelow(boulders.get(i).x, boulders.get(i).y)) { // no tiles or players or creeps below the boulder
 
           boulders.get(i).hasMomentum = true;
           map[boulders.get(i).x][boulders.get(i).y].empty = true;
@@ -227,7 +227,7 @@ void processFlames() {
     if (millis() >= flame.flameTimer)
       deadFlames.add(flame);
   }
-  
+
   for (Flame deadFlame : deadFlames)
     flames.remove(deadFlame);
   if (dead)
@@ -243,7 +243,7 @@ void processBombs() {
       bomb.explode();
     }
   }
-  for (Bomb explodedBomb : explodedBombs){
+  for (Bomb explodedBomb : explodedBombs) {
     soundExplosion.rewind();
     soundExplosion.play();
     bombs.remove(explodedBomb);
@@ -281,15 +281,16 @@ void storyEnd() {
 void drawScore() {
   fill(255, 255, 255);
   textSize(25);
-  textAlign(CENTER);
-  text("Score:"+player.score, width/2, 32);
+  text("Score:"+player.score, 450, 32);
 }
 
 void drawInventory() {
   fill(255, 255, 255);
   textSize(25);
   textAlign(LEFT);
-  int axis = 200;
+  int axis = 680;
+  for(int i = 0; i < 5; i++)
+  image(itembg, axis+i*32,10);
   for (AbstractItem item : player.inventory) {
     image(item.icon, axis, 10);
     if (player.inventory.get(player.selectedItem) == item) {
@@ -303,10 +304,16 @@ void drawInventory() {
 }
 
 void drawKeycount() {
-  fill(255, 255, 255);
+  fill(227, 227, 107);
   textSize(25);
-  textAlign(RIGHT);
-  text("Keys: "+player.keys+"/3", 1280, 32);
+  image(keyicon, 320, 8);
+  text(player.keys+"/3", 364, 32);
+}
+
+void drawUI() {
+  drawScore();
+  drawInventory();
+  drawKeycount();
 }
 
 // switch case structure to monitor state of the game

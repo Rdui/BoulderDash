@@ -84,6 +84,15 @@ void handleButtonEvents(GButton button, GEvent event) {
     newGameSetup();
     state = State.NAME_INPUT;
   }
+  if (button == deathNewGameButton && event == GEvent.CLICKED) {
+    state = State.WAIT_USER_INPUT;
+    resetKeyboardInputs();
+    setup();
+    deleteHighscoreButtons();
+  }
+  if (button == deathNewGameButton && event == GEvent.CLICKED){
+    exit();
+  }
   if (state == State.SELECT_LEVEL && button.getText().split(" ")[0].equals("Level"))
   {
     mapNumber = int(button.getText().split(" ")[1])-1;

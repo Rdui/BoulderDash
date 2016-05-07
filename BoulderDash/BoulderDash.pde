@@ -129,7 +129,7 @@ void draw() {
       Creep creep = creeps.get(i);
       if (abs(second()-lastMove) > 0.5)
         creep.moveRandom();
-      if (creep != null)
+      if (creep != null && creeps.size() != 0)
         creeps.get(i).draw();
     }
 
@@ -195,6 +195,8 @@ void processBoulders() {
           for (Creep creep : creeps)
           {
             if (creep.x == boulders.get(i).x && creep.y == boulders.get(i).y+1) {
+              map[boulders.get(i).x][boulders.get(i).y].empty = true;
+              map[boulders.get(i).x][boulders.get(i).y].tileHp = 2;
               deadCreep = creep;
               break;
             }
@@ -472,11 +474,15 @@ void clearMap() {
 
 void newLevel() {
   state = State.GAME;
+  soundGateOpen.play();
   soundLevelCleared.rewind();
   soundLevelCleared.play();
   mapNumber++;
   clearMap();
-  resetKeyboardInputs();   
+  resetKeyboardInputs();
+  if(mapNumber == 5){
+    mapNumber = 0;
+  }
   loadMap("Maps/map"+mapNumber+".txt", "chars.txt");
   player.reset();
   exp_hori_img = loadImage("graphics/exp_horizontal.png");
@@ -487,5 +493,5 @@ void newLevel() {
 void drawCredits() {
   textAlign(CENTER);
   textSize(20);
-  text("Created by Lasse Linkola, Esa Niemi and Rudi Ritasalo", width/2, 690);
+  text("Created by Lasse Linkola, Esa Niemi and Rudi Ritosalo", width/2, 690);
 }

@@ -24,7 +24,16 @@ class Player {
     y = 0;
     keys = 0;
     setCoordinates(startX*32, startY*32+8);
-    inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    
+    if (player.inventory.size() == 0){
+      inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    }
+    else{
+      for (AbstractItem listItem : player.inventory) {
+        listItem.thisBombLeft += 1; 
+      }
+    }
+    
     selectedItem = 0;
   }
 
@@ -32,7 +41,6 @@ class Player {
     x = _x;
     y = _y;
   }
-
   int getX() {
     int gridX = 0;
     gridX = round(x)/32;
@@ -75,6 +83,7 @@ class Player {
         checkItem();
       }
     } else if (down == 1 && gridY < 21) {
+      println(map[gridX][gridY+1].tileHp);
       if ( this.is_mineable(gridX, gridY+1) == true) {
         if (map[gridX][gridY+1].tileHp > 0) {
           map[gridX][gridY+1].tileHp -= 1;
@@ -151,9 +160,12 @@ class Player {
       soundPickup.rewind();
       soundPickup.play();
       for (AbstractItem listItem : player.inventory) {
-        if (listItem == map[gridX][gridY].item) {
+        println(listItem.itemName);
+        println(map[gridX][gridY].item.itemName);
+        if (listItem.itemName.equals( map[gridX][gridY].item.itemName)) {
           exists = true;
           listItem.thisBombLeft += 1;
+          break;
         }
       }
       if (exists == false) {
@@ -170,9 +182,11 @@ class Player {
     {
       map[gridX][gridY].portalkey = false;
       player.keys += 1;
-      if(player.keys == 3)
+      if (player.keys == 3) {
+        soundGateOpen.rewind();
         soundGateOpen.play();
-    } else if (map[gridX][gridY].portal && player.keys == 3){
+      }
+    } else if (map[gridX][gridY].portal && player.keys == 3) {
       fade = millis()+2000;
       state = State.NEWLEVEL;
     }

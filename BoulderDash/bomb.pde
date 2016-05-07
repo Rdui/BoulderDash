@@ -50,10 +50,68 @@ class Bomb extends AbstractItem {
   // radius increases plus length
   void plusExplosion() {
     flames.add(new Flame(loadImage("graphics/explosionmiddle.png"), x, y, 15));
-    for (int fx = (x-radius > -1 ? -radius : -x); fx <= radius; fx++) {
+    
+    for (int fx =0; fx <= radius; fx++){
+      if ( x-fx > 39 || x-fx <= 0 || map[x-fx][y].tileHp == -1 ) {
+        break;
+      }
+      if (map[x-fx][y].item != null) {
+        pickups.add(map[x-fx][y].item);
+        map[x-fx][y].item.x = x+fx;
+        map[x-fx][y].item.y =y;
+      }
+      
+      flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x-fx, y, 15));
+      map[x-fx][y].destroy(); 
+    }
+    
+    for (int fx =0; fx <= radius; fx++){
+      if ( x+fx > 39 || x+fx <= 0 || map[x+fx][y].tileHp == -1 ) {
+        break;
+      }
+      if (map[x+fx][y].item != null) {
+        pickups.add(map[x+fx][y].item);
+        map[x+fx][y].item.x = x+fx;
+        map[x+fx][y].item.y =y;
+      }
+      
+      flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x+fx, y, 15));
+      map[x+fx][y].destroy(); 
+    }
+    
+    for (int fy =0; fy <= radius; fy++){
+      if ( y-fy > 21 || y-fy <= 0 || map[x][y-fy].tileHp == -1 ) {
+        break;
+      }
+      if (map[x][y-fy].item != null) {
+        pickups.add(map[x][y-fy].item);
+        map[x][y-fy].item.x = x;
+        map[x][y-fy].item.y =y-fy;
+      }
+      
+      flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x, y-fy, 15));
+      map[x][y-fy].destroy(); 
+    }
+    
+    for (int fy =0; fy <= radius; fy++){
+      if ( y+fy > 21 || y+fy <= 0 || map[x][y+fy].tileHp == -1 ) {
+        break;
+      }
+      if (map[x][y+fy].item != null) {
+        pickups.add(map[x][y+fy].item);
+        map[x][y+fy].item.x = x;
+        map[x][y+fy].item.y =y+fy;
+      }
+      
+      flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x, y+fy, 15));
+      map[x][y+fy].destroy(); 
+    }
+    
+    /*for (int fx = (x-radius > -1 ? -radius : -x); fx <= radius; fx++) {
       if ( x+fx > 39 || x+fx <= 0 || map[x+fx][y].tileHp == -1 ) {
         continue;
       }
+
       if (map[x+fx][y].item != null) {
         pickups.add(map[x+fx][y].item);
         map[x+fx][y].item.x = x+fx;
@@ -76,6 +134,6 @@ class Bomb extends AbstractItem {
       flames.add(new Flame(loadImage("graphics/explosionvertical.png"), x, y+fy, 15));
       map[x][y+fy].destroy();
       
-    }
+    }*/
   }
 }

@@ -140,7 +140,7 @@ void draw() {
     textSize(25);
     textAlign(CENTER);
     text("LEVEL "+(mapNumber+1)+" CLEARED", width/2, height/2);
-    if(fade <= millis()){
+    if (fade <= millis() && fade > 0) {
       fade = 0;
       newLevel();
     }
@@ -154,7 +154,7 @@ void draw() {
     break;
   case State.END:
     fade = fade == 0 ? millis() + 1000 : fade;
-    if (fade <= millis())
+    if (fade <= millis() && fade > 0)
     {
       fade = -1;
       highscoreSetup();
@@ -359,7 +359,6 @@ void keyTyped() {
   switch(state) {
   case State.NAME_INPUT:
     mainMenuKeyTyped();
-
     break;
   case State.STORY:
     storyEnd();
@@ -401,31 +400,6 @@ void keyReleased() {
     break;
   case State.PAUSE:
     movementKeyReleased();
-  }
-}
-
-// switch case structure to monitor state of the game
-void mousePressed() {
-  switch(state) {
-  case State.WAIT_USER_INPUT:
-    // mainMenuKeyTyped();
-    break;
-  case State.GAME:
-
-    break;
-
-  case State.END:
-    if (mousePressed) {
-      if (mouseX>=300 && mouseX <=600 && mouseY>600 && mouseY <650) {
-        state = State.WAIT_USER_INPUT;
-        resetKeyboardInputs();
-        setup();
-        deleteHighscoreButtons();
-      }
-      if (mouseX>=690 && mouseX <=990 && mouseY>600 && mouseY <650) {
-        exit();
-      }
-    }
   }
 }
 

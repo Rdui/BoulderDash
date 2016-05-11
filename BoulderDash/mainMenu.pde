@@ -84,13 +84,14 @@ void handleButtonEvents(GButton button, GEvent event) {
     newGameSetup();
     state = State.NAME_INPUT;
   }
-  if (button == deathNewGameButton && event == GEvent.CLICKED) {
-    state = State.WAIT_USER_INPUT;
+  if (button == retryButton && event == GEvent.CLICKED) {
+    clearMap();
     resetKeyboardInputs();
-    setup();
     deleteHighscoreButtons();
+      loadMap("Maps/map"+mapNumber+".txt", "chars.txt");
+      state = State.GAME;
   }
-  if (button == deathNewGameButton && event == GEvent.CLICKED){
+  if (button == exitButton || button == quitButton && event == GEvent.CLICKED) {
     exit();
   }
   if (state == State.SELECT_LEVEL && button.getText().split(" ")[0].equals("Level"))

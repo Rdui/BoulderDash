@@ -21,20 +21,14 @@ class Player {
   }
 
   void reset() {
+    icon = playerIconRight;
     x = 0;
     y = 0;
     keys = 0;
     setCoordinates(startX*32, startY*32+8);
-    
-    if (player.inventory.size() == 0){
-      inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
-    }
-    else{
-      for (AbstractItem listItem : player.inventory) {
-        listItem.thisBombLeft += 1; 
-      }
-    }
-    
+    player.inventory.clear();
+    inventory.add(new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb"));
+    inventory.add(bigBomb);
     selectedItem = 0;
   }
 

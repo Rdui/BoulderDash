@@ -54,6 +54,7 @@ AudioPlayer soundGateOpen;
 void setup() {
   basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
   bigBomb = new Bomb(loadImage("graphics/bigbomb.png"), 4, 0, 2, "Bigger bomb");
+  mapNumber = 0;
   size(1280, 720);
   frameRate(60);
   noSmooth();
@@ -115,7 +116,6 @@ void draw() {
     break;
   case State.GAME:
     background(backgroundColor);
-    //println(frameRate);
     drawBackground();
     drawMap();
     processFlames();
@@ -156,17 +156,21 @@ void draw() {
     break;
   case State.END:
     fade = fade == 0 ? millis() + 1000 : fade;
-    if (fade <= millis() && fade > 0)
-    {
-      fade = -1;
-      highscoreSetup();
-      printScores();
+    if (fade > 0) {
+      if (fade <= millis())
+      {
+        fade = -1;
+        highscoreSetup();
+        printScores();
+      } else {
+        processFlames();
+        player.drawPlayer();
+      }
     }
     break;
   }
 }
 void drawBoulders() { // draws the boulders in the boulders list.
-
   for (Boulder boulder : boulders) {
     image(boulder.image, 32*boulder.x, 32*boulder.y+8);
   }
@@ -248,13 +252,11 @@ void processFlames() {
     image(flame.image, 32*flame.x, 32*flame.y+8);
     if (player.getX() == flame.x && player.getY() == flame.y) {
       dead = true;
-      break;
     }
     Creep deadCreep = null;
     for (Creep creep : creeps) {
       if (creep.x == flame.x && creep.y == flame.y) {
         deadCreep = creep;
-        break;
       }
     }
     if (deadCreep != null)
@@ -265,7 +267,7 @@ void processFlames() {
 
   for (Flame deadFlame : deadFlames)
     flames.remove(deadFlame);
-  if (dead)
+  if (dead && state == State.GAME)
     endGame();
 }
 
@@ -435,10 +437,10 @@ void endGame() {
     output.close();
   }
   scores = loadStrings("scores.txt");
-  clearMap();
 }
 
 void clearMap() {
+  fade = 0;
   flames.clear();
   bombs.clear();
   creeps.clear();
@@ -454,7 +456,7 @@ void newLevel() {
   mapNumber++;
   clearMap();
   resetKeyboardInputs();
-  if(mapNumber == 5){
+  if (mapNumber == 5) {
     mapNumber = 0;
   }
   loadMap("Maps/map"+mapNumber+".txt", "chars.txt");

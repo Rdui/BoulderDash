@@ -14,6 +14,7 @@ PImage bgTile, keyicon, portalicon, closedportalicon;
 Tile groundTile, emptyTile;
 
 void loadMap(String mapPath, String charPath) {
+  player.reset();
   bgTile = loadImage("graphics/bg.png");
   keyicon = loadImage("graphics/key.png");
   portalicon = loadImage("graphics/portal.png");
@@ -45,7 +46,7 @@ void loadMap(String mapPath, String charPath) {
       tiles.put(split[1], tile);
       break;
     case "portal":
-      tile = new Tile(groundTile);
+      tile = new Tile(emptyTile);
       tile.portal = true;
       tiles.put(split[1], tile);
       break;
@@ -66,7 +67,6 @@ void loadMap(String mapPath, String charPath) {
   map = new Tile[split(mapLines[0], ' ').length][mapLines.length];
   for (int y = 0; y < mapLines.length; y++) {
     String[] row = split(mapLines[y], ' ');
-    //println(row[0], row[1], row[2]);
     for (int x = 0; x < row.length; x++) 
     {
       if (row[x].equals("!")) { // normal creep

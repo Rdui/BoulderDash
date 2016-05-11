@@ -14,9 +14,9 @@ w g g g g # # g g g g g g g g g g g g g g g g g g g g g g g g g g g w b b b g w
 w g g g g # # g g g g g g g g g g g g g g g g g g g g g g g g g g g w b b b g w
 w g g g g # # g g g g g g g g g g g g g g g g g g g g g g g g g g g w b b b g w
 w g g g g # # g g g g g g g g g g g g g g g g g g g g g g g g g g b w b b b g w
-w g g g g # # g g g g g g g g g g g g g g g g g g g g g g g g g b b w b b b g w
-w g g g g @ # g g g g g g g g g g g g g g g g g g g g g g g g b b b w b b b g w
-w g g g g g g g g g g g g g g g g g g g g g g g g g g g g g b b b b w b b b g w
-w g g g g g g g g g g g g g g g g g g g g g g g g g g g g b b b b b w g w w g w
-w g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g g w g g g g w
+w g g g g # # g g g g g g g g g # # # # # # # g g g g g g g g g b b w b b b g w
+w g g g g @ # g g g g g g g g g # g g g g g # g g g g g g g g b b b w b b b g w
+w g g g g g g g g g g g g g g g # g g g g g # g g g g g g g b b b b w b b b g w
+w g g g g g g g g g g g g g g g ! g h j h g ! g g g g g g b b b b b w g w w g w
+w g g g g g g g g g g g g g g g # g c C c g # g g g g g g g g g g g w g g g g w
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w

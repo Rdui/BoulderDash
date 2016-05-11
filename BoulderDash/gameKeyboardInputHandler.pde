@@ -56,7 +56,6 @@ void useKeyPressed() {
 void pauseKeyPressed() {
   if (key == 'p' || key ==  'P') {
     if (state == State.GAME){
-      println("dsad");
       state = State.PAUSE;
     }
     else{

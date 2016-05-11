@@ -36,6 +36,7 @@ PImage openPortalImage;
 String[] scores;
 // normal bomb
 Bomb basicBomb;
+Bomb bigBomb;
 
 // mapnumber = current map, mapcount = number of maps
 int time = 500, mapNumber = 0, mapCount = 5, fade = 0;
@@ -52,6 +53,7 @@ AudioPlayer soundGateOpen;
 
 void setup() {
   basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
+  bigBomb = new Bomb(loadImage("graphics/bigbomb.png"), 4, 0, 2, "Bigger bomb");
   size(1280, 720);
   frameRate(60);
   noSmooth();
@@ -76,7 +78,7 @@ void setup() {
   soundExplosion = minim.loadFile("Sounds/explosion.mp3");
   soundGameOver = minim.loadFile("Sounds/gameover.mp3");
   soundLevelCleared = minim.loadFile("Sounds/fanfare.mp3");
-  soundWalking = minim.loadFile("Sounds/step.mp3");
+  soundWalking = minim.loadFile("Sounds/step2.wav");
   soundTick = minim.loadFile("Sounds/tick.mp3");
   soundGateOpen = minim.loadFile("Sounds/gateopen.mp3");
 }
@@ -177,7 +179,6 @@ void processBoulders() {
       map[boulders.get(i).x][boulders.get(i).y].empty = false;
       map[boulders.get(i).x][boulders.get(i).y].tileHp = -1;
       if (boulders.get(i).y <= 20 && map[boulders.get(i).x][boulders.get(i).y+1].empty == true) { // empty tile beneath the boulder
-        //println(boulders.get(i).y+"  " + boulders.get(i).x+ "  " +map[boulders.get(i).x][boulders.get(i).y].empty);
         if (!playerIsBelow(boulders.get(i).x, boulders.get(i).y) && !creepIsBelow(boulders.get(i).x, boulders.get(i).y)) { // no tiles or players or creeps below the boulder
 
           boulders.get(i).hasMomentum = true;
@@ -246,7 +247,6 @@ void processFlames() {
   for (Flame flame : flames) {
     image(flame.image, 32*flame.x, 32*flame.y+8);
     if (player.getX() == flame.x && player.getY() == flame.y) {
-      println("mio");
       dead = true;
       break;
     }

@@ -89,7 +89,7 @@ class Bomb extends AbstractItem {
         map[x][y-fy].item.y =y-fy;
       }
       
-      flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x, y-fy, 15));
+      flames.add(new Flame(loadImage("graphics/explosionvertical.png"), x, y-fy, 15));
       map[x][y-fy].destroy(); 
     }
     
@@ -103,7 +103,7 @@ class Bomb extends AbstractItem {
         map[x][y+fy].item.y =y+fy;
       }
       
-      flames.add(new Flame(loadImage("graphics/explosionhorizontal.png"), x, y+fy, 15));
+      flames.add(new Flame(loadImage("graphics/explosionvertical.png"), x, y+fy, 15));
       map[x][y+fy].destroy(); 
     }
     

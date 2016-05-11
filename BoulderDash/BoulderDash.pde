@@ -436,6 +436,7 @@ void endGame() {
 }
 
 void clearMap() {
+  fade = 0;
   flames.clear();
   bombs.clear();
   creeps.clear();

@@ -66,7 +66,6 @@ class Player {
       if (this.is_mineable(gridX, gridY-1)) {
 
         if (map[gridX][gridY-1].tileHp > 0) {
-          println("tuhottu");
           map[gridX][gridY-1].tileHp -= 1;
           return;
         }
@@ -83,7 +82,6 @@ class Player {
         checkItem();
       }
     } else if (down == 1 && gridY < 21) {
-      println(map[gridX][gridY+1].tileHp);
       if ( this.is_mineable(gridX, gridY+1) == true) {
         if (map[gridX][gridY+1].tileHp > 0) {
           map[gridX][gridY+1].tileHp -= 1;
@@ -160,8 +158,6 @@ class Player {
       soundPickup.rewind();
       soundPickup.play();
       for (AbstractItem listItem : player.inventory) {
-        println(listItem.itemName);
-        println(map[gridX][gridY].item.itemName);
         if (listItem.itemName.equals( map[gridX][gridY].item.itemName)) {
           exists = true;
           listItem.thisBombLeft += 1;

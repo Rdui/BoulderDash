@@ -113,7 +113,6 @@ void draw() {
     break;
   case State.GAME:
     background(backgroundColor);
-    //println(frameRate);
     drawBackground();
     drawMap();
     processFlames();
@@ -177,7 +176,6 @@ void processBoulders() {
       map[boulders.get(i).x][boulders.get(i).y].empty = false;
       map[boulders.get(i).x][boulders.get(i).y].tileHp = -1;
       if (boulders.get(i).y <= 20 && map[boulders.get(i).x][boulders.get(i).y+1].empty == true) { // empty tile beneath the boulder
-        //println(boulders.get(i).y+"  " + boulders.get(i).x+ "  " +map[boulders.get(i).x][boulders.get(i).y].empty);
         if (!playerIsBelow(boulders.get(i).x, boulders.get(i).y) && !creepIsBelow(boulders.get(i).x, boulders.get(i).y)) { // no tiles or players or creeps below the boulder
 
           boulders.get(i).hasMomentum = true;
@@ -246,7 +244,6 @@ void processFlames() {
   for (Flame flame : flames) {
     image(flame.image, 32*flame.x, 32*flame.y+8);
     if (player.getX() == flame.x && player.getY() == flame.y) {
-      println("mio");
       dead = true;
       break;
     }

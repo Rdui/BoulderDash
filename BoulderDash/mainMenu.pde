@@ -90,7 +90,7 @@ void handleButtonEvents(GButton button, GEvent event) {
     setup();
     deleteHighscoreButtons();
   }
-  if (button == deathNewGameButton && event == GEvent.CLICKED){
+  if (button == exitButton && event == GEvent.CLICKED){
     exit();
   }
   if (state == State.SELECT_LEVEL && button.getText().split(" ")[0].equals("Level"))

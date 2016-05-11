@@ -52,6 +52,7 @@ AudioPlayer soundGateOpen;
 
 void setup() {
   basicBomb = new Bomb(loadImage("graphics/smallbomb.png"), 2, 0, 2, "Bomb");
+  mapNumber = 0;
   size(1280, 720);
   frameRate(60);
   noSmooth();
@@ -163,7 +164,6 @@ void draw() {
   }
 }
 void drawBoulders() { // draws the boulders in the boulders list.
-
   for (Boulder boulder : boulders) {
     image(boulder.image, 32*boulder.x, 32*boulder.y+8);
   }
@@ -432,7 +432,6 @@ void endGame() {
     output.close();
   }
   scores = loadStrings("scores.txt");
-  clearMap();
 }
 
 void clearMap() {

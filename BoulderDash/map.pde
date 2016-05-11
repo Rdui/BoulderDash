@@ -14,6 +14,7 @@ PImage bgTile, keyicon, portalicon, closedportalicon;
 Tile groundTile, emptyTile;
 
 void loadMap(String mapPath, String charPath) {
+  player.reset();
   bgTile = loadImage("graphics/bg.png");
   keyicon = loadImage("graphics/key.png");
   portalicon = loadImage("graphics/portal.png");

@@ -1,12 +1,12 @@
-GButton deathNewGameButton;
+GButton retryButton;
 GButton exitButton;
 
 void highscoreSetup(){
-  deathNewGameButton = new GButton(this, 300, 600, 300, 50, "New Game!");
-  exitButton = new GButton(this, 690, 600, 300, 50, "Exit to desktop");
+  retryButton = new GButton(this, 300, 600, 300, 50, "Retry!");
+  exitButton = new GButton(this, 690, 600, 300, 50, "Give up");
 }
 
 void deleteHighscoreButtons(){
-  deathNewGameButton.dispose();
+  retryButton.dispose();
   exitButton.dispose();
 }

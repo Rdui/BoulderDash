@@ -91,7 +91,7 @@ void handleButtonEvents(GButton button, GEvent event) {
       loadMap("Maps/map"+mapNumber+".txt", "chars.txt");
       state = State.GAME;
   }
-  if (button == exitButton && event == GEvent.CLICKED) {
+  if (button == exitButton || button == quitButton && event == GEvent.CLICKED) {
     exit();
   }
   if (state == State.SELECT_LEVEL && button.getText().split(" ")[0].equals("Level"))

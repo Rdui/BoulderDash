@@ -46,7 +46,7 @@ void loadMap(String mapPath, String charPath) {
       tiles.put(split[1], tile);
       break;
     case "portal":
-      tile = new Tile(groundTile);
+      tile = new Tile(emptyTile);
       tile.portal = true;
       tiles.put(split[1], tile);
       break;
